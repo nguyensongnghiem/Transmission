@@ -5,15 +5,15 @@ import jakarta.persistence.*;
 @Entity
 public class Router {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     @Column(nullable = false,unique = true)
     String name;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "routerTypeId")
     private RouterType routerType;
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "transmissionDeviceTypeId")
+    @JoinColumn(name = "transmissionDeviceTypeId",nullable = false)
     private TransmissionDeviceType transmissionDeviceType;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "SiteId",nullable = false)
@@ -26,11 +26,11 @@ public class Router {
     public Router() {
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

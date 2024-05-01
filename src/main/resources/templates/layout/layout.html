@@ -16,7 +16,7 @@
 </header>
 
 <th:block th:fragment="sidebar">
-    <ul class="navbar-nav bg-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+    <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
         <!-- Sidebar - Brand -->
         <a class="sidebar-brand d-flex align-items-center justify-content-center" href="/">
@@ -61,15 +61,15 @@
             <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
                aria-expanded="true" aria-controls="collapseUtilities">
                 <i class="fas fa-fw fa-wrench"></i>
-                <span>Truyền dẫn trạm</span>
+                <span>Quản lý thiết bị</span>
             </a>
             <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
                  data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
                     <h6 class="collapse-header">Tác vụ</h6>
-                    <a class="collapse-item" href="utilities-color.html">Colors</a>
-                    <a class="collapse-item" href="utilities-border.html">Borders</a>
-                    <a class="collapse-item" href="utilities-animation.html">Animations</a>
+                    <a class="collapse-item" href="/router/list">Danh sách thiết bị </a>
+                    <a class="collapse-item" href="/router/create">Thêm mới thiết bị</a>
+                    <a class="collapse-item" href="utilities-animation.html">Cảnh báo hệ thống</a>
                     <a class="collapse-item" href="utilities-other.html">Other</a>
                 </div>
             </div>
@@ -335,6 +335,8 @@
 </div>
 
 <div th:fragment="js-libs">
+    <!-- Google chart -->
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <!-- Bootstrap core JavaScript-->
     <script src="/vendor/jquery/jquery.min.js"></script>
     <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -349,13 +351,15 @@
     <script src="/vendor/chart.js/Chart.min.js"></script>
 
     <!-- Page level custom scripts -->
-    <script src="/js/demo/chart-area-demo.js"></script>
-    <script src="/js/demo/chart-pie-demo.js"></script>
+    <script src="/js/demo/site-chart.js"></script>
+    <script src="/js/demo/trans-type-chart.js"></script>
     <!-- Page level plugins -->
     <script src="/vendor/datatables/jquery.dataTables.min.js"></script>
     <script src="/vendor/datatables/dataTables.bootstrap4.min.js"></script>
     <!-- Page level custom scripts -->
     <script src="/js/demo/datatables-demo.js"></script>
+
+
 </div>
 
 

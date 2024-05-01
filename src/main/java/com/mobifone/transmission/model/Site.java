@@ -19,6 +19,12 @@ public class Site {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "siteOwnerId")
     private SiteOwner siteOwner;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "siteTransmissionTypeId")
+    private SiteTransmissionType siteTransmissionType;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "TransmissionOwnerId")
+    private TransmissionOwner transmissionOwner;
     private boolean status;
     private String note;
     @ManyToOne(fetch = FetchType.LAZY)
@@ -111,5 +117,21 @@ public class Site {
 
     public void setProvince(Province province) {
         this.province = province;
+    }
+
+    public SiteTransmissionType getSiteTransmissionType() {
+        return siteTransmissionType;
+    }
+
+    public void setSiteTransmissionType(SiteTransmissionType siteTransmissionType) {
+        this.siteTransmissionType = siteTransmissionType;
+    }
+
+    public TransmissionOwner getTransmissionOwner() {
+        return transmissionOwner;
+    }
+
+    public void setTransmissionOwner(TransmissionOwner transmissionOwner) {
+        this.transmissionOwner = transmissionOwner;
     }
 }

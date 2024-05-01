@@ -13,7 +13,6 @@ import java.util.List;
 @Service
 public class SiteService implements ISiteService {
 
-
     @Autowired
     private ISiteRepository siteRepository;
     @Override

@@ -77,9 +77,8 @@
                                         <label class="form-label">Tỉnh</label>
                                         <select class=" form-control "
                                                 aria-hidden="true" th:field="*{province}">
-                                            <option th:each="province1:${provinces}" th:value="${province1.id}"
+                                            <option th:each="province1:${provinces}" th:value="${province1.id}" th:selected="(${province1.id} == *{province.id})"
                                                     th:text="${province1.name}"></option>
-
                                         </select>
                                     </div>
                                 </div>
@@ -88,7 +87,9 @@
                                         <label class="form-label">Đơn vị sở hữu</label>
                                         <select class=" form-control "
                                                 aria-hidden="true" th:field="*{siteOwner}" >
-                                            <option th:each="siteOwner1:${siteOwners}" th:value="${siteOwner1.id}"
+                                            <option th:value="null" th:selected="*{siteOwner==null}"
+                                                    >-- Chọn đơn vị sở hữu --</option>
+                                            <option th:each="siteOwner1:${siteOwners}" th:value="${siteOwner1.id}" th:selected="(${siteOwner1?.id} == *{siteOwner?.id})"
                                                     th:text="${siteOwner1.name}"></option>
                                         </select>
                                     </div>
@@ -98,13 +99,14 @@
                                     <div class="mb-3 form-group">
                                         <label class="form-label mb-3">Trạng thái hoạt động</label>
                                         <div class="form-check mb-3">
-                                            <input class="form-check-input " th:field="*{status}" type="radio" name="status" id="exampleRadios1" value="1" checked>
+                                            <input class="form-check-input " th:field="*{status}" type="radio" name="status" id="exampleRadios1" value="1"
+                                                   th:checked="(*{status}=='1')">
                                             <label class="form-check-label" for="exampleRadios1">
                                                 Đang hoạt động
                                             </label>
                                         </div>
                                         <div class="form-check form-check-inline mb-3">
-                                            <input class="form-check-input" th:field="*{status}" type="radio" name="status" id="exampleRadios2" value="0">
+                                            <input class="form-check-input" th:field="*{status}" th:checked="(*{status}=='0')" type="radio" name="status" id="exampleRadios2" value="0">
                                             <label class="form-check-label" for="exampleRadios2">
                                                Không hoạt động
                                             </label>

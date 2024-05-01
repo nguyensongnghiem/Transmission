@@ -28,25 +28,17 @@ function number_format(number, decimals, dec_point, thousands_sep) {
 }
 
 // Area Chart Example
-var ctx = document.getElementById("myAreaChart");
+var ctx = document.getElementById("siteChart");
 var myLineChart = new Chart(ctx, {
-  type: 'line',
+  type: 'bar',
   data: {
-    labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+    labels: siteChartLabels,
     datasets: [{
-      label: "Earnings",
-      lineTension: 0.3,
-      backgroundColor: "rgba(78, 115, 223, 0.05)",
-      borderColor: "rgba(78, 115, 223, 1)",
-      pointRadius: 3,
-      pointBackgroundColor: "rgba(78, 115, 223, 1)",
-      pointBorderColor: "rgba(78, 115, 223, 1)",
-      pointHoverRadius: 3,
-      pointHoverBackgroundColor: "rgba(78, 115, 223, 1)",
-      pointHoverBorderColor: "rgba(78, 115, 223, 1)",
-      pointHitRadius: 10,
-      pointBorderWidth: 2,
-      data: [0, 10000, 5000, 15000, 10000, 20000, 15000, 25000, 20000, 30000, 25000, 40000],
+      label: "Sites",
+      backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850","#c45850","#F79D65","#F79D63","#3e95cd", "#8e5ea2","#3cba9f"],
+      borderColor: 'rgba(150, 100, 255, 1)',
+      borderWidth: 0,
+      data: siteChartDatas,
     }],
   },
   options: {
@@ -69,17 +61,17 @@ var myLineChart = new Chart(ctx, {
           drawBorder: false
         },
         ticks: {
-          maxTicksLimit: 7
+          maxTicksLimit: 12
         }
       }],
       yAxes: [{
         ticks: {
           maxTicksLimit: 5,
-          padding: 10,
-          // Include a dollar sign in the ticks
-          callback: function(value, index, values) {
-            return '$' + number_format(value);
-          }
+          padding: 10
+          // // Include a dollar sign in the ticks
+          // callback: function(value, index, values) {
+          //   return '$' + number_format(value);
+          // }
         },
         gridLines: {
           color: "rgb(234, 236, 244)",
@@ -110,7 +102,7 @@ var myLineChart = new Chart(ctx, {
       callbacks: {
         label: function(tooltipItem, chart) {
           var datasetLabel = chart.datasets[tooltipItem.datasetIndex].label || '';
-          return datasetLabel + ': $' + number_format(tooltipItem.yLabel);
+          return datasetLabel + " " + number_format(tooltipItem.yLabel);
         }
       }
     }

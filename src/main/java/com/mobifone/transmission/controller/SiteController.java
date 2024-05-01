@@ -1,11 +1,7 @@
 package com.mobifone.transmission.controller;
 
-import com.mobifone.transmission.model.Province;
-import com.mobifone.transmission.model.Site;
-import com.mobifone.transmission.model.SiteOwner;
-import com.mobifone.transmission.service.IProvinceService;
-import com.mobifone.transmission.service.ISiteOwnerService;
-import com.mobifone.transmission.service.ISiteService;
+import com.mobifone.transmission.model.*;
+import com.mobifone.transmission.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
@@ -22,6 +18,14 @@ public class SiteController {
     private IProvinceService provinceService;
     @Autowired
     private ISiteOwnerService siteOwnerService;
+    @Autowired
+    private ISiteTransmissionTypeService siteTransmissionTypeService;
+    @Autowired
+    private ITransmissionOwnerService transmissionOwnerService;
+    @ModelAttribute("transOwners")
+    public List<TransmissionOwner> getTransOwner(){
+        return transmissionOwnerService.findAll();
+    }
 
     @ModelAttribute("provinces")
     public List<Province> getProvinces(){
@@ -36,6 +40,8 @@ public class SiteController {
     public int getTotalSites(){
         return siteService.findAll().size();
     }
+    @ModelAttribute("siteTransTypes")
+    public List<SiteTransmissionType> getSiteTransType(){return siteTransmissionTypeService.findAll();}
 
     @GetMapping("/site/list")
     public String list(Model model) {

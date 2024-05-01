@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Thêm mới trạm vào CSDL </title>
+    <title>Thêm mới thiết bị vào CSDL </title>
     <div th:replace="~{layout/layout::library}"></div>
 
 </head>
@@ -38,80 +38,64 @@
                 <!-- Site input Form -->
                 <div class="card shadow mb-4">
                     <div class="card-header py-3">
-                        <h6 class="m-0 font-weight-bold text-primary">Thêm mới trạm vào Cơ sở dữ liệu</h6>
+                        <h6 class="m-0 font-weight-bold text-primary">Thêm mới thiết bị vào Cơ sở dữ liệu</h6>
                     </div>
                     <div class="card-body">
-                        <form action="/site/create" method="post" th:object="${site}">
+                        <form action="/router/create" method="post" th:object="${router}">
                             <div class="row">
                                 <div class="mb-3 col">
-                                    <label class="form-label">Site ID</label>
-                                    <input type="text" class="form-control" th:field="*{siteId}">
+                                    <label class="form-label">Tên Router</label>
+                                    <input type="text" class="form-control" th:field="*{name}">
                                 </div>
                                 <div class="mb-3 col">
-                                    <label class="form-label">Site ID khác (Nếu có)</label>
-                                    <input type="text" class="form-control" th:field="*{siteId2}">
+                                    <label class="form-label">Ip quản lý</label>
+                                    <input type="text" class="form-control" th:field="*{ip}">
                                 </div>
                                 <div class="mb-3 col">
-                                    <label class="form-label">Tên trạm</label>
-                                    <input type="text" class="form-control" th:field="*{siteName}">
+                                    <label class="form-label">Site Id</label>
+                                    <input type="text" list="siteList" class="form-control" th:field="*{site}">
+                                    <datalist id="siteList">
+                                        <option th:each="site1:${siteList}" th:value="${site1.id}" th:text="${site1.siteId}">
+                                    </datalist>
                                 </div>
                             </div>
-                            <div class="row">
-                                <div class="mb-3 col-2">
-                                    <label class="form-label">Vĩ độ</label>
-                                    <input type="text" class="form-control" th:field="*{latitude}">
-                                </div>
-                                <div class="mb-3 col-2">
-                                    <label class="form-label">Kinh độ</label>
-                                    <input type="text" class="form-control" th:field="*{longitude}">
-                                </div>
-                                <div class="mb-3 col">
-                                    <label class="form-label">Địa chỉ</label>
-                                    <input type="text" class="form-control" th:field="*{address}">
-                                </div>
-                            </div>
+<!--                            <div class="row">-->
+<!--                                <div class="mb-3 col-2">-->
+<!--                                    <label class="form-label">Vĩ độ</label>-->
+<!--                                    <input type="text" class="form-control" th:field="*{latitude}">-->
+<!--                                </div>-->
+<!--                                <div class="mb-3 col-2">-->
+<!--                                    <label class="form-label">Kinh độ</label>-->
+<!--                                    <input type="text" class="form-control" th:field="*{longitude}">-->
+<!--                                </div>-->
+<!--                                <div class="mb-3 col">-->
+<!--                                    <label class="form-label">Địa chỉ</label>-->
+<!--                                    <input type="text" class="form-control" th:field="*{address}">-->
+<!--                                </div>-->
+<!--                            </div>-->
                             <div class=" row">
                                 <div class="col-lg-6">
                                     <div class="mb-3">
-                                        <label class="form-label">Tỉnh</label>
+                                        <label class="form-label">Loại thiết bị Router</label>
                                         <select class=" form-control "
-                                                aria-hidden="true" th:field="*{province}">
-                                            <option th:each="province1:${provinces}" th:value="${province1.id}"
-                                                    th:text="${province1.name}"></option>
+                                                aria-hidden="true" th:field="*{routerType}">
+                                            <option th:each="routerType:${routerTypes}" th:value="${routerType.id}"
+                                                    th:text="${routerType.name}"></option>
 
                                         </select>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="mb-3">
-                                        <label class="form-label">Đơn vị sở hữu</label>
+                                        <label class="form-label">Loại thiết bị truyền dẫn</label>
                                         <select class=" form-control "
-                                                aria-hidden="true" th:field="*{siteOwner}" >
-                                            <option th:each="siteOwner1:${siteOwners}" th:value="${siteOwner1.id}"
-                                                    th:text="${siteOwner1.name}"></option>
+                                                aria-hidden="true" th:field="*{transmissionDeviceType}" >
+                                            <option th:each="transDevType:${transDevTypes}" th:value="${transDevType.id}"
+                                                    th:text="${transDevType.name}"></option>
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
-                                    <div class="mb-3">
-                                        <label class="form-label">Loại TD trạm</label>
-                                        <select class=" form-control "
-                                                aria-hidden="true" th:field="*{siteTransmissionType}" >
-                                            <option th:each="siteTransmissionType1:${siteTransTypes}" th:value="${siteTransmissionType1.id}"
-                                                    th:text="${siteTransmissionType1.name}"></option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="mb-3">
-                                        <label class="form-label">Đơn vị sở hữu TD </label>
-                                        <select class=" form-control "
-                                                aria-hidden="true" th:field="*{transmissionOwner}" >
-                                            <option th:each="transmissionOwner1:${transOwners}" th:value="${transmissionOwner1.id}"
-                                                    th:text="${transmissionOwner1.name}"></option>
-                                        </select>
-                                    </div>
-                                </div>
+
                                 <div class="col-lg-6">
                                     <div class="mb-3 form-group">
                                         <label class="form-label mb-3">Trạng thái hoạt động</label>

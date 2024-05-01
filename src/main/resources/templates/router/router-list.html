@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Danh sách trạm</title>
+    <title>Danh sách Router</title>
     <div th:replace="~{layout/layout::library}"></div>
 
 </head>
@@ -40,7 +40,7 @@
                 <!-- DataTales Example -->
                 <div class="card shadow mb-4">
                     <div class="card-header py-3">
-                        <h6 class="m-0 font-weight-bold text-primary" >Danh sách trạm <span class="badge badge-pill badge-primary" th:text="${siteList.size()}"></span></h6>
+                        <h6 class="m-0 font-weight-bold text-primary">Danh sách Router <span class="badge badge-pill badge-primary" th:text="${routerList.size()}"></span></h6>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive  ">
@@ -49,13 +49,10 @@
                                 <tr>
                                     <th>Tỉnh</th>
                                     <th>Site ID</th>
-                                    <th>Tên trạm</th>
-                                    <th>Vĩ độ</th>
-                                    <th>Kinh độ</th>
-                                    <th>Địa chỉ</th>
-                                    <th>Đơn vị sở hữu</th>
-                                    <th>Loại truyền dẫn trạm</th>
-                                    <th>Đơn vị sở hữu TD </th>
+                                    <th>Tên router</th>
+                                    <th>Loại router</th>
+                                    <th>Loại thiết bị TD</th>
+                                    <th>Ip quản lý</th>
                                     <th>Trạng thái hoạt động</th>
                                     <th>Ghi chú</th>
                                     <th>Tác vụ</th>
@@ -65,38 +62,33 @@
                                 <tr>
                                     <th>Tỉnh</th>
                                     <th>Site ID</th>
-                                    <th>Tên trạm</th>
-                                    <th>Vĩ độ</th>
-                                    <th>Kinh độ</th>
-                                    <th>Địa chỉ</th>
-                                    <th>Đơn vị sở hữu</th>
-                                    <th>Loại truyền dẫn trạm</th>
-                                    <th>Đơn vị sở hữu TD </th>
+                                    <th>Tên router</th>
+                                    <th>Loại router</th>
+                                    <th>Loại thiết bị TD</th>
+                                    <th>Ip quản lý</th>
                                     <th>Trạng thái hoạt động</th>
                                     <th>Ghi chú</th>
                                     <th>Tác vụ</th>
                                 </tr>
                                 </tfoot>
                                 <tbody>
-                                <tr th:each="site:${siteList}">
-                                    <td th:text="${site.getProvince().getName()}">
-                                    <td th:text="${site.siteId}">
-                                    <td th:text="${site.siteName}">
-                                    <td th:text="${site.latitude}">
-                                    <td th:text="${site.longitude}">
-                                    <td th:text="${site.address}">
-                                    <td th:text="${site.getSiteOwner()!=null}?${site.getSiteOwner().getName()}:''">
-                                    <td th:text="${site.getSiteTransmissionType()!=null}?${site.getSiteTransmissionType().getName()}:''">
-                                    <td th:text="${site.getTransmissionOwner()!=null}?${site.getTransmissionOwner().getName()}:'N/A'">
-                                    <td th:text="${site.status}?'Đang hoạt động':'Không hoạt động'">
-                                    <td th:text="${site.note}">
+                                <tr th:each="router:${routerList}">
+                                    <td th:text="${router.site.province.name}">
+                                    <td th:text="${router.site.siteId}">
+                                    <td th:text="${router.name}">
+                                    <td th:text="${router.routerType?.name}">
+                                    <td th:text="${router.transmissionDeviceType.name}">
+                                    <td th:text="${router.ip}">
+                                    <td th:text="${router.status}?'Đang hoạt động':'Không hoạt động'">
+                                    <td th:text="${router.note}">
                                     <td>
                                     <div class="btn-group btn-group-sm" role="group" aria-label="Basic mixed styles example">
-                                        <a th:href="@{'/site/edit/'+${site.id}}" type="button" class="btn btn-warning">Sửa</a>
-                                        <button th:data-id="${site.id}" th:data-site-id="${site.siteId}"
-                                                th:onclick="deleteSite(this.getAttribute('data-id'),this.getAttribute('data-site-id'))"
+                                        <a th:href="@{'/router/edit/'+${router.id}}" type="button" class="btn btn-warning">Sửa</a>
+                                        <button th:data-id="${router.id}" th:data-router-name="${router.name}"
+                                                th:onclick="deleteRouter(this.getAttribute('data-id'),this.getAttribute('data-router-name'))"
                                                 type="button" class="btn btn-danger" data-toggle="modal"
-                                                data-target="#deleteModal">Xóa
+                                                data-target="#deleteModal">
+                                            Xóa
                                         </button>
                                     </div>
                                     </td>
@@ -164,7 +156,7 @@
      aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
-            <form action="/site/delete" method="post">
+            <form action="/router/delete" method="post">
                 <div class="modal-header">
                     <h5 class="modal-title" id="deleteModalLabel">Xác nhận xóa dữ liệu !</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -172,7 +164,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    Bạn có muốn thực hiện xóa trạm <span style="color: red" id="delete-site-id"></span> ?
+                    Bạn có muốn thực hiện xóa router <span style="color: red" id="delete-router-name"></span> ?
                 </div>
                 <input name="deleteId" type="hidden" id="hidden-delete-id">
                 <div class="modal-footer">
@@ -187,8 +179,8 @@
 <!-- Bootstrap and JavaScript libs -->
 <div th:replace="~{layout/layout::js-libs}"></div>
 <script>
-    function deleteSite(id, siteId) {
-        document.getElementById("delete-site-id").innerHTML = siteId;
+    function deleteRouter(id, routerName) {
+        document.getElementById("delete-router-name").innerHTML = routerName;
         document.getElementById("hidden-delete-id").value = id;
     }
 </script>

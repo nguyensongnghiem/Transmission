@@ -1,7 +1,8 @@
 package com.mobifone.transmission.model;
 
 import jakarta.persistence.*;
-import java.util.Set;
+
+import java.util.List;
 
 @Entity
 public class Province {
@@ -9,7 +10,7 @@ public class Province {
     private String id;
     private String name;
     @OneToMany(mappedBy = "province", cascade = CascadeType.ALL)
-    private Set<Site> siteSet;
+    private List<Site> siteList;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "telecomCenterId", nullable = false)
     private  TelecomCenter telecomCenter;
@@ -33,12 +34,12 @@ public class Province {
         this.name = name;
     }
 
-    public Set<Site> getSiteSet() {
-        return siteSet;
+    public List<Site> getSiteList() {
+        return siteList;
     }
 
-    public void setSiteSet(Set<Site> siteSet) {
-        this.siteSet = siteSet;
+    public void setSiteList(List<Site> siteList) {
+        this.siteList = siteList;
     }
 
     public TelecomCenter getTelecomCenter() {
