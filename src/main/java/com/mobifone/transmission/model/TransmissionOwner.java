@@ -13,7 +13,18 @@ public class TransmissionOwner {
 
     @OneToMany(mappedBy = "transmissionOwner", cascade = CascadeType.ALL)
     private List<Site> siteList;
+
+    @OneToMany(mappedBy = "transmissionOwner", cascade = CascadeType.ALL)
+    private List<LeaseLine> leaseLineList;
     public TransmissionOwner() {
+    }
+
+    public List<LeaseLine> getLeaseLineList() {
+        return leaseLineList;
+    }
+
+    public void setLeaseLineList(List<LeaseLine> leaseLineList) {
+        this.leaseLineList = leaseLineList;
     }
 
     public int getId() {

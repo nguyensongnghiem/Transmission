@@ -2,6 +2,8 @@ package com.mobifone.transmission.model;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 public class Site {
     @Id
@@ -30,6 +32,19 @@ public class Site {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "provinceId",nullable = false)
     private Province province;
+    @OneToMany(mappedBy = "site", cascade = CascadeType.ALL)
+    private List<LeaseLine> leaseLineList;
+
+    public Site() {
+    }
+
+    public List<LeaseLine> getLeaseLineList() {
+        return leaseLineList;
+    }
+
+    public void setLeaseLineList(List<LeaseLine> leaseLineList) {
+        this.leaseLineList = leaseLineList;
+    }
 
     public Long getId() {
         return id;

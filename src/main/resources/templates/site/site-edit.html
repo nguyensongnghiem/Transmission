@@ -84,17 +84,45 @@
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="mb-3">
-                                        <label class="form-label">Đơn vị sở hữu</label>
+                                        <label class="form-label">Đơn vị sở hữu trạm</label>
                                         <select class=" form-control "
                                                 aria-hidden="true" th:field="*{siteOwner}" >
                                             <option th:value="null" th:selected="*{siteOwner==null}"
                                                     >-- Chọn đơn vị sở hữu --</option>
-                                            <option th:each="siteOwner1:${siteOwners}" th:value="${siteOwner1.id}" th:selected="(${siteOwner1?.id} == *{siteOwner?.id})"
+                                            <option th:each="siteOwner1:${siteOwners}" th:value="${siteOwner1.id}"
+                                                    th:selected="(${siteOwner1?.id} == *{siteOwner?.id})"
                                                     th:text="${siteOwner1.name}"></option>
                                         </select>
                                     </div>
                                 </div>
-
+                                <div class="col-lg-6">
+                                    <div class="mb-3">
+                                        <label class="form-label">Loại TD trạm</label>
+                                        <select class=" form-control "
+                                                aria-hidden="true" th:field="*{siteTransmissionType}" >
+                                            <option th:value="null" th:selected="*{siteTransmissionType==null}"
+                                            >-- Chọn loại TD --</option>
+                                            <option th:each="siteTransmissionType1:${siteTransTypes}"
+                                                    th:value="${siteTransmissionType1.id}"
+                                                    th:selected="(${siteTransmissionType1?.id} == *{siteTransmissionType?.id})"
+                                                    th:text="${siteTransmissionType1.name}"></option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="mb-3">
+                                        <label class="form-label">Đơn vị sở hữu TD </label>
+                                        <select class=" form-control "
+                                                aria-hidden="true" th:field="*{transmissionOwner}" >
+                                            <option th:value="null" th:selected="*{transmissionOwner==null}"
+                                            >-- Chọn chủ sở hữu TD --</option>
+                                            <option th:each="transmissionOwner1:${transOwners}"
+                                                    th:value="${transmissionOwner1.id}"
+                                                    th:selected="(${transmissionOwner1?.id} == *{transmissionOwner?.id})"
+                                                    th:text="${transmissionOwner1.name}"></option>
+                                        </select>
+                                    </div>
+                                </div>
                                 <div class="col-lg-6">
                                     <div class="mb-3 form-group">
                                         <label class="form-label mb-3">Trạng thái hoạt động</label>
