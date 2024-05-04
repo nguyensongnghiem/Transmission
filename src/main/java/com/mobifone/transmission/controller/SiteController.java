@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @Controller
+@RequestMapping("/site")
 public class SiteController {
     @Autowired
     private ISiteService siteService;
@@ -43,7 +44,7 @@ public class SiteController {
     @ModelAttribute("siteTransTypes")
     public List<SiteTransmissionType> getSiteTransType(){return siteTransmissionTypeService.findAll();}
 
-    @GetMapping("/site/list")
+    @GetMapping("/list")
     public String list(Model model) {
         List<Site> siteList = siteService.findAll();
         model.addAttribute("siteList", siteList);
@@ -63,31 +64,31 @@ public class SiteController {
     }
 
 // show the create form
-    @GetMapping("/site/create")
+    @GetMapping("/create")
     public String showCreateForm(Model model) {
         model.addAttribute("site",new Site());
         return "/site/site-create";
     }
 
 //    save new site to DB
-    @PostMapping("/site/create")
+    @PostMapping("/create")
     public String create(@ModelAttribute Site site) {
         siteService.save(site);
         return "redirect:/site/list";
     }
-    @PostMapping("/site/delete")
+    @PostMapping("/delete")
     public String deleteSite(@RequestParam Long deleteId) {
         siteService.deleteById(deleteId);
         return "redirect:/site/list";
     }
-    @GetMapping("/site/edit/{editId}")
+    @GetMapping("/edit/{editId}")
     public String showEditForm(Model model, @PathVariable Long editId) {
         Site site = siteService.findById(editId);
         model.addAttribute("site",site);
         return "/site/site-edit";
     }
 
-    @PostMapping("/site/edit")
+    @PostMapping("/edit")
     public String edit(@ModelAttribute Site site) {
         siteService.save(site);
         return "redirect:/site/list";

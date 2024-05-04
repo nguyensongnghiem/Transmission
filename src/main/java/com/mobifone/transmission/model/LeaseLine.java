@@ -2,8 +2,6 @@ package com.mobifone.transmission.model;
 
 import jakarta.persistence.*;
 
-import java.util.List;
-
 @Entity
 public class LeaseLine {
     @Id

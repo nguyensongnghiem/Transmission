@@ -3,13 +3,12 @@ package com.mobifone.transmission.controller;
 import com.mobifone.transmission.model.*;
 import com.mobifone.transmission.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
+@RequestMapping("/router")
 @Controller
 public class RouterController {
     @Autowired
@@ -52,7 +51,7 @@ public class RouterController {
         return transmissionDeviceTypeService.findAll();
     }
 
-    @GetMapping("/router/list")
+    @GetMapping("/list")
     public String list(Model model) {
         List<Router> routerList = routerService.findAll();
         model.addAttribute("routerList", routerList);
@@ -72,28 +71,28 @@ public class RouterController {
 //    }
 //
 // show the create form
-    @GetMapping("/router/create")
+    @GetMapping("/create")
     public String showCreateForm(Model model) {
         model.addAttribute("router",new Router());
         return "/router/router-create";
     }
 
 //    save new site to DB
-    @PostMapping("/router/create")
+    @PostMapping("/create")
     public String create(@ModelAttribute Router router) {
         routerService.save(router);
         return "redirect:/router/list";
     }
-    @PostMapping("/router/delete")
+    @PostMapping("/delete")
     public String deleteRouter(@RequestParam Long deleteId) {
         routerService.deleteById(deleteId);
         return "redirect:/router/list";
     }
-    @GetMapping("/router/edit/{editId}")
+    @GetMapping("/edit/{editId}")
     public String showEditForm(Model model, @PathVariable Long editId) {
         Router router = routerService.findById(editId);
         model.addAttribute("router",router);
-        return "/router/router-edit";
+        return "/router-edit";
     }
 
     @PostMapping("/router/edit")
