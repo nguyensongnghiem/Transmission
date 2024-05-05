@@ -1,189 +1,127 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>Quản lý Truyền dẫn - MLMT</title>
+        <div th:replace="~{layout/layout::library}"></div>
+    </head>
+    <body class="sb-nav-fixed">
 
-<head>
-
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
-
-    <title>Thêm mới thiết bị vào CSDL </title>
-    <div th:replace="~{layout/layout::library}"></div>
-
-</head>
-
-<body id="page-top">
-
-<!-- Page Wrapper -->
-<div id="wrapper">
+    <!-- Topbar -->
+    <   <div th:replace="~{layout/layout::topbar}"></div>
+    <!-- End of Topbar -->
 
     <!-- Sidebar -->
-    <div th:replace="~{layout/layout::sidebar}"></div>
-    <!-- End of Sidebar -->
+        <div id="layoutSidenav">
+            <div th:replace="~{layout/layout::sidebar}"></div>
 
-    <!-- Content Wrapper -->
-    <div id="content-wrapper" class="d-flex flex-column">
+            <div id="layoutSidenav_content">
+                <main>
+                    <div class="container-fluid px-4">
+                        <h1 class="mt-4">Thêm mới thiết bị</h1>
+                        <ol class="breadcrumb mb-4">
+                            <li class="breadcrumb-item active"><a href="/">Tổng quan</a></li>
+                            <li class="breadcrumb-item active"><a href="/router/list">Thiết bị</a></li>
+                            <li class="breadcrumb-item active">Thêm mới</li>
 
-        <!-- Main Content -->
-        <div id="content">
+                        </ol>
 
-            <!-- Topbar -->
-            <div th:replace="~{layout/layout::topbar}"></div>
-            <!-- End of Topbar -->
-
-            <!-- Begin Page Content -->
-            <div class="container-fluid">
-                <!-- Site input Form -->
-                <div class="card shadow mb-4">
-                    <div class="card-header py-3">
-                        <h6 class="m-0 font-weight-bold text-primary">Thêm mới thiết bị vào Cơ sở dữ liệu</h6>
-                    </div>
-                    <div class="card-body">
-                        <form action="/router/create" method="post" th:object="${router}">
-                            <div class="row">
-                                <div class="mb-3 col">
-                                    <label class="form-label">Tên Router</label>
-                                    <input type="text" class="form-control" th:field="*{name}">
-                                </div>
-                                <div class="mb-3 col">
-                                    <label class="form-label">Ip quản lý</label>
-                                    <input type="text" class="form-control" th:field="*{ip}">
-                                </div>
-                                <div class="mb-3 col">
-                                    <label class="form-label">Site Id</label>
-                                    <input type="text" list="siteList" class="form-control" th:field="*{site}">
-                                    <datalist id="siteList">
-                                        <option th:each="site1:${siteList}" th:value="${site1.id}" th:text="${site1.siteId}">
-                                    </datalist>
-                                </div>
+                        <div class="card mb-4">
+                            <div class="card-header">
+                                <i class="fas fa-edit me-1"></i>
+                                Thêm mới thiết bị
                             </div>
-<!--                            <div class="row">-->
-<!--                                <div class="mb-3 col-2">-->
-<!--                                    <label class="form-label">Vĩ độ</label>-->
-<!--                                    <input type="text" class="form-control" th:field="*{latitude}">-->
-<!--                                </div>-->
-<!--                                <div class="mb-3 col-2">-->
-<!--                                    <label class="form-label">Kinh độ</label>-->
-<!--                                    <input type="text" class="form-control" th:field="*{longitude}">-->
-<!--                                </div>-->
-<!--                                <div class="mb-3 col">-->
-<!--                                    <label class="form-label">Địa chỉ</label>-->
-<!--                                    <input type="text" class="form-control" th:field="*{address}">-->
-<!--                                </div>-->
-<!--                            </div>-->
-                            <div class=" row">
-                                <div class="col-lg-6">
-                                    <div class="mb-3">
-                                        <label class="form-label">Loại thiết bị Router</label>
-                                        <select class=" form-control "
-                                                aria-hidden="true" th:field="*{routerType}">
-                                            <option th:each="routerType:${routerTypes}" th:value="${routerType.id}"
-                                                    th:text="${routerType.name}"></option>
-
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="mb-3">
-                                        <label class="form-label">Loại thiết bị truyền dẫn</label>
-                                        <select class=" form-control "
-                                                aria-hidden="true" th:field="*{transmissionDeviceType}" >
-                                            <option th:each="transDevType:${transDevTypes}" th:value="${transDevType.id}"
-                                                    th:text="${transDevType.name}"></option>
-                                        </select>
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-6">
-                                    <div class="mb-3 form-group">
-                                        <label class="form-label mb-3">Trạng thái hoạt động</label>
-                                        <div class="form-check mb-3">
-                                            <input class="form-check-input " th:field="*{status}" type="radio" name="status" id="exampleRadios1" value="1" checked>
-                                            <label class="form-check-label" for="exampleRadios1">
-                                                Đang hoạt động
-                                            </label>
+                            <div class="card-body">
+                                <form action="/router/create" method="post" th:object="${router}">
+                                    <div class="row g3">
+                                        <div class="mb-3 col">
+                                            <label class="form-label fw-bold">Tên Router</label>
+                                            <input type="text" class="form-control" th:field="*{name}" th:required="required">
                                         </div>
-                                        <div class="form-check form-check-inline mb-3">
-                                            <input class="form-check-input" th:field="*{status}" type="radio" name="status" id="exampleRadios2" value="0">
-                                            <label class="form-check-label" for="exampleRadios2">
-                                               Không hoạt động
-                                            </label>
+                                        <div class="mb-3 col">
+                                            <label class="form-label fw-bold">Ip quản lý</label>
+                                            <input type="text" class="form-control" th:field="*{ip}" th:required="required">
+                                        </div>
+                                        <div class="mb-3 col">
+                                            <label class="form-label fw-bold">Site Id</label>
+                                            <input type="text" list="siteList" class="form-control" th:field="*{site}" th:required="required">
+                                            <datalist id="siteList">
+                                                <option th:each="site1:${siteList}" th:value="${site1.id}" th:text="${site1.siteId}">
+                                            </datalist>
                                         </div>
                                     </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="form-group col">
-                                    <label for="exampleFormControlTextarea1">Ghi chú</label>
-                                    <textarea th:field="*{note}" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-                                </div>
-                            </div>
-                            <button class="btn btn-primary">Thêm mới</button>
-                        </form>
+                                    <div class=" row g3">
+                                        <div class="col-lg-6">
+                                            <div class="mb-3">
+                                                <label class="form-label fw-bold">Loại thiết bị Router</label>
+                                                <select class=" form-control "
+                                                        aria-hidden="true" th:field="*{routerType}">
+                                                    <option th:each="routerType:${routerTypes}" th:value="${routerType.id}"
+                                                            th:text="${routerType.name}"></option>
 
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="mb-3">
+                                                <label class="form-label fw-bold">Loại thiết bị truyền dẫn</label>
+                                                <select class=" form-control "
+                                                        aria-hidden="true" th:field="*{transmissionDeviceType}" >
+                                                    <option th:each="transDevType:${transDevTypes}" th:value="${transDevType.id}"
+                                                            th:text="${transDevType.name}"></option>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-6">
+                                            <div class="mb-3 form-group">
+                                                <label class="form-label fw-bold mb-3">Trạng thái hoạt động</label>
+                                                <div class="form-check mb-3">
+                                                    <input class="form-check-input " th:field="*{status}" type="radio" name="status" id="statusRadios1"
+                                                           value="1" th:checked="true">
+                                                    <label class="form-check-label" for="statusRadios1">
+                                                        Đang hoạt động
+                                                    </label>
+                                                </div>
+                                                <div class="form-check form-check-inline mb-3">
+                                                    <input class="form-check-input" th:field="*{status}" type="radio" name="status" id="statusRadios2"
+                                                           value="0">
+                                                    <label class="form-check-label" for="statusRadios2">
+                                                        Không hoạt động
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row g3">
+                                        <div class="form-group col">
+                                            <label for="exampleFormControlTextarea1" class="form-label fw-bold">Ghi chú</label>
+                                            <textarea th:field="*{note}" class="form-control" id="exampleFormControlTextarea1" row g3s="3"></textarea>
+                                        </div>
+                                    </div>
+                                    <button class="btn btn-primary mt-3">Thêm mới</button>
+                                </form>
+                            </div>
+                        </div>
                     </div>
-                </div>
-            </div>
-            <!-- /.container-fluid -->
-
-        </div>
-        <!-- End of Main Content -->
-
-        <!-- Footer -->
-        <div th:replace="~{layout/layout::footer}"></div>
-        <!-- End of Footer -->
-
-    </div>
-    <!-- End of Content Wrapper -->
-
-</div>
-<!-- End of Page Wrapper -->
-
-<!-- Scroll to Top Button-->
-<a class="scroll-to-top rounded" href="#page-top">
-    <i class="fas fa-angle-up"></i>
-</a>
-
-<!-- Logout Modal-->
-<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-     aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">×</span>
-                </button>
-            </div>
-            <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
-            <div class="modal-footer">
-                <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                <a class="btn btn-primary" href="../login.html">Logout</a>
+                </main>
+                <div th:replace="~{layout/layout::footer}"></div>
             </div>
         </div>
-    </div>
-</div>
 
-<!-- Bootstrap core JavaScript-->
-<script src="/vendor/jquery/jquery.min.js"></script>
-<script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script th:inline="javascript">
+    </script>
+    <script>
+        function deleteSite(id, siteId) {
+            document.getElementById("delete-site-id").innerHTML = siteId;
+            document.getElementById("hidden-delete-id").value = id;
+        }
+    </script>
 
-<!-- Core plugin JavaScript-->
-<script src="/vendor/jquery-easing/jquery.easing.min.js"></script>
-
-<!-- Custom scripts for all pages-->
-<script src="/js/sb-admin-2.min.js"></script>
-
-<!-- Page level plugins -->
-<script src="/vendor/datatables/jquery.dataTables.min.js"></script>
-<script src="/vendor/datatables/dataTables.bootstrap4.min.js"></script>
-
-
-<!-- Page level custom scripts -->
-<script src="/js/demo/datatables-demo.js"></script>
-
-</body>
-
+    <div th:replace="~{layout/layout::js-libs}"></div>
+    </body>
 </html>

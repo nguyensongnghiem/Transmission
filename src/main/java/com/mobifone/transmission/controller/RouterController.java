@@ -92,10 +92,10 @@ public class RouterController {
     public String showEditForm(Model model, @PathVariable Long editId) {
         Router router = routerService.findById(editId);
         model.addAttribute("router",router);
-        return "/router-edit";
+        return "router/router-edit";
     }
 
-    @PostMapping("/router/edit")
+    @PostMapping("/edit")
     public String edit(@ModelAttribute Router router) {
         routerService.save(router);
         return "redirect:/router/list";

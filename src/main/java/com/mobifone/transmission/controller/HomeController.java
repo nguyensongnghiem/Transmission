@@ -36,7 +36,7 @@ public class HomeController {
     private ISiteTransmissionTypeService siteTransmissionTypeService;
     @InitBinder
     public void initBinder(WebDataBinder binder) {
-        // Định dạng chuỗi rỗng thành null
+        // Định dạng chuỗi rỗng thành null khi binding
         binder.registerCustomEditor(String.class, new StringTrimmerEditor(true));
     }
     @ModelAttribute("provinces")
@@ -57,6 +57,13 @@ public class HomeController {
     public int getTotalSites(){
         return siteService.findAll().size();
     }
+    @ModelAttribute("totalFoSites")
+    public int getTotalFoSites(){
+        int totalFoSites = siteTransmissionTypeService.findById(1).getSiteList().size()
+                + siteTransmissionTypeService.findById(2).getSiteList().size() ;
+        return totalFoSites;
+    }
+
     @ModelAttribute("totalRouters")
     public int getTotalRouter(){
         return routerService.findAll().size();

@@ -1,189 +1,130 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>Quản lý Truyền dẫn - MLMT</title>
+        <div th:replace="~{layout/layout::library}"></div>
+    </head>
+    <body class="sb-nav-fixed">
 
-<head>
-
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
-
-    <title>Danh sách Router</title>
-    <div th:replace="~{layout/layout::library}"></div>
-
-</head>
-
-<body id="page-top">
-
-<!-- Page Wrapper -->
-<div id="wrapper">
+    <!-- Topbar -->
+    <   <div th:replace="~{layout/layout::topbar}"></div>
+    <!-- End of Topbar -->
 
     <!-- Sidebar -->
-    <div th:replace="~{layout/layout::sidebar}"></div>
-    <!-- End of Sidebar -->
+        <div id="layoutSidenav">
+            <div th:replace="~{layout/layout::sidebar}"></div>
 
-    <!-- Content Wrapper -->
-    <div id="content-wrapper" class="d-flex flex-column">
+            <div id="layoutSidenav_content">
+                <main>
+                    <div class="container-fluid px-4">
+                        <h1 class="mt-4">Danh sách router</h1>
+                        <ol class="breadcrumb mb-4">
+                            <li class="breadcrumb-item active"><a href="/">Tổng quan</a></li>
+                            <li class="breadcrumb-item active">Thiết bị</li>
 
-        <!-- Main Content -->
-        <div id="content">
+                        </ol>
 
-            <!-- Topbar -->
-            <div th:replace="~{layout/layout::topbar}"></div>
-            <!-- End of Topbar -->
-
-            <!-- Begin Page Content -->
-            <div class="container-fluid">
-
-                <!-- Page Heading -->
-                <!-- DataTales Example -->
-                <div class="card shadow mb-4">
-                    <div class="card-header py-3">
-                        <h6 class="m-0 font-weight-bold text-primary">Danh sách Router <span class="badge badge-pill badge-primary" th:text="${routerList.size()}"></span></h6>
-                    </div>
-                    <div class="card-body">
-                        <div class="table-responsive  ">
-                            <table class="table table-bordered table-striped" id="dataTable" width="100%" cellspacing="0">
-                                <thead class="thead-dark">
-                                <tr>
-                                    <th>Tỉnh</th>
-                                    <th>Site ID</th>
-                                    <th>Tên router</th>
-                                    <th>Loại router</th>
-                                    <th>Loại thiết bị TD</th>
-                                    <th>Ip quản lý</th>
-                                    <th>Trạng thái hoạt động</th>
-                                    <th>Ghi chú</th>
-                                    <th>Tác vụ</th>
-                                </tr>
-                                </thead>
-                                <tfoot>
-                                <tr>
-                                    <th>Tỉnh</th>
-                                    <th>Site ID</th>
-                                    <th>Tên router</th>
-                                    <th>Loại router</th>
-                                    <th>Loại thiết bị TD</th>
-                                    <th>Ip quản lý</th>
-                                    <th>Trạng thái hoạt động</th>
-                                    <th>Ghi chú</th>
-                                    <th>Tác vụ</th>
-                                </tr>
-                                </tfoot>
-                                <tbody>
-                                <tr th:each="router:${routerList}">
-                                    <td th:text="${router.site.province.name}">
-                                    <td th:text="${router.site.siteId}">
-                                    <td th:text="${router.name}">
-                                    <td th:text="${router.routerType?.name}">
-                                    <td th:text="${router.transmissionDeviceType.name}">
-                                    <td th:text="${router.ip}">
-                                    <td th:text="${router.status}?'Đang hoạt động':'Không hoạt động'">
-                                    <td th:text="${router.note}">
-                                    <td>
-                                    <div class="btn-group btn-group-sm" role="group" aria-label="Basic mixed styles example">
-                                        <a th:href="@{'/router/edit/'+${router.id}}" type="button" class="btn btn-warning">Sửa</a>
-                                        <button th:data-id="${router.id}" th:data-router-name="${router.name}"
-                                                th:onclick="deleteRouter(this.getAttribute('data-id'),this.getAttribute('data-router-name'))"
-                                                type="button" class="btn btn-danger" data-toggle="modal"
-                                                data-target="#deleteModal">
-                                            Xóa
-                                        </button>
-                                    </div>
-                                    </td>
-                                </tr>
-                                </tbody>
-                            </table>
+                        <div class="card mb-4">
+                            <div class="card-header">
+                                <i class="fas fa-table me-1"></i>
+                                Danh sách thiết bị
+                            </div>
+                            <div class="card-body">
+                                <table id="routerDatatables" class="table table-striped table-sm">
+                                    <thead >
+                                        <tr>
+                                            <th>Tỉnh</th>
+                                            <th>Site ID</th>
+                                            <th>Tên router</th>
+                                            <th>Loại router</th>
+                                            <th>Loại thiết bị TD</th>
+                                            <th>Ip quản lý</th>
+                                            <th>Trạng thái hoạt động</th>
+                                            <th>Ghi chú</th>
+                                            <th>Tác vụ</th>
+                                        </tr>
+                                    </thead>
+                                    <tfoot>
+                                        <tr>
+                                            <th>Tỉnh</th>
+                                            <th>Site ID</th>
+                                            <th>Tên router</th>
+                                            <th>Loại router</th>
+                                            <th>Loại thiết bị TD</th>
+                                            <th>Ip quản lý</th>
+                                            <th>Trạng thái hoạt động</th>
+                                            <th>Ghi chú</th>
+                                            <th>Tác vụ</th>
+                                        </tr>
+                                    </tfoot>
+                                    <tbody><tr th:each="router:${routerList}">
+                                        <td th:text="${router.site.province.name}">
+                                        <td th:text="${router.site.siteId}">
+                                        <td th:text="${router.name}">
+                                        <td th:text="${router.routerType?.name}">
+                                        <td th:text="${router.transmissionDeviceType.name}">
+                                        <td th:text="${router.ip}">
+                                        <td th:text="${router.status}?'Đang hoạt động':'Không hoạt động'">
+                                        <td th:text="${router.note}">
+                                        <td>
+                                            <div class="btn-group btn-group-sm" role="group" aria-label="Basic mixed styles example">
+                                                <a th:href="@{'/router/edit/'+${router.id}}" type="button" class="btn btn-warning">Sửa</a>
+                                                <button th:data-id="${router.id}" th:data-router-name="${router.name}"
+                                                        th:onclick="deleteRouter(this.getAttribute('data-id'),this.getAttribute('data-router-name'))"
+                                                        type="button" class="btn btn-danger" data-bs-toggle="modal"
+                                                        data-bs-target="#deleteModal">Xóa
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr></tbody>
+                                </table>
+                            </div>
                         </div>
-<!--                        <div class="row justify-content-between">-->
-<!--                            <div class="col" th:text="'Showing page ' + ${currentPage} + ' of ' + ${totalPages}"></div>-->
-<!--                            <div class="col">-->
-<!--                                <span th:each="i:${#numbers.sequence(1,totalPages)}">-->
-<!--                                    <a th:href="@{'/site/list/'+${i}}" th:text="${i}"></a> &nbsp; &nbsp;-->
-<!--                                </span>-->
-<!--                            </div>-->
-<!--                        </div>-->
-
                     </div>
-                </div>
-
+                </main>
+                <div th:replace="~{layout/layout::footer}"></div>
             </div>
-
-            <!-- /.container-fluid -->
-
         </div>
-        <!-- End of Main Content -->
 
-        <!-- Footer -->
-        <div th:replace="~{layout/layout::footer}"></div>
-        <!-- End of Footer -->
-
-    </div>
-    <!-- End of Content Wrapper -->
-
-</div>
-<!-- End of Page Wrapper -->
-
-<!-- Scroll to Top Button-->
-<a class="scroll-to-top rounded" href="#page-top">
-    <i class="fas fa-angle-up"></i>
-</a>
-
-<!-- Logout Modal-->
-<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-     aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">×</span>
-                </button>
-            </div>
-            <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
-            <div class="modal-footer">
-                <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                <a class="btn btn-primary" href="../login.html">Logout</a>
+    <!-- MODAL TÁC VỤ XÓA-->
+    <<!-- Modal -->
+    <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form action="/router/delete" method="post">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="deleteModalLabel">Xác nhận xóa dữ liệu !</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="modal-body">
+                            Bạn có muốn thực hiện xóa router <span style="color: red" id="delete-name"></span> ?
+                        </div>
+                        <input name="deleteId" type="hidden" id="hidden-delete-id">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                        <button type="submit" class="btn btn-danger">Xóa dữ liệu</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
-</div>
+    <script th:inline="javascript">
+    </script>
 
-<!-- MODAL TÁC VỤ XÓA-->
-<<!-- Modal -->
-<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel"
-     aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <form action="/router/delete" method="post">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="deleteModalLabel">Xác nhận xóa dữ liệu !</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    Bạn có muốn thực hiện xóa router <span style="color: red" id="delete-router-name"></span> ?
-                </div>
-                <input name="deleteId" type="hidden" id="hidden-delete-id">
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
-                    <button type="submit" class="btn btn-primary">Đồng ý</button>
-                </div>
-            </form>
+    <script>
+        function deleteRouter(id, name) {
+            document.getElementById("delete-name").innerHTML = name;
+            document.getElementById("hidden-delete-id").value = id;
+        }
+    </script>
 
-        </div>
-    </div>
-</div>
-<!-- Bootstrap and JavaScript libs -->
-<div th:replace="~{layout/layout::js-libs}"></div>
-<script>
-    function deleteRouter(id, routerName) {
-        document.getElementById("delete-router-name").innerHTML = routerName;
-        document.getElementById("hidden-delete-id").value = id;
-    }
-</script>
-</body>
-
+    <div th:replace="~{layout/layout::js-libs}"></div>
+    </body>
 </html>

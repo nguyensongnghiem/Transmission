@@ -7,5 +7,6 @@ import java.util.List;
 
 public interface ISiteTransmissionTypeService {
     public List<SiteTransmissionType> findAll();
+    public SiteTransmissionType findById(int id);
     public boolean save(SiteTransmissionType siteTransmissionType);
 }

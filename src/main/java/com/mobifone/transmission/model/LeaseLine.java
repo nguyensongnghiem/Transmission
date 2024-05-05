@@ -1,6 +1,8 @@
 package com.mobifone.transmission.model;
 
 import jakarta.persistence.*;
+import lombok.Data;
+
 
 @Entity
 public class LeaseLine {
@@ -11,8 +13,9 @@ public class LeaseLine {
     private float cost;
     private String note;
     private int quantity;
-    private String connectType; // Kênh gom, Lasmile, Backup, Dự phòng
-
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "leaseLineConnectType",nullable = false)
+    private LeaseLineConnectType leaseLineConnectType;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "transmissionOwnerId",nullable = false)
     private TransmissionOwner transmissionOwner;
@@ -32,12 +35,12 @@ public class LeaseLine {
         this.quantity = quantity;
     }
 
-    public String getConnectType() {
-        return connectType;
+    public LeaseLineConnectType getLeaseLineConnectType() {
+        return leaseLineConnectType;
     }
 
-    public void setConnectType(String connectType) {
-        this.connectType = connectType;
+    public void setLeaseLineConnectType(LeaseLineConnectType leaseLineConnectType) {
+        this.leaseLineConnectType = leaseLineConnectType;
     }
 
     public Long getId() {
