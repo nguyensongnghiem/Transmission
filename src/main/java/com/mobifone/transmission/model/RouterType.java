@@ -1,9 +1,15 @@
 package com.mobifone.transmission.model;
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.Set;
 
+@Setter
+@Getter
 @Entity
+@NoArgsConstructor
 public class RouterType {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -15,38 +21,5 @@ public class RouterType {
 
     @OneToMany(mappedBy = "routerType",cascade = CascadeType.ALL)
     private Set<Router> routers;
-    public RouterType() {
-    }
 
-    public Set<Router> getRouters() {
-        return routers;
-    }
-
-    public void setRouters(Set<Router> routers) {
-        this.routers = routers;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Vendor getVendor() {
-        return vendor;
-    }
-
-    public void setVendor(Vendor vendor) {
-        this.vendor = vendor;
-    }
 }

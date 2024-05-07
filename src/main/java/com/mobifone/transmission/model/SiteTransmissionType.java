@@ -1,10 +1,16 @@
 package com.mobifone.transmission.model;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.List;
 import java.util.Set;
 
+@Getter
+@Setter
+@NoArgsConstructor
 @Entity
 public class SiteTransmissionType {
     @Id
@@ -14,30 +20,4 @@ public class SiteTransmissionType {
     @OneToMany(mappedBy = "siteTransmissionType", cascade = CascadeType.ALL)
     private List<Site> siteList;
 
-    public SiteTransmissionType() {
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public List<Site> getSiteList() {
-        return siteList;
-    }
-
-    public void setSiteList(List<Site> siteList) {
-        this.siteList = siteList;
-    }
 }

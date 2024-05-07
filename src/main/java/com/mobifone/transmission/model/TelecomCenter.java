@@ -1,9 +1,16 @@
 package com.mobifone.transmission.model;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import java.util.Set;
 
+@Setter
+@Getter
 @Entity
+@NoArgsConstructor
 public class TelecomCenter {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -11,30 +18,5 @@ public class TelecomCenter {
     private String name;
     @OneToMany(mappedBy = "telecomCenter",cascade = CascadeType.ALL)
     private Set<Province> provinces;
-    public TelecomCenter() {
-    }
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Set<Province> getProvinces() {
-        return provinces;
-    }
-
-    public void setProvinces(Set<Province> provinces) {
-        this.provinces = provinces;
-    }
 }
