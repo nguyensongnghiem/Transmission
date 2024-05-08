@@ -7,11 +7,13 @@ import jakarta.persistence.Id;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.SoftDelete;
 
 @NoArgsConstructor
 @Getter
 @Setter
 @Entity
+@SoftDelete
 public class LeaseLineConnectType {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

@@ -27,9 +27,7 @@
                             <li class="breadcrumb-item active"><a href="/">Tổng quan</a></li>
                             <li class="breadcrumb-item active"><a href="/router/list">Thiết bị</a></li>
                             <li class="breadcrumb-item active">Thêm mới</li>
-
                         </ol>
-
                         <div class="card mb-4">
                             <div class="card-header">
                                 <i class="fas fa-edit me-1"></i>
@@ -74,26 +72,6 @@
                                                     <option th:each="transDevType:${transDevTypes}" th:value="${transDevType.id}"
                                                             th:text="${transDevType.name}"></option>
                                                 </select>
-                                            </div>
-                                        </div>
-
-                                        <div class="col-lg-6">
-                                            <div class="mb-3 form-group">
-                                                <label class="form-label fw-bold mb-3">Trạng thái hoạt động</label>
-                                                <div class="form-check mb-3">
-                                                    <input class="form-check-input " th:field="*{status}" type="radio" name="status" id="statusRadios1"
-                                                           value="1" th:checked="true">
-                                                    <label class="form-check-label" for="statusRadios1">
-                                                        Đang hoạt động
-                                                    </label>
-                                                </div>
-                                                <div class="form-check form-check-inline mb-3">
-                                                    <input class="form-check-input" th:field="*{status}" type="radio" name="status" id="statusRadios2"
-                                                           value="0">
-                                                    <label class="form-check-label" for="statusRadios2">
-                                                        Không hoạt động
-                                                    </label>
-                                                </div>
                                             </div>
                                         </div>
                                     </div>

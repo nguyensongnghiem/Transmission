@@ -48,7 +48,6 @@
                                 <th>Đơn vị sở hữu</th>
                                 <th>Loại truyền dẫn trạm</th>
                                 <th>Đơn vị sở hữu TD</th>
-                                <th>Trạng thái hoạt động</th>
                                 <th>Ghi chú</th>
                                 <th>Tác vụ</th>
                             </tr>
@@ -64,7 +63,6 @@
                                 <th>Đơn vị sở hữu</th>
                                 <th>Loại truyền dẫn trạm</th>
                                 <th>Đơn vị sở hữu TD</th>
-                                <th>Trạng thái hoạt động</th>
                                 <th>Ghi chú</th>
                                 <th>Tác vụ</th>
                             </tr>
@@ -80,7 +78,6 @@
                                 <td th:text="${site.getSiteOwner()!=null}?${site.getSiteOwner().getName()}:''">
                                 <td th:text="${site.getSiteTransmissionType()!=null}?${site.getSiteTransmissionType().getName()}:''">
                                 <td th:text="${site.getTransmissionOwner()!=null}?${site.getTransmissionOwner().getName()}:'N/A'">
-                                <td th:text="${site.status}?'Đang hoạt động':'Không hoạt động'">
                                 <td th:text="${site.note}">
                                 <td>
                                     <div class="btn-group btn-group-sm" role="group">
