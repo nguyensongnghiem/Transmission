@@ -68,7 +68,7 @@ public class HomeController {
         List<LeaseLine> leaseLines = leaseLineService.findAll();
         int cost =0 ;
         for (LeaseLine ll : leaseLines) {
-            cost += ll.getCost();
+            cost += ll.getCost()*ll.getQuantity();
         }
         return cost;
     }
