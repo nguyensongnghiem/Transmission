@@ -22,76 +22,59 @@
             <div id="layoutSidenav_content">
                 <main>
                     <div class="container-fluid px-4">
-                        <h1 class="mt-4">Sửa thông tin thiết bị</h1>
+                        <h1 class="mt-4">Sửa thông tin kênh thuê</h1>
                         <ol class="breadcrumb mb-4">
                             <li class="breadcrumb-item active"><a href="/">Tổng quan</a></li>
-                            <li class="breadcrumb-item active"><a href="/site/list">Thiết bị</a></li>
+                            <li class="breadcrumb-item active"><a href="/site/list">Kênh thuê</a></li>
                             <li class="breadcrumb-item active">Sửa đổi</li>
                         </ol>
 
                         <div class="card mb-4">
                             <div class="card-header">
                                 <i class="fas fa-edit me-1"></i>
-                                Sửa đổi thông tin thiết bị
+                                Sửa đổi thông tin kênh thuê
                             </div>
                             <div class="card-body">
-                                <form action="/router/edit" method="post" th:object="${router}">
+                                <form action="/router/edit" method="post" th:object="${leaseLine}">
                                     <div class="row">
                                         <input type="text" class="form-control" th:field="*{id}" th:value="*{id}" hidden>
                                         <div class="mb-3 col">
-                                            <label class="form-label fw-bold">Tên Router</label>
-                                            <input type="text" class="form-control" th:field="*{name}" th:value="*{name}">
-                                        </div>
-                                        <div class="mb-3 col">
-                                            <label class="form-label fw-bold">Ip quản lý</label>
-                                            <input type="text" class="form-control" th:field="*{ip}" th:value="*{ip}">
-                                        </div>
-                                        <div class="mb-3 col">
-                                            <label class="form-label fw-bold">Site Id</label>
-                                            <input type="text" list="siteList" class="form-control" th:field="*{site}" th:value="*{site.id}">
+                                            <label class="form-label fw-bold">Site ID</label>
+                                            <input type="text" list="siteList" class="form-control" th:field="*{speed}" th:value="*{speed}">
                                             <datalist id="siteList">
                                                 <option th:each="site1:${siteList}" th:value="${site1.id}" th:text="${site1.siteId}">
                                             </datalist>
                                         </div>
-                                    </div>
-                                    <div class=" row">
                                         <div class="col-lg-6">
                                             <div class="mb-3">
-                                                <label class="form-label fw-bold">Loại thiết bị Router</label>
+                                                <label class="form-label fw-bold">Nhà cung cấp</label>
                                                 <select class=" form-control "
-                                                        aria-hidden="true" th:field="*{routerType}">
-                                                    <option th:value="null" th:selected="*{routerType==null}"
-                                                    >-- Chọn loại thiết bị Router --</option>
-                                                    <option th:each="routerType1:${routerTypes}" th:value="${routerType1.id}" th:selected="(${routerType1?.id} == *{routerType?.id})"
-                                                            th:text="${routerType1.name}"></option>
-
+                                                        aria-hidden="true" th:field="*{transmissionOwner}">
+                                                    <option th:each="transOwner1:${transOwners}" th:value="${transOwner1.id}" th:selected="(${transOwner1?.id} == *{transmissionOwner?.id})"
+                                                            th:text="${transOwner1.name}"></option>
                                                 </select>
                                             </div>
                                         </div>
                                         <div class="col-lg-6">
                                             <div class="mb-3">
-                                                <label class="form-label fw-bold">Loại thiết bị truyền dẫn</label>
+                                                <label class="form-label fw-bold">Loại kết nối</label>
                                                 <select class=" form-control "
-                                                        aria-hidden="true" th:field="*{transmissionDeviceType}" >
-                                                    <option th:each="transDevType:${transDevTypes}" th:value="${transDevType.id}" th:selected="(${transDevType?.id} == *{transmissionDeviceType?.id})"
-                                                            th:text="${transDevType.name}"></option>
+                                                        aria-hidden="true" th:field="*{leaseLineConnectType}">
+                                                    <option th:each="leaseLineConnectType1:${leaseLineConnectTypes}" th:value="${leaseLineConnectType1.id}" th:selected="(${leaseLineConnectType1?.id} == *{leaseLineConnectType?.id})"
+                                                            th:text="${leaseLineConnectType1.name}"></option>
                                                 </select>
                                             </div>
                                         </div>
-
-<!--                                        <div class="col-lg-6">-->
-<!--                                            <div class="mb-3 form-group">-->
-<!--                                                <label class="form-label fw-bold mb-3">Trạng thái hoạt động</label>-->
-<!--                                                <div class="form-check mb-3">-->
-<!--                                                    <input class="form-check-input " th:field="*{status}"  th:checked="(*{status}=='1')" type="radio" name="status" id="exampleRadios1" value="1">-->
-<!--                                                    <label class="form-check-label" for="exampleRadios1">-->
-<!--                                                        Đang hoạt động-->
-<!--                                                    </label>-->
-<!--                                                </div>-->
-
-<!--                                            </div>-->
-<!--                                        </div>-->
+                                        <div class="mb-3 col">
+                                            <label class="form-label fw-bold">Băng thông</label>
+                                            <input type="number" class="form-control" th:field="*{speed}" th:value="*{speed}">
+                                        </div>
+                                        <div class="mb-3 col">
+                                            <label class="form-label fw-bold">Đơn giá thuê (VAT)</label>
+                                            <input type="number" class="form-control" th:field="*{cost}" th:value="*{cost}">
+                                        </div>
                                     </div>
+
                                     <div class="row">
                                         <div class="form-group col">
                                             <label for="exampleFormControlTextarea1">Ghi chú</label>

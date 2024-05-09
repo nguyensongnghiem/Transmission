@@ -22,48 +22,44 @@
             <div id="layoutSidenav_content">
                 <main>
                     <div class="container-fluid px-4">
-                        <h1 class="mt-4">Sửa thông tin thiết bị</h1>
+                        <h1 class="mt-4">Thêm mới thiết bị</h1>
                         <ol class="breadcrumb mb-4">
                             <li class="breadcrumb-item active"><a href="/">Tổng quan</a></li>
-                            <li class="breadcrumb-item active"><a href="/site/list">Thiết bị</a></li>
-                            <li class="breadcrumb-item active">Sửa đổi</li>
+                            <li class="breadcrumb-item active"><a href="/router/list">Thiết bị</a></li>
+                            <li class="breadcrumb-item active">Thêm mới</li>
                         </ol>
-
                         <div class="card mb-4">
                             <div class="card-header">
                                 <i class="fas fa-edit me-1"></i>
-                                Sửa đổi thông tin thiết bị
+                                Thêm mới thiết bị
                             </div>
                             <div class="card-body">
-                                <form action="/router/edit" method="post" th:object="${router}">
-                                    <div class="row">
-                                        <input type="text" class="form-control" th:field="*{id}" th:value="*{id}" hidden>
+                                <form action="/router/create" method="post" th:object="${router}">
+                                    <div class="row g3">
                                         <div class="mb-3 col">
                                             <label class="form-label fw-bold">Tên Router</label>
-                                            <input type="text" class="form-control" th:field="*{name}" th:value="*{name}">
+                                            <input type="text" class="form-control" th:field="*{name}" th:required="required">
                                         </div>
                                         <div class="mb-3 col">
                                             <label class="form-label fw-bold">Ip quản lý</label>
-                                            <input type="text" class="form-control" th:field="*{ip}" th:value="*{ip}">
+                                            <input type="text" class="form-control" th:field="*{ip}" th:required="required">
                                         </div>
                                         <div class="mb-3 col">
                                             <label class="form-label fw-bold">Site Id</label>
-                                            <input type="text" list="siteList" class="form-control" th:field="*{site}" th:value="*{site.id}">
+                                            <input type="text" list="siteList" class="form-control" th:field="*{site}" th:required="required">
                                             <datalist id="siteList">
                                                 <option th:each="site1:${siteList}" th:value="${site1.id}" th:text="${site1.siteId}">
                                             </datalist>
                                         </div>
                                     </div>
-                                    <div class=" row">
+                                    <div class=" row g3">
                                         <div class="col-lg-6">
                                             <div class="mb-3">
                                                 <label class="form-label fw-bold">Loại thiết bị Router</label>
                                                 <select class=" form-control "
                                                         aria-hidden="true" th:field="*{routerType}">
-                                                    <option th:value="null" th:selected="*{routerType==null}"
-                                                    >-- Chọn loại thiết bị Router --</option>
-                                                    <option th:each="routerType1:${routerTypes}" th:value="${routerType1.id}" th:selected="(${routerType1?.id} == *{routerType?.id})"
-                                                            th:text="${routerType1.name}"></option>
+                                                    <option th:each="routerType:${routerTypes}" th:value="${routerType.id}"
+                                                            th:text="${routerType.name}"></option>
 
                                                 </select>
                                             </div>
@@ -73,32 +69,19 @@
                                                 <label class="form-label fw-bold">Loại thiết bị truyền dẫn</label>
                                                 <select class=" form-control "
                                                         aria-hidden="true" th:field="*{transmissionDeviceType}" >
-                                                    <option th:each="transDevType:${transDevTypes}" th:value="${transDevType.id}" th:selected="(${transDevType?.id} == *{transmissionDeviceType?.id})"
+                                                    <option th:each="transDevType:${transDevTypes}" th:value="${transDevType.id}"
                                                             th:text="${transDevType.name}"></option>
                                                 </select>
                                             </div>
                                         </div>
-
-<!--                                        <div class="col-lg-6">-->
-<!--                                            <div class="mb-3 form-group">-->
-<!--                                                <label class="form-label fw-bold mb-3">Trạng thái hoạt động</label>-->
-<!--                                                <div class="form-check mb-3">-->
-<!--                                                    <input class="form-check-input " th:field="*{status}"  th:checked="(*{status}=='1')" type="radio" name="status" id="exampleRadios1" value="1">-->
-<!--                                                    <label class="form-check-label" for="exampleRadios1">-->
-<!--                                                        Đang hoạt động-->
-<!--                                                    </label>-->
-<!--                                                </div>-->
-
-<!--                                            </div>-->
-<!--                                        </div>-->
                                     </div>
-                                    <div class="row">
+                                    <div class="row g3">
                                         <div class="form-group col">
-                                            <label for="exampleFormControlTextarea1">Ghi chú</label>
-                                            <textarea th:field="*{note}" th:value="*{note}" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                                            <label for="exampleFormControlTextarea1" class="form-label fw-bold">Ghi chú</label>
+                                            <textarea th:field="*{note}" class="form-control" id="exampleFormControlTextarea1" row g3s="3"></textarea>
                                         </div>
                                     </div>
-                                    <button class="btn btn-warning mt-3">Cập nhật</button>
+                                    <button class="btn btn-primary mt-3">Thêm mới</button>
                                 </form>
                             </div>
                         </div>
@@ -109,6 +92,12 @@
         </div>
 
     <script th:inline="javascript">
+    </script>
+    <script>
+        function deleteSite(id, siteId) {
+            document.getElementById("delete-site-id").innerHTML = siteId;
+            document.getElementById("hidden-delete-id").value = id;
+        }
     </script>
 
     <div th:replace="~{layout/layout::js-libs}"></div>

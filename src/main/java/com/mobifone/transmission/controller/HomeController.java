@@ -26,10 +26,10 @@ public class HomeController {
     private ISiteOwnerService siteOwnerService;
     @Autowired
     private IRouterService routerService;
-    @Autowired
-    private IRouterTypeService routerTypeService;
-    @Autowired
-    private ITransmissionDeviceTypeService transmissionDeviceTypeService;
+//    @Autowired
+//    private IRouterTypeService routerTypeService;
+//    @Autowired
+//    private ITransmissionDeviceTypeService transmissionDeviceTypeService;
     @Autowired
     private ITransmissionOwnerService transmissionOwnerService;
     @Autowired
@@ -63,11 +63,24 @@ public class HomeController {
                 + siteTransmissionTypeService.findById(2).getSiteList().size() ;
         return totalFoSites;
     }
+    @ModelAttribute("totalLeaseLineCostPerMonth")
+    public int getTotalLeaseLineCostPerMonth(){
+        List<LeaseLine> leaseLines = leaseLineService.findAll();
+        int cost =0 ;
+        for (LeaseLine ll : leaseLines) {
+            cost += ll.getCost();
+        }
+        return cost;
+    }
 
     @ModelAttribute("totalRouters")
     public int getTotalRouter(){
         return routerService.findAll().size();
     }
+    @Autowired
+    private ILeaseLineService leaseLineService;
+    @Autowired
+    private ILeaseLineConnectTypeService leaseLineConnectTypeService;
 
     @GetMapping("/")
     public String home(Model model) {
@@ -110,5 +123,6 @@ public class HomeController {
         }
         return siteNumber;
     }
+
 
 }

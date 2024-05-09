@@ -36,50 +36,50 @@
                         Danh sách trạm
                     </div>
                     <div class="card-body">
-                        <table id="siteDatatables" class="table table-striped" style="width:100%">
+                        <table id="siteDatatables" class="table table-bordered table-striped" style="width:100%">
                             <thead>
                             <tr>
-                                <th>Tỉnh</th>
-                                <th>Site ID</th>
-                                <th>Tên trạm</th>
-                                <th>Vĩ độ</th>
-                                <th>Kinh độ</th>
-                                <th>Địa chỉ</th>
-                                <th>Đơn vị sở hữu</th>
-                                <th>Loại truyền dẫn trạm</th>
-                                <th>Đơn vị sở hữu TD</th>
-                                <th>Ghi chú</th>
-                                <th>Tác vụ</th>
+                                <th  class="text-center"  >Tỉnh</th>
+                                <th class="text-center" >Site ID</th>
+                                <th class="text-center" >Tên trạm</th>
+                                <th class="text-center" >Vĩ độ</th>
+                                <th class="text-center" >Kinh độ</th>
+                                <th class="text-center" >Địa chỉ</th>
+                                <th class="text-center" >Đơn vị sở hữu</th>
+                                <th class="text-center" >Loại truyền dẫn trạm</th>
+                                <th class="text-center" >Đơn vị sở hữu TD</th>
+                                <th class="text-center" >Ghi chú</th>
+                                <th class="text-center" >Tác vụ</th>
                             </tr>
                             </thead>
                             <tfoot>
                             <tr>
-                                <th>Tỉnh</th>
-                                <th>Site ID</th>
-                                <th>Tên trạm</th>
-                                <th>Vĩ độ</th>
-                                <th>Kinh độ</th>
-                                <th>Địa chỉ</th>
-                                <th>Đơn vị sở hữu</th>
-                                <th>Loại truyền dẫn trạm</th>
-                                <th>Đơn vị sở hữu TD</th>
-                                <th>Ghi chú</th>
-                                <th>Tác vụ</th>
+                                <th class="text-center" >Tỉnh</th>
+                                <th class="text-center" >Site ID</th>
+                                <th class="text-center" >Tên trạm</th>
+                                <th class="text-center" >Vĩ độ</th>
+                                <th class="text-center" >Kinh độ</th>
+                                <th class="text-center" >Địa chỉ</th>
+                                <th class="text-center" >Đơn vị sở hữu</th>
+                                <th class="text-center" >Loại truyền dẫn trạm</th>
+                                <th class="text-center" >Đơn vị sở hữu TD</th>
+                                <th class="text-center" >Ghi chú</th>
+                                <th class="text-center" >Tác vụ</th>
                             </tr>
                             </tfoot>
                             <tbody>
                             <tr th:each="site:${siteList}">
-                                <td th:text="${site.getProvince().getName()}">
-                                <td th:text="${site.siteId}">
-                                <td th:text="${site.siteName}">
-                                <td th:text="${site.latitude}">
-                                <td th:text="${site.longitude}">
-                                <td th:text="${site.address}">
-                                <td th:text="${site.getSiteOwner()!=null}?${site.getSiteOwner().getName()}:''">
-                                <td th:text="${site.getSiteTransmissionType()!=null}?${site.getSiteTransmissionType().getName()}:''">
-                                <td th:text="${site.getTransmissionOwner()!=null}?${site.getTransmissionOwner().getName()}:'N/A'">
-                                <td th:text="${site.note}">
-                                <td>
+                                <td  class="text-center" th:text="${site.getProvince().getName()}">
+                                <td  class="text-center" th:text="${site.siteId}">
+                                <td  class="text-center" th:text="${site.siteName}">
+                                <td  class="text-center" th:text="${site.latitude}">
+                                <td  class="text-center" th:text="${site.longitude}">
+                                <td  class="text-center" th:text="${site.address}">
+                                <td  class="text-center" th:text="${site.getSiteOwner()!=null}?${site.getSiteOwner().getName()}:''">
+                                <td  class="text-center" th:text="${site.getSiteTransmissionType()!=null}?${site.getSiteTransmissionType().getName()}:''">
+                                <td  class="text-center" th:text="${site.getTransmissionOwner()!=null}?${site.getTransmissionOwner().getName()}:'N/A'">
+                                <td  class="text-center" th:text="${site.note}">
+                                <td class="text-center" >
                                     <div class="btn-group btn-group-sm" role="group">
                                         <a th:href="@{'/site/edit/'+${site.id}}" type="button" class="btn btn-warning">Sửa</a>
                                         <button th:data-id="${site.id}" th:data-site-id="${site.siteId}"

@@ -12,6 +12,6 @@ public interface IRouterService {
     public boolean save(Router router);
     public void deleteById(Long id);
 
-    public Router findById(Long editId);
+    public Router findById(Long id);
     public boolean update(Router router);
 }
