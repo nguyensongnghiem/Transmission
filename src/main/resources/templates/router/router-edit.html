@@ -24,8 +24,8 @@
                     <div class="container-fluid px-4">
                         <h1 class="mt-4">Sửa thông tin thiết bị</h1>
                         <ol class="breadcrumb mb-4">
-                            <li class="breadcrumb-item active"><a href="/">Tổng quan</a></li>
-                            <li class="breadcrumb-item active"><a href="/site/list">Thiết bị</a></li>
+                            <li class="breadcrumb-item active"><a th:href="@{/}">Tổng quan</a></li>
+                            <li class="breadcrumb-item active"><a th:href="@{/site/list}">Thiết bị</a></li>
                             <li class="breadcrumb-item active">Sửa đổi</li>
                         </ol>
 
@@ -35,7 +35,7 @@
                                 Sửa đổi thông tin thiết bị
                             </div>
                             <div class="card-body">
-                                <form action="/router/edit" method="post" th:object="${router}">
+                                <form th:action="@{/router/edit}" method="post" th:object="${router}">
                                     <div class="row">
                                         <input type="text" class="form-control" th:field="*{id}" th:value="*{id}" hidden>
                                         <div class="mb-3 col">

@@ -24,8 +24,8 @@
                     <div class="container-fluid px-4">
                         <h1 class="mt-4">Thêm mới thiết bị</h1>
                         <ol class="breadcrumb mb-4">
-                            <li class="breadcrumb-item active"><a href="/">Tổng quan</a></li>
-                            <li class="breadcrumb-item active"><a href="/router/list">Thiết bị</a></li>
+                            <li class="breadcrumb-item active"><a th:href="@{/}">Tổng quan</a></li>
+                            <li class="breadcrumb-item active"><a th:href="@{/router/list}">Thiết bị</a></li>
                             <li class="breadcrumb-item active">Thêm mới</li>
                         </ol>
                         <div class="card mb-4">
@@ -34,7 +34,7 @@
                                 Thêm mới thiết bị
                             </div>
                             <div class="card-body">
-                                <form action="/router/create" method="post" th:object="${router}">
+                                <form th:action="@{/router/create}" method="post" th:object="${router}">
                                     <div class="row g3">
                                         <div class="mb-3 col">
                                             <label class="form-label fw-bold">Tên Router</label>

@@ -24,8 +24,8 @@
                     <div class="container-fluid px-4">
                         <h1 class="mt-4">Sửa thông tin kênh thuê</h1>
                         <ol class="breadcrumb mb-4">
-                            <li class="breadcrumb-item active"><a href="/">Tổng quan</a></li>
-                            <li class="breadcrumb-item active"><a href="/site/list">Kênh thuê</a></li>
+                            <li class="breadcrumb-item active"><a th:href="@{/}">Tổng quan</a></li>
+                            <li class="breadcrumb-item active"><a th:href="@{/site/list}">Kênh thuê</a></li>
                             <li class="breadcrumb-item active">Sửa đổi</li>
                         </ol>
 
@@ -35,7 +35,7 @@
                                 Sửa đổi thông tin kênh thuê
                             </div>
                             <div class="card-body">
-                                <form action="/leaseline/edit" method="post" th:object="${leaseLine}">
+                                <form th:action="@{/leaseline/edit}" method="post" th:object="${leaseLine}">
                                     <div class="row">
                                         <input type="text" class="form-control" th:field="*{id}" th:value="*{id}" hidden>
                                         <div class="mb-3 col">

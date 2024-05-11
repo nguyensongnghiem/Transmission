@@ -34,7 +34,7 @@
                                         <h3 class="card-text text-end fs-1" th:text="${totalSites}"></h3>
                                     </div>
                                     <div class="card-footer d-flex align-items-center justify-content-between">
-                                        <a class="small text-dark stretched-link" href="/site/list">Xem chi tiết</a>
+                                        <a class="small text-dark stretched-link" th:href="@{/site/list}">Xem chi tiết</a>
                                         <div class="small text-dark"><i class="fas fa-angle-right"></i></div>
                                     </div>
                                 </div>
@@ -46,7 +46,7 @@
                                         <h3 class="card-text text-end fs-1"  th:text="${totalRouters}"></h3>
                                     </div>
                                     <div class="card-footer d-flex align-items-center justify-content-between">
-                                        <a class="small text-white stretched-link" href="/router/list">Xem chi tiết</a>
+                                        <a class="small text-white stretched-link" th:href="@{/router/list}">Xem chi tiết</a>
                                         <div class="small text-white"><i class="fas fa-angle-right"></i></div>
                                     </div>
                                 </div>
@@ -58,7 +58,7 @@
                                         <h3 class="card-text text-end fs-1" th:with="var=${(totalFoSites*1.0/totalSites*100)}" th:text="${#numbers.formatDecimal(var,2,0)}+'%'"></h3>
                                     </div>
                                     <div class="card-footer d-flex align-items-center justify-content-between">
-                                        <a class="small text-white stretched-link" href="/site/list">Xem chi tiết</a>
+                                        <a class="small text-white stretched-link" th:href="@{/site/list}">Xem chi tiết</a>
                                         <div class="small text-white"><i class="fas fa-angle-right"></i></div>
                                     </div>
                                 </div>
@@ -70,7 +70,7 @@
                                         <h3 class="card-text text-end fs-1" th:text="${#numbers.formatDecimal(totalLeaseLineCostPerMonth,1,'POINT',0,'COMMA')} + ' VNĐ'"></h3>
                                     </div>
                                     <div class="card-footer d-flex align-items-center justify-content-between">
-                                        <a class="small text-white stretched-link" href="/leaseline/list">Xem chi tiết</a>
+                                        <a class="small text-white stretched-link" th:href="@{/leaseline/list}">Xem chi tiết</a>
                                         <div class="small text-white"><i class="fas fa-angle-right"></i></div>
                                     </div>
                                 </div>

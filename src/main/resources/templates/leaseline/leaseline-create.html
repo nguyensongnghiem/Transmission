@@ -24,8 +24,8 @@
                     <div class="container-fluid px-4">
                         <h1 class="mt-4">Thêm mới kênh thuê</h1>
                         <ol class="breadcrumb mb-4">
-                            <li class="breadcrumb-item active"><a href="/">Tổng quan</a></li>
-                            <li class="breadcrumb-item active"><a href="/leaseline/list">Kênh thuê</a></li>
+                            <li class="breadcrumb-item active"><a th:href="@{/}">Tổng quan</a></li>
+                            <li class="breadcrumb-item active"><a th:href="@{/leaseline/list}">Kênh thuê</a></li>
                             <li class="breadcrumb-item active">Thêm mới</li>
                         </ol>
                         <div class="card mb-4">
@@ -34,7 +34,7 @@
                                 Thêm mới kênh thuê
                             </div>
                             <div class="card-body">
-                                <form action="/leaseline/create" method="post" th:object="${leaseLine}">
+                                <form th:action="@{/leaseline/create}" method="post" th:object="${leaseLine}">
                                     <div class="row">
                                         <div class="mb-3 col">
                                             <label class="form-label fw-bold">Site Id</label>
@@ -46,7 +46,7 @@
                                         <div class="col-lg-6">
                                             <div class="mb-3">
                                                 <label class="form-label fw-bold">Nhà cung cấp</label>
-                                                <select class=" form-control "
+                                                <select class="form-control"
                                                         aria-hidden="true" th:field="*{transmissionOwner}">
                                                     <option th:each="transOwner1:${transOwners}" th:value="${transOwner1.id}"
                                                             th:text="${transOwner1.name}"></option>
