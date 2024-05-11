@@ -64,9 +64,9 @@ public class HomeController {
         return totalFoSites;
     }
     @ModelAttribute("totalLeaseLineCostPerMonth")
-    public int getTotalLeaseLineCostPerMonth(){
+    public float getTotalLeaseLineCostPerMonth(){
         List<LeaseLine> leaseLines = leaseLineService.findAll();
-        int cost =0 ;
+        float cost = 0f ;
         for (LeaseLine ll : leaseLines) {
             cost += ll.getCost()*ll.getQuantity();
         }
