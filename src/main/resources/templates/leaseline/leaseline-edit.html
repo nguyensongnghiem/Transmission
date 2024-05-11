@@ -35,12 +35,12 @@
                                 Sửa đổi thông tin kênh thuê
                             </div>
                             <div class="card-body">
-                                <form action="/router/edit" method="post" th:object="${leaseLine}">
+                                <form action="/leaseline/edit" method="post" th:object="${leaseLine}">
                                     <div class="row">
                                         <input type="text" class="form-control" th:field="*{id}" th:value="*{id}" hidden>
                                         <div class="mb-3 col">
-                                            <label class="form-label fw-bold">Site ID</label>
-                                            <input type="text" list="siteList" class="form-control" th:field="*{speed}" th:value="*{speed}">
+                                            <label class="form-label fw-bold">Site Id</label>
+                                            <input type="text" list="siteList" class="form-control" th:field="*{site.id}" th:value="*{site.siteId}">
                                             <datalist id="siteList">
                                                 <option th:each="site1:${siteList}" th:value="${site1.id}" th:text="${site1.siteId}">
                                             </datalist>
@@ -65,13 +65,19 @@
                                                 </select>
                                             </div>
                                         </div>
+                                    </div>
+                                    <div class="row">
                                         <div class="mb-3 col">
                                             <label class="form-label fw-bold">Băng thông</label>
                                             <input type="number" class="form-control" th:field="*{speed}" th:value="*{speed}">
                                         </div>
                                         <div class="mb-3 col">
                                             <label class="form-label fw-bold">Đơn giá thuê (VAT)</label>
-                                            <input type="number" class="form-control" th:field="*{cost}" th:value="*{cost}">
+                                            <input type="number" class="form-control" th:field="*{cost}" th:value="*{#numbers.formatDecimal(cost, 1, 'POINT', 0, 'COMMA')}">
+                                        </div>
+                                        <div class="mb-3 col">
+                                            <label class="form-label fw-bold">Số lượng</label>
+                                            <input type="number" class="form-control" th:field="*{quantity}" th:value="*{quantity}">
                                         </div>
                                     </div>
 

@@ -44,6 +44,7 @@
                                             <th class="text-center" >Loại kết nối</th>
                                             <th class="text-center" >Băng thông</th>
                                             <th class="text-center" >Đơn giá thuê(Chưa VAT)</th>
+                                            <th class="text-center" >Số lượng</th>
                                             <th class="text-center" >Ghi chú</th>
                                             <th class="text-center" >Tác vụ</th>
                                         </tr>
@@ -56,6 +57,7 @@
                                             <th class="text-center" >Loại kết nối</th>
                                             <th class="text-center" >Băng thông</th>
                                             <th class="text-center" >Đơn giá thuê(Chưa VAT)</th>
+                                            <th class="text-center" >Số lượng</th>
                                             <th class="text-center" >Ghi chú</th>
                                             <th class="text-center" >Tác vụ</th>
                                         </tr>
@@ -67,6 +69,7 @@
                                         <td class="text-center" th:text="${ll.leaseLineConnectType.name}">
                                         <td class="text-center" th:text="${ll.speed}">
                                         <td class="text-end" th:text="${#numbers.formatDecimal(ll.cost, 1, 'POINT', 0, 'COMMA')}">
+                                        <td class="text-center" th:text="${ll.quantity}">
                                         <td th:text="${ll.note}">
                                         <td>
                                             <div class="btn-group btn-group-sm" role="group" aria-label="Basic mixed styles example">
@@ -93,7 +96,7 @@
     <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                <form action="/router/delete" method="post">
+                <form action="/leaseline/delete" method="post">
                     <div class="modal-header">
                         <h1 class="modal-title fs-5" id="deleteModalLabel">Xác nhận xóa dữ liệu !</h1>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>

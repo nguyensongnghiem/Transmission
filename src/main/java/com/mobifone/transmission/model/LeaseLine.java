@@ -16,8 +16,8 @@ import org.hibernate.annotations.SoftDeleteType;
 @Entity
 public class LeaseLine {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
     private float speed;
     private float cost;
     private String note;
