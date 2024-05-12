@@ -22,32 +22,29 @@
             <div id="layoutSidenav_content">
                 <main>
                     <div class="container-fluid px-4">
-                        <h1 class="mt-4">Hệ thống</h1>
-                        <ol class="breadcrumb mb-4">
-                            <li class="breadcrumb-item active">Tổng quan</li>
-                        </ol>
-                        <div class="row">
+                        <h2 class="mt-4">Tổng quan</h2>
+                        <div class="row mt-3">
                             <div class="col-xl-3 col-md-6">
-                                <div class="card bg-light text-dark mb-4 shadow">
+                                <div class="card text-bg-primary mb-4 shadow">
                                     <h5 class="card-header fs-4">Tổng số trạm</h5>
                                     <div class="card-body" >
                                         <h3 class="card-text text-end fs-3" th:text="${totalSites}"></h3>
                                     </div>
                                     <div class="card-footer d-flex align-items-center justify-content-between">
-                                        <a class="small text-dark stretched-link" th:href="@{/site/list}">Xem chi tiết</a>
-                                        <div class="small text-dark"><i class="fas fa-angle-right"></i></div>
+                                        <a class="small text-bg-primary stretched-link" th:href="@{/site/list}">Xem chi tiết</a>
+                                        <div class="small "><i class="fas fa-angle-right"></i></div>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-xl-3 col-md-6">
-                                <div class="card bg-info text-white mb-4 shadow">
+                                <div class="card text-bg-danger mb-4 shadow">
                                     <h5 class="card-header fs-4">Tổng số thiết bị </h5>
                                     <div class="card-body" >
                                         <h3 class="card-text text-end fs-3"  th:text="${totalRouters}"></h3>
                                     </div>
                                     <div class="card-footer d-flex align-items-center justify-content-between">
-                                        <a class="small text-white stretched-link" th:href="@{/router/list}">Xem chi tiết</a>
-                                        <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                                        <a class="small stretched-link text-bg-danger" th:href="@{/router/list}">Xem chi tiết</a>
+                                        <div class="small "><i class="fas fa-angle-right"></i></div>
                                     </div>
                                 </div>
                             </div>

@@ -23,15 +23,15 @@
     <div id="layoutSidenav_content">
         <main>
             <div class="container-fluid px-4">
-                <h1 class="mt-4">Thông tin trạm</h1>
+                <h4 class="mt-4">Thông tin trạm</h4>
                 <ol class="breadcrumb mb-4">
                     <li class="breadcrumb-item active"><a th:href="@{/}">Tổng quan</a></li>
                     <li class="breadcrumb-item active"><a th:href="@{/site/list}">Danh sách trạm</a></li>
                     <li class="breadcrumb-item active">Thông tin chi tiết trạm</li>
                 </ol>
                 <div class="row">
-                    <div class="col-4">
-                        <div class="card mb-4">
+                    <div class="col-12 col-md-4 ">
+                        <div class="card mb-4 text-bg-light">
                             <div class="card-header">
                                 <i class="fas fa-search me-1"></i>
                                 Tìm trạm
@@ -54,7 +54,7 @@
                         </div>
                     </div>
 
-                    <div class="col-8">
+                    <div class="col-12 col-md-8 ">
                         <p th:if="${site==null}">Không có thông tin</p>
                         <div th:if="${site!=null}" class="accordion" id="accordionPanelsStayOpenExample">
                             <div class="accordion-item">
@@ -67,7 +67,7 @@
                                 </h2>
                                 <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show">
                                     <div class="accordion-body">
-                                        <table th:if="${site!=null}" id="site" class="table table-sm"
+                                        <table th:if="${site!=null}" id="site-info-table" class="table table-sm "
                                                style="width:100%">
                                             <thead>
                                             <tr>
@@ -104,7 +104,7 @@
                                 </h2>
                                 <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse">
                                     <div class="accordion-body">
-                                        <table th:if="${site!=null}" id="routers" class="table table-sm"
+                                        <table th:if="${site!=null}" id="router-info-table" class="table table-sm "
                                                style="width:100%">
                                             <thead>
                                             <tr>
@@ -142,7 +142,7 @@
                                 <div id="panelsStayOpen-collapseThree" class="accordion-collapse collapse">
                                     <div class="accordion-body">
                                         <div class="accordion-body">
-                                            <table th:if="${site!=null}" id="leaselines" class="table table-sm"
+                                            <table th:if="${site!=null}" id="leaseline-info-table" class="table table-sm"
                                                    style="width:100%">
                                                 <thead>
                                                 <tr>
