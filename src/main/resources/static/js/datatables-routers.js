@@ -10,6 +10,11 @@
 $(document).ready(function() {
     let $fileName = 'Danh sách thiết bị'
     $('#routerDatatables').DataTable({
+        scrollY:        400,
+        deferRender:    true,
+        scroller:       true,
+        fixedHeader: true,
+        colReorder: true,
         responsive: true,
         lengthMenu: [
             [10, 25, 50, -1],

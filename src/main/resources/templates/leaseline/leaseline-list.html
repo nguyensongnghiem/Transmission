@@ -6,7 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
         <meta name="author" content="" />
-        <title>Quản lý Truyền dẫn - MLMT</title>
+        <title>Danh sách kênh thuê - MLMT</title>
         <div th:replace="~{layout/layout::library}"></div>
     </head>
     <body class="sb-nav-fixed">
@@ -38,6 +38,7 @@
                                 <table id="leaseLineDataTables" class="table table-striped table-sm table-bordered">
                                     <thead >
                                         <tr>
+                                            <th class="text-center" >STT</th>
                                             <th class="text-center" >Tỉnh</th>
                                             <th class="text-center" >Site ID</th>
                                             <th class="text-center" >Nhà cung cấp</th>
@@ -51,6 +52,7 @@
                                     </thead>
                                     <tfoot>
                                         <tr>
+                                            <th class="text-center" >STT</th>
                                             <th class="text-center" >Tỉnh</th>
                                             <th class="text-center" >Site ID</th>
                                             <th class="text-center" >Nhà cung cấp</th>
@@ -62,7 +64,8 @@
                                             <th class="text-center" >Tác vụ</th>
                                         </tr>
                                     </tfoot>
-                                    <tbody><tr th:each="ll:${leaseLineList}">
+                                    <tbody><tr th:each="ll,stats:${leaseLineList}">
+                                        <td class="text-center" th:text="${stats.count}">
                                         <td class="text-center" th:text="${ll.site?.province?.name}">
                                         <td class="text-center" th:text="${ll.site?.siteId}">
                                         <td class="text-center" th:text="${ll.transmissionOwner.name}">

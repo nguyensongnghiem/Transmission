@@ -6,7 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
         <meta name="author" content="" />
-        <title>Quản lý Truyền dẫn - MLMT</title>
+        <title>Danh sách thiết bị</title>
         <div th:replace="~{layout/layout::library}"></div>
     </head>
     <body class="sb-nav-fixed">
@@ -38,6 +38,7 @@
                                 <table id="routerDatatables" class="table table-bordered table-striped table-sm">
                                     <thead >
                                         <tr>
+                                            <th class="text-center" >STT</th>
                                             <th class="text-center" >Tỉnh</th>
                                             <th class="text-center" >Site ID</th>
                                             <th class="text-center" >Tên router</th>
@@ -50,6 +51,7 @@
                                     </thead>
                                     <tfoot>
                                         <tr>
+                                            <th class="text-center" >STT</th>
                                             <th class="text-center" >Tỉnh</th>
                                             <th class="text-center" >Site ID</th>
                                             <th class="text-center" >Tên router</th>
@@ -60,7 +62,8 @@
                                             <th class="text-center" >Tác vụ</th>
                                         </tr>
                                     </tfoot>
-                                    <tbody><tr th:each="router:${routerList}">
+                                    <tbody><tr th:each="router,stats:${routerList}">
+                                        <td  class="text-center" th:text="${stats.count}">
                                         <td  class="text-center" th:text="${router.site.province.name}">
                                         <td  class="text-center" th:text="${router.site.siteId}">
                                         <td  class="text-center" th:text="${router.name}">
