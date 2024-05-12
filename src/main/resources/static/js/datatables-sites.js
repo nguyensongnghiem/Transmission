@@ -9,6 +9,7 @@
 // });
 
 $(document).ready(function() {
+    let $fileName = 'Danh sách trạm'
     $('#siteDatatables').DataTable({
         responsive: true,
         lengthMenu: [
@@ -17,7 +18,38 @@ $(document).ready(function() {
         ],
         dom: 'Blfrtip',
         buttons: [
-            'copy', 'excel', 'pdf'
-        ]
+            {
+                extend: 'csv',
+                filename: $fileName
+            },
+            {
+                extend: 'excel',
+                filename: $fileName
+            },
+            {
+                extend: 'pdf',
+                filename: $fileName
+            }
+        ],
+        initComplete: function () {
+            this.api()
+                .columns()
+                .every(function () {
+                    let column = this;
+                    let title = column.footer().textContent;
+
+                    // Create input element
+                    let input = document.createElement('input');
+                    input.placeholder = title;
+                    column.footer().replaceChildren(input);
+                    input.classList.add('form-control')
+                    // Event listener for user input
+                    input.addEventListener('keyup', () => {
+                        if (column.search() !== this.value) {
+                            column.search(input.value).draw();
+                        }
+                    });
+                });
+        }
     });
 });
