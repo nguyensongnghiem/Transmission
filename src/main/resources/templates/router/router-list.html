@@ -62,10 +62,13 @@
                                             <th class="text-center" >Tác vụ</th>
                                         </tr>
                                     </tfoot>
-                                    <tbody><tr th:each="router,stats:${routerList}">
+                                    <tbody>
+                                    <tr th:each="router,stats:${routerList}">
                                         <td  class="text-center" th:text="${stats.count}">
                                         <td  class="text-center" th:text="${router.site.province.name}">
-                                        <td  class="text-center" th:text="${router.site.siteId}">
+                                        <td  class="text-center">
+                                        <a th:href="@{/site/detail(siteId=${router.site.siteId})}" th:text="${router.site.siteId}"></a>
+                                        </td>
                                         <td  class="text-center" th:text="${router.name}">
                                         <td  class="text-center" th:text="${router.routerType?.name}">
                                         <td  class="text-center" th:text="${router.transmissionDeviceType.name}">

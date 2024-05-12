@@ -9,6 +9,6 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 
 public interface ISiteRepository extends JpaRepository<Site,Long> {
-
+public Site findSitesBySiteId(String siteId);
 
 }

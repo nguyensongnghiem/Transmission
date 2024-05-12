@@ -14,4 +14,6 @@ public interface ISiteService {
     public Site findById(Long editId);
 
     public boolean update(Site site);
+
+    public Site findSitesBySiteId(String siteId);
 }

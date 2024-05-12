@@ -93,5 +93,12 @@ public class SiteController {
         siteService.save(site);
         return "redirect:/site/list";
     }
+    @GetMapping("/detail")
+    public String showDetail(Model model, @RequestParam(required = false,defaultValue = "") String siteId) {
+        Site site = siteService.findSitesBySiteId(siteId);
+        model.addAttribute("site",site);
+        return "/site/site-detail";
+    }
+
 }
 

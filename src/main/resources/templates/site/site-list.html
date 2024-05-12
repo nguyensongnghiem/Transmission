@@ -73,7 +73,9 @@
                             <tr th:each="site,stats:${siteList}">
                                 <td class="text-center" th:text="${stats.count}">
                                 <td class="text-center" th:text="${site.getProvince().getName()}">
-                                <td class="text-center" th:text="${site.siteId}">
+                                <td  class="text-center">
+                                    <a th:href="@{/site/detail(siteId=${site.siteId})}" th:text="${site.siteId}"></a>
+                                </td>
                                 <td class="text-center" th:text="${site.siteName}">
                                 <td class="text-center" th:text="${site.latitude}">
                                 <td class="text-center" th:text="${site.longitude}">

@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <meta name="description" content=""/>
+    <meta name="author" content=""/>
+    <title>Thông tin chi tiết trạm</title>
+    <div th:replace="~{layout/layout::library}"></div>
+</head>
+<body class="sb-nav-fixed">
+
+<!-- Topbar -->
+<
+<div th:replace="~{layout/layout::topbar}"></div>
+<!-- End of Topbar -->
+
+<!-- Sidebar -->
+<div id="layoutSidenav">
+    <div th:replace="~{layout/layout::sidebar}"></div>
+
+    <div id="layoutSidenav_content">
+        <main>
+            <div class="container-fluid px-4">
+                <h1 class="mt-4">Thông tin trạm</h1>
+                <ol class="breadcrumb mb-4">
+                    <li class="breadcrumb-item active"><a th:href="@{/}">Tổng quan</a></li>
+                    <li class="breadcrumb-item active"><a th:href="@{/site/list}">Danh sách trạm</a></li>
+                    <li class="breadcrumb-item active">Thông tin chi tiết trạm</li>
+                </ol>
+                <div class="row">
+                    <div class="col-4">
+                        <div class="card mb-4">
+                            <div class="card-header">
+                                <i class="fas fa-search me-1"></i>
+                                Tìm trạm
+                            </div>
+                            <div class="card-body">
+                                <div class="row g-3">
+                                    <form th:action="@{/site/detail}" method="get">
+                                        <div class="mb-3 col fw-bold">
+                                            <label for="siteId" class="form-label">Site ID</label>
+                                            <input type="text" id="siteId" class="form-control" th:name="siteId"
+                                                   th:value="${site?.siteId}"
+                                                   th:required="required">
+                                        </div>
+                                        <button class="btn btn-primary" type="submit"><i class="fas fa-search me-1"></i>
+                                            Tra cứu
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-8">
+                        <p th:if="${site==null}">Không có thông tin</p>
+                        <div th:if="${site!=null}" class="accordion" id="accordionPanelsStayOpenExample">
+                            <div class="accordion-item">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button fw-bold" type="button" data-bs-toggle="collapse"
+                                            data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true"
+                                            aria-controls="panelsStayOpen-collapseOne">
+                                        Thông tin cơ bản
+                                    </button>
+                                </h2>
+                                <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show">
+                                    <div class="accordion-body">
+                                        <table th:if="${site!=null}" id="site" class="table table-sm"
+                                               style="width:100%">
+                                            <thead>
+                                            <tr>
+                                                <th class="text-center">Tên trạm</th>
+                                                <th class="text-center">Vĩ độ</th>
+                                                <th class="text-center">Kinh độ</th>
+                                                <th class="text-center">Địa chỉ</th>
+                                                <th class="text-center">Loại truyền dẫn trạm</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr>
+                                                <td class="text-center" th:text="${site.siteName}">
+                                                <td class="text-center" th:text="${site.latitude}">
+                                                <td class="text-center" th:text="${site.longitude}">
+                                                <td class="text-center" th:text="${site.address}">
+                                                <td class="text-center"
+                                                    th:text="${site.getSiteTransmissionType()!=null}?${site.getSiteTransmissionType().getName()}:''">
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button collapsed fw-bold position-relative" type="button"
+                                            data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseTwo"
+                                            aria-expanded="false" aria-controls="panelsStayOpen-collapseTwo">
+                                        Thiết bị tại trạm
+                                        <span class="badge text-bg-danger"
+                                              th:text="${site.routerList.size()}"></span>
+                                    </button>
+                                </h2>
+                                <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse">
+                                    <div class="accordion-body">
+                                        <table th:if="${site!=null}" id="routers" class="table table-sm"
+                                               style="width:100%">
+                                            <thead>
+                                            <tr>
+                                                <th class="text-center">STT</th>
+                                                <th class="text-center">Tên router</th>
+                                                <th class="text-center">Loại router</th>
+                                                <th class="text-center">Loại thiết bị TD</th>
+                                                <th class="text-center">Ip quản lý</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr th:each="router,stats:${site.routerList}">
+                                                <td class="text-center" th:text="${stats.count}">
+                                                <td class="text-center" th:text="${router.name}">
+                                                <td class="text-center" th:text="${router.routerType?.name}">
+                                                <td class="text-center"
+                                                    th:text="${router.transmissionDeviceType?.name}">
+                                                <td class="text-center" th:text="${router.ip}">
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button collapsed fw-bold" type="button"
+                                            data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseThree"
+                                            aria-expanded="false" aria-controls="panelsStayOpen-collapseThree">
+                                        Kênh thuê tại trạm
+                                        <span class="badge text-bg-danger"
+                                              th:text="${site.leaseLineList.size()}"></span>
+                                    </button>
+                                </h2>
+                                <div id="panelsStayOpen-collapseThree" class="accordion-collapse collapse">
+                                    <div class="accordion-body">
+                                        <div class="accordion-body">
+                                            <table th:if="${site!=null}" id="leaselines" class="table table-sm"
+                                                   style="width:100%">
+                                                <thead>
+                                                <tr>
+                                                    <th class="text-center" >Nhà cung cấp</th>
+                                                    <th class="text-center" >Loại kết nối</th>
+                                                    <th class="text-center" >Băng thông</th>
+                                                    <th class="text-center" >Đơn giá thuê(Chưa VAT)</th>
+                                                    <th class="text-center" >Số lượng</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                <tr th:each="leaseline,stats:${site.leaseLineList}">
+                                                    <td class="text-center" th:text="${leaseline.transmissionOwner.name}">
+                                                    <td class="text-center" th:text="${leaseline.leaseLineConnectType.name}">
+                                                    <td class="text-center" th:text="${leaseline.speed}">
+                                                    <td class="text-end" th:text="${#numbers.formatDecimal(leaseline.cost, 1, 'POINT', 0, 'COMMA')}">
+                                                    <td class="text-center" th:text="${leaseline.quantity}">
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </main>
+        <div th:replace="~{layout/layout::footer}"></div>
+    </div>
+</div>
+
+<script th:inline="javascript">
+</script>
+<script>
+    function deleteSite(id, siteId) {
+        document.getElementById("delete-site-id").innerHTML = siteId;
+        document.getElementById("hidden-delete-id").value = id;
+    }
+</script>
+
+<div th:replace="~{layout/layout::js-libs}"></div>
+</body>
+</html>

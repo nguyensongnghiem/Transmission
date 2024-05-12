@@ -45,4 +45,10 @@ public class SiteService implements ISiteService {
     public boolean update(Site site) {
         return siteRepository.save(site)!=null;
     }
+
+    @Override
+    public Site findSitesBySiteId(String siteId) {
+        return siteRepository.findSitesBySiteId(siteId);
+    }
+
 }
