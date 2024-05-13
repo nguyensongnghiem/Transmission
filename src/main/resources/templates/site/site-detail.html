@@ -67,6 +67,10 @@
                                 </h2>
                                 <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show">
                                     <div class="accordion-body">
+                                        <div>
+                                            <a th:href="@{'/site/edit/'+${site.id}}" type="button"
+                                               class="btn btn-sm btn-warning">Sửa thông tin <i class="far fa-edit"></i></a>
+                                        </div>
                                         <table th:if="${site!=null}" id="site-info-table" class="table table-sm "
                                                style="width:100%">
                                             <thead>
@@ -113,6 +117,7 @@
                                                 <th class="text-center">Loại router</th>
                                                 <th class="text-center">Loại thiết bị TD</th>
                                                 <th class="text-center">Ip quản lý</th>
+                                                <th class="text-center">Sửa</th>
                                             </tr>
                                             </thead>
                                             <tbody>
@@ -123,6 +128,11 @@
                                                 <td class="text-center"
                                                     th:text="${router.transmissionDeviceType?.name}">
                                                 <td class="text-center" th:text="${router.ip}">
+                                                <td class="text-center">
+                                                    <a th:href="@{'/router/edit/'+${router.id}}" type="button"
+                                                       class="btn btn-sm btn-warning"><i
+                                                            class="far fa-edit"></i></a>
+                                                </td>
                                             </tr>
                                             </tbody>
                                         </table>
@@ -142,24 +152,34 @@
                                 <div id="panelsStayOpen-collapseThree" class="accordion-collapse collapse">
                                     <div class="accordion-body">
                                         <div class="accordion-body">
-                                            <table th:if="${site!=null}" id="leaseline-info-table" class="table table-sm"
+                                            <table th:if="${site!=null}" id="leaseline-info-table"
+                                                   class="table table-sm"
                                                    style="width:100%">
                                                 <thead>
                                                 <tr>
-                                                    <th class="text-center" >Nhà cung cấp</th>
-                                                    <th class="text-center" >Loại kết nối</th>
-                                                    <th class="text-center" >Băng thông</th>
-                                                    <th class="text-center" >Đơn giá thuê(Chưa VAT)</th>
-                                                    <th class="text-center" >Số lượng</th>
+                                                    <th class="text-center">Nhà cung cấp</th>
+                                                    <th class="text-center">Loại kết nối</th>
+                                                    <th class="text-center">Băng thông</th>
+                                                    <th class="text-center">Đơn giá thuê(Chưa VAT)</th>
+                                                    <th class="text-center">Số lượng</th>
+                                                    <th class="text-center">Sửa</th>
                                                 </tr>
                                                 </thead>
                                                 <tbody>
                                                 <tr th:each="leaseline,stats:${site.leaseLineList}">
-                                                    <td class="text-center" th:text="${leaseline.transmissionOwner.name}">
-                                                    <td class="text-center" th:text="${leaseline.leaseLineConnectType.name}">
+                                                    <td class="text-center"
+                                                        th:text="${leaseline.transmissionOwner.name}">
+                                                    <td class="text-center"
+                                                        th:text="${leaseline.leaseLineConnectType.name}">
                                                     <td class="text-center" th:text="${leaseline.speed}">
-                                                    <td class="text-end" th:text="${#numbers.formatDecimal(leaseline.cost, 1, 'POINT', 0, 'COMMA')}">
+                                                    <td class="text-end"
+                                                        th:text="${#numbers.formatDecimal(leaseline.cost, 1, 'POINT', 0, 'COMMA')}">
                                                     <td class="text-center" th:text="${leaseline.quantity}">
+                                                    <td class="text-center">
+                                                        <a th:href="@{'/router/edit/'+${leaseline.id}}" type="button"
+                                                           class="btn btn-sm btn-warning"><i
+                                                                class="far fa-edit"></i></a>
+                                                    </td>
                                                 </tr>
                                                 </tbody>
                                             </table>
