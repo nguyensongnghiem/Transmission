@@ -5,7 +5,6 @@ import com.mobifone.transmission.repository.ISiteRepository;
 import com.mobifone.transmission.service.ISiteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -16,8 +15,7 @@ public class SiteService implements ISiteService {
     @Autowired
     private ISiteRepository siteRepository;
     @Override
-    public Page<Site> findAll(int pageNumber) {
-        Pageable pageable = PageRequest.of(pageNumber-1,20);
+    public Page<Site> findAll(Pageable pageable) {
         return siteRepository.findAll(pageable);
     }
 
@@ -49,6 +47,16 @@ public class SiteService implements ISiteService {
     @Override
     public Site findSitesBySiteId(String siteId) {
         return siteRepository.findSitesBySiteId(siteId);
+    }
+
+    @Override
+    public Page<Site> findSiteBySiteIdContainingIgnoreCase(String searchSiteId, Pageable pageable) {
+        return siteRepository.findSiteBySiteIdContainingIgnoreCase(searchSiteId, pageable);
+    }
+
+    @Override
+    public Page<Site> findSitesBySiteIdAndProvince_Name(String siteId, String provinceName, Pageable pageable) {
+        return siteRepository.findSitesBySiteIdContainingIgnoreCaseAndProvince_NameContainingIgnoreCase(siteId, provinceName,pageable);
     }
 
 }
