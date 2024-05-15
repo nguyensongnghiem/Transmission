@@ -4,6 +4,8 @@ import com.mobifone.transmission.model.*;
 import com.mobifone.transmission.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -41,25 +43,30 @@ public class SiteController {
     public int getTotalSites(){
         return siteService.findAll().size();
     }
+
     @ModelAttribute("siteTransTypes")
     public List<SiteTransmissionType> getSiteTransType(){return siteTransmissionTypeService.findAll();}
 
+//    @GetMapping("/list")
+//    public String list(Model model) {
+//        List<Site> siteList = siteService.findAll();
+//        model.addAttribute("siteList", siteList);
+//        return "/site/site-list";
+//    }
     @GetMapping("/list")
-    public String list(Model model) {
-        List<Site> siteList = siteService.findAll();
-        model.addAttribute("siteList", siteList);
-        return "/site/site-list";
-    }
-    @GetMapping("/site/list/{pageNumber}")
-    public String listByPage(Model model, @PathVariable("pageNumber") int currentPage) {
-        Page<Site> page = siteService.findAll(currentPage);
-        int totalPages = page.getTotalPages();
-        long totalElements = page.getTotalElements();
-        List<Site> siteList = page.getContent();
-        model.addAttribute("currentPage", currentPage);
-        model.addAttribute("siteList", siteList);
-        model.addAttribute("totalPages", totalPages);
-        model.addAttribute("totalElements", totalElements);
+    public String listByPage(Model model, @RequestParam(required = false,defaultValue = "") String searchSiteId, @RequestParam(required = false,defaultValue = "0") int pageNumber) {
+        Pageable pageable = PageRequest.of(pageNumber, 20);
+        if (searchSiteId==null) searchSiteId="";
+//        Pageable pageable = Pageable.unpaged();
+//        Page<Site> page = siteService.findAll(pageable);
+        Page<Site> page = siteService.findSiteBySiteIdContainingIgnoreCase(searchSiteId,pageable);
+//        int totalPages = page.getTotalPages();
+//        long totalElements = page.getTotalElements();
+//        List<Site> siteList = page.getContent();
+        model.addAttribute("page", page);
+//        model.addAttribute("siteList", siteList);
+//        model.addAttribute("totalPages", totalPages);
+//        model.addAttribute("totalElements", totalElements);
         return "/site/site-list";
     }
 

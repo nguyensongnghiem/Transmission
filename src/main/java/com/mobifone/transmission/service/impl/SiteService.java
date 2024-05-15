@@ -16,8 +16,7 @@ public class SiteService implements ISiteService {
     @Autowired
     private ISiteRepository siteRepository;
     @Override
-    public Page<Site> findAll(int pageNumber) {
-        Pageable pageable = PageRequest.of(pageNumber-1,20);
+    public Page<Site> findAll(Pageable pageable) {
         return siteRepository.findAll(pageable);
     }
 
@@ -49,6 +48,11 @@ public class SiteService implements ISiteService {
     @Override
     public Site findSitesBySiteId(String siteId) {
         return siteRepository.findSitesBySiteId(siteId);
+    }
+
+    @Override
+    public Page<Site> findSiteBySiteIdContainingIgnoreCase(String searchSiteId, Pageable pageable) {
+        return siteRepository.findSiteBySiteIdContainingIgnoreCase(searchSiteId, pageable);
     }
 
 }

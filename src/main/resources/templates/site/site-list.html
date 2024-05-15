@@ -23,7 +23,8 @@
     <div id="layoutSidenav_content">
         <main>
             <div class="container-fluid px-4">
-                <h4 class="mt-4">Danh sách trạm <span class="badge text-bg-success rounded-pill" th:text="${totalSites}"></span></h4>
+                <h4 class="mt-4">Danh sách trạm <span class="badge text-bg-success rounded-pill"
+                                                      th:text="${totalSites}"></span></h4>
                 <ol class="breadcrumb mb-4">
                     <li class="breadcrumb-item active"><a th:href="@{/}">Tổng quan</a></li>
                     <li class="breadcrumb-item active">Trạm</li>
@@ -35,9 +36,35 @@
                         <i class="fas fa-table me-1"></i>
                         Danh sách trạm
                     </div>
-                    <div class="card-body">
-                        <table id="siteDatatables" class="table table-bordered table-striped" style="width:100%">
+                    <div class="card-body table-responsive">
+                        <!--                        <form action="/site/list" method="get">-->
+                        <!--                            <lable> Tìm theo Site ID</lable>-->
+                        <!--                            <input name="searchSiteId" placeholder="Nhập Site Id" th:value="${searchSiteId}">-->
+                        <!--                            <button>Tìm kiếm</button>-->
+                        <!--                        </form>-->
+                        <table id="siteDatatables#" class="table table-bordered table-striped ">
                             <thead>
+                            <form action="/site/list" method="get" class="form-control">
+                                <tr>
+                                    <td>
+                                        <button class="btn btn-primary"><i class="fas fa-search me-1"></i></button>
+                                    </td>
+                                    <td>
+                                        <select class=" form-control" name="searchProvince">
+                                            <option value="">Tất cả</option>
+                                            <option th:each="province:${provinces}"
+                                                    th:value="${province.name}"
+                                                    th:text="${province.name}">
+                                            </option>
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <input class="form-control" name="searchSiteId" placeholder="Nhập Site Id"
+                                               th:value="${searchSiteId}">
+                                    </td>
+
+                                </tr>
+                            </form>
                             <tr>
                                 <th class="text-center">STT</th>
                                 <th class="text-center">Tỉnh</th>
@@ -70,10 +97,10 @@
                             </tr>
                             </tfoot>
                             <tbody>
-                            <tr th:each="site,stats:${siteList}">
+                            <tr th:each="site,stats:${page.getContent()}">
                                 <td class="text-center" th:text="${stats.count}">
                                 <td class="text-center" th:text="${site.getProvince().getName()}">
-                                <td  class="text-center">
+                                <td class="text-center">
                                     <a th:href="@{/site/detail(siteId=${site.siteId})}" th:text="${site.siteId}"></a>
                                 </td>
                                 <td class="text-center" th:text="${site.siteName}">
@@ -97,19 +124,41 @@
                                         </button>
                                     </div>
                                 </td>
-                                <!--                                        <td>-->
-                                <!--                                            <div class="btn-group btn-group-sm" role="group">-->
-                                <!--                                                <a th:href="@{'/site/edit/'+${site.id}}" type="button" class="btn btn-warning">Sửa</a>-->
-                                <!--                                                <button th:data-id="${site.id}" th:data-site-id="${site.siteId}"-->
-                                <!--                                                        th:onclick="deleteSite(this.getAttribute('data-id'),this.getAttribute('data-site-id'))"-->
-                                <!--                                                        type="button" class="btn btn-danger" data-toggle="modal"-->
-                                <!--                                                        data-target="#deleteModal">Xóa-->
-                                <!--                                                </button>-->
-                                <!--                                            </div>-->
-                                <!--                                        </td>-->
                             </tr>
                             </tbody>
                         </table>
+                        <nav aria-label="...">
+                            <ul class="pagination">
+                                <li class="page-item" th:classappend="${!page.hasPrevious()} ? disabled">
+                                    <a class="page-link" th:href="@{/site/list(pageNumber=0)}" aria-label="Previous">
+                                        <span aria-hidden="true">&laquo;</span>
+                                    </a>
+                                </li>
+                                <li class="page-item" th:classappend="${!page.hasPrevious()} ? disabled">
+                                    <a class="page-link" th:href="@{/site/list(pageNumber=${page.getNumber()-1})}">Previous</a>
+                                </li>
+
+                                <li th:each="p:${#numbers.sequence(page.getNumber()-3,page.getNumber()+3)}"
+                                    th:if="${p>=0&&p<page.getTotalPages()}"
+                                    th:classappend="${p==page.getNumber()} ? active"
+                                    class="page-item">
+                                    <a class="page-link" th:href="@{/site/list(pageNumber=${p})}" th:text="${p+1}"></a>
+                                </li>
+
+                                <li class="page-item" th:if="${page.hasNext()}">
+                                    <a class="page-link"
+                                       th:href="@{/site/list(pageNumber=${page.getNumber()+1})}">Next</a>
+                                </li>
+                                <li class="page-item" th:classappend="${!page.hasNext()} ? disabled">
+                                    <a class="page-link" th:href="@{/site/list(pageNumber=${page.getTotalPages()-1})}"
+                                       aria-label="Previous">
+                                        <span aria-hidden="true">&raquo;</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </nav>
+                        <span th:text="${'Đang hiển thị trang ' + (page.getNumber()+1) + ' trong ' + page.totalPages}"></span>
+
                     </div>
                 </div>
             </div>
