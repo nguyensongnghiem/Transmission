@@ -1,15 +1,22 @@
 package com.mobifone.transmission.controller;
 
+import com.mobifone.transmission.dto.SiteDTO;
+import com.mobifone.transmission.dto.SiteViewDTO;
+//import com.mobifone.transmission.mapper.SiteMapper;
 import com.mobifone.transmission.model.*;
 import com.mobifone.transmission.service.*;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -25,52 +32,63 @@ public class SiteController {
     private ISiteTransmissionTypeService siteTransmissionTypeService;
     @Autowired
     private ITransmissionOwnerService transmissionOwnerService;
+
     @ModelAttribute("transOwners")
-    public List<TransmissionOwner> getTransOwner(){
+    public List<TransmissionOwner> getTransOwner() {
         return transmissionOwnerService.findAll();
     }
 
     @ModelAttribute("provinces")
-    public List<Province> getProvinces(){
+    public List<Province> getProvinces() {
         return provinceService.findAll();
     }
 
     @ModelAttribute("siteOwners")
-    public List<SiteOwner> getSiteOwners(){
+    public List<SiteOwner> getSiteOwners() {
         return siteOwnerService.findAll();
     }
+
     @ModelAttribute("totalSites")
-    public int getTotalSites(){
+    public int getTotalSites() {
         return siteService.findAll().size();
     }
 
     @ModelAttribute("siteTransTypes")
-    public List<SiteTransmissionType> getSiteTransType(){return siteTransmissionTypeService.findAll();}
+    public List<SiteTransmissionType> getSiteTransType() {
+        return siteTransmissionTypeService.findAll();
+    }
 
-//    @GetMapping("/list")
+    //    @GetMapping("/list")
 //    public String list(Model model) {
 //        List<Site> siteList = siteService.findAll();
 //        model.addAttribute("siteList", siteList);
 //        return "/site/site-list";
 //    }
     @GetMapping("/list")
-    public String listByPage(Model model,
-                             @RequestParam(required = false,defaultValue = "") String searchSiteId,
-                             @RequestParam(required = false,defaultValue = "") String searchProvince,
-                             @RequestParam(required = false,defaultValue = "0") int pageNumber) {
+    public String listByPage(
+            Model model,
+            @RequestParam(required = false, defaultValue = "") String searchSiteId,
+            @RequestParam(required = false, defaultValue = "") String searchProvince,
+            @RequestParam(required = false, defaultValue = "0") int pageNumber) {
+        List<Site> siteList = siteService.findAll();
+
+//        List<SiteViewDTO> siteViewDTOList= new ArrayList<>();
+//        for (Site site:siteList) {
+//            siteViewDTOList.add(SiteMapper.toSiteViewDTO(site));
+//        }
+
         Pageable pageable = PageRequest.of(pageNumber, 20);
-        if (searchSiteId==null) searchSiteId="";
-        if (searchProvince==null) searchProvince="";
+        if (searchSiteId == null) searchSiteId = "";
+        if (searchProvince == null) searchProvince = "";
 //        Pageable pageable = Pageable.unpaged();
 //        Page<Site> page = siteService.findAll(pageable);
 //        Page<Site> page = siteService.findSiteBySiteIdContainingIgnoreCase(searchSiteId,pageable);
-          Page<Site> page = siteService.findSitesBySiteIdAndProvince_Name(searchSiteId,searchProvince, pageable);
-
-
+        Page<Site> page = siteService.findSitesBySiteIdAndProvince_Name(searchSiteId, searchProvince, pageable);
+        Page<SiteViewDTO> pageDTO= page.map(SiteViewDTO::new);
 //        int totalPages = page.getTotalPages();
 //        long totalElements = page.getTotalElements();
 //        List<Site> siteList = page.getContent();
-        model.addAttribute("page", page);
+        model.addAttribute("page", pageDTO);
         model.addAttribute("searchSiteId", searchSiteId);
         model.addAttribute("searchProvince", searchProvince);
 //        model.addAttribute("siteList", siteList);
@@ -79,28 +97,40 @@ public class SiteController {
         return "/site/site-list";
     }
 
-// show the create form
+    // show the create form
     @GetMapping("/create")
     public String showCreateForm(Model model) {
-        model.addAttribute("site",new Site());
+        model.addAttribute("siteDTO", new SiteDTO());
         return "/site/site-create";
     }
 
-//    save new site to DB
+    //    save new site to DB
     @PostMapping("/create")
-    public String create(@ModelAttribute Site site) {
-        siteService.save(site);
+    public String create(@Validated @ModelAttribute SiteDTO siteDTO, BindingResult bindingResult) {
+        Site targetSite = new Site();
+
+        if (siteService.findSitesBySiteId(siteDTO.getSiteId())!=null) {
+            bindingResult.rejectValue("siteId",null,"Site ID đã tồn tại trong hệ thống");
+            return "site/site-create";
+        }
+        if (bindingResult.hasErrors()){
+            return "site/site-create";
+        }
+        BeanUtils.copyProperties(siteDTO,targetSite);
+        siteService.save(targetSite);
         return "redirect:/site/list";
     }
+
     @PostMapping("/delete")
     public String deleteSite(@RequestParam Long deleteId) {
         siteService.deleteById(deleteId);
         return "redirect:/site/list";
     }
+
     @GetMapping("/edit/{editId}")
     public String showEditForm(Model model, @PathVariable Long editId) {
         Site site = siteService.findById(editId);
-        model.addAttribute("site",site);
+        model.addAttribute("site", site);
         return "/site/site-edit";
     }
 
@@ -109,11 +139,12 @@ public class SiteController {
         siteService.save(site);
         return "redirect:/site/list";
     }
+
     @GetMapping("/detail")
-    public String showDetail(Model model, @RequestParam(required = false,defaultValue = "") String siteId) {
+    public String showDetail(Model model, @RequestParam(required = false, defaultValue = "") String siteId) {
         Site site = siteService.findSitesBySiteId(siteId);
-        model.addAttribute("site",site);
-        model.addAttribute("siteList",siteService.findAll());
+        model.addAttribute("site", site);
+        model.addAttribute("siteList", siteService.findAll());
         return "/site/site-detail";
     }
 

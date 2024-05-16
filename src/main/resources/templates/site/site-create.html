@@ -36,11 +36,12 @@
                                 Thêm mới trạm
                             </div>
                             <div class="card-body">
-                                <form th:action="@{/site/create}" method="post" th:object="${site}">
+                                <form th:action="@{/site/create}" method="post" th:object="${siteDTO}">
                                     <div class="row g-3">
-                                        <div class="mb-3 col fw-bold" >
-                                            <label for="siteId" class="form-label">Site ID</label>
-                                            <input type="text" id="siteId" class="form-control" th:field="*{siteId}" th:required="required">
+                                        <div class="mb-3 col" >
+                                            <label for="siteId" class="form-label fw-bold">Site ID</label>
+                                            <input type="text" id="siteId" th:classappend="${#fields.hasErrors('siteId')}?'is-invalid'" class="form-control" th:field="*{siteId}" th:required="required" >
+                                            <span class="invalid-feedback fw-bold" th:if="${#fields.hasErrors('siteId')}" th:errors="*{siteId}"></span>
                                         </div>
                                         <div class="mb-3 col">
                                             <label class="form-label fw-bold">Site ID khác (Nếu có)</label>
@@ -53,12 +54,14 @@
                                     </div>
                                     <div class="row g-3">
                                         <div class="mb-3 col-2">
-                                            <label class="form-label fw-bold">Vĩ độ</label>
-                                            <input type="number" step="any" class="form-control" th:field="*{latitude}" th:required="required">
+                                            <label class="form-label fw-bold" for="latitude">Vĩ độ</label>
+                                            <input type="number" id="latitude"  step="any" th:classappend="${#fields.hasErrors('latitude')}?'is-invalid'" class="form-control" th:field="*{latitude}" th:required="required">
+                                            <span class="invalid-feedback fw-bold" th:if="${#fields.hasErrors('latitude')}" th:errors="*{latitude}"></span>
                                         </div>
                                         <div class="mb-3 col-2">
-                                            <label class="form-label fw-bold">Kinh độ</label>
-                                            <input type="number" step="any" class="form-control" th:field="*{longitude}" th:required="required">
+                                            <label class="form-label fw-bold" for="longitude" >Kinh độ</label>
+                                            <input type="number" step="any" id="longitude"  class="form-control" th:classappend="${#fields.hasErrors('longitude')}?'is-invalid'" th:field="*{longitude}" th:required="required">
+                                            <span class="invalid-feedback fw-bold" th:if="${#fields.hasErrors('longitude')}" th:errors="*{longitude}"></span>
                                         </div>
                                         <div class="mb-3 col">
                                             <label class="form-label fw-bold">Địa chỉ</label>

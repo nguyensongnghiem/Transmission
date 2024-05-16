@@ -102,7 +102,7 @@
                             <tbody>
                             <tr th:each="site,stats:${page.getContent()}">
                                 <td class="text-center" th:text="${stats.count}">
-                                <td class="text-center" th:text="${site.getProvince().getName()}">
+                                <td class="text-center" th:text="${site.getProvince()}">
                                 <td class="text-center">
                                     <a th:href="@{/site/detail(siteId=${site.siteId})}" th:text="${site.siteId}"></a>
                                 </td>
@@ -111,11 +111,11 @@
                                 <td class="text-center" th:text="${site.longitude}">
                                 <td class="text-center" th:text="${site.address}">
                                 <td class="text-center"
-                                    th:text="${site.getSiteOwner()!=null}?${site.getSiteOwner().getName()}:''">
+                                    th:text="${site.getSiteOwner()}">
                                 <td class="text-center"
-                                    th:text="${site.getSiteTransmissionType()!=null}?${site.getSiteTransmissionType().getName()}:''">
+                                    th:text="${site.getSiteTransmissionType()}">
                                 <td class="text-center"
-                                    th:text="${site.getTransmissionOwner()!=null}?${site.getTransmissionOwner().getName()}:'N/A'">
+                                    th:text="${site.getTransmissionOwner()}">
                                 <td class="text-center" th:text="${site.note}">
                                 <td class="text-center">
                                     <div class="btn-group btn-group-sm" role="group">
