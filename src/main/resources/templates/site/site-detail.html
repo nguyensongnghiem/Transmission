@@ -41,9 +41,13 @@
                                     <form th:action="@{/site/detail}" method="get">
                                         <div class="mb-3 col fw-bold">
                                             <label for="siteId" class="form-label">Site ID</label>
-                                            <input type="text" id="siteId" class="form-control" th:name="siteId"
+                                            <input list="siteList" type="text" id="siteId" class="form-control" th:name="siteId"
                                                    th:value="${site?.siteId}"
                                                    th:required="required">
+                                            <datalist id="siteList">
+                                                <option th:each="site1:${siteList}" th:value="${site1.siteId}" th:text="${site1.siteId}">
+                                            </datalist>
+
                                         </div>
                                         <button class="btn btn-primary" type="submit"><i class="fas fa-search me-1"></i>
                                             Tra cứu

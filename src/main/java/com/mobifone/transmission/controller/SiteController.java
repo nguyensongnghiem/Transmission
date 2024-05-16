@@ -113,6 +113,7 @@ public class SiteController {
     public String showDetail(Model model, @RequestParam(required = false,defaultValue = "") String siteId) {
         Site site = siteService.findSitesBySiteId(siteId);
         model.addAttribute("site",site);
+        model.addAttribute("siteList",siteService.findAll());
         return "/site/site-detail";
     }
 
