@@ -108,9 +108,7 @@ public class SiteController {
     //    save new site to DB
     @PostMapping("/create")
     public String create(@Validated @ModelAttribute SiteDTO siteDTO, BindingResult bindingResult) {
-        Site targetSite = new Site();
-        SiteValidator siteValidator = new SiteValidator(this.siteService);
-        siteValidator.validate(siteDTO,bindingResult);
+        Site targetSite = new Site();//
         if (bindingResult.hasErrors()){
             return "site/site-create";
         }
