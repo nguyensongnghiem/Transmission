@@ -5,6 +5,7 @@ import com.mobifone.transmission.dto.SiteViewDTO;
 //import com.mobifone.transmission.mapper.SiteMapper;
 import com.mobifone.transmission.model.*;
 import com.mobifone.transmission.service.*;
+import com.mobifone.transmission.validator.SiteValidator;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -108,11 +109,8 @@ public class SiteController {
     @PostMapping("/create")
     public String create(@Validated @ModelAttribute SiteDTO siteDTO, BindingResult bindingResult) {
         Site targetSite = new Site();
-
-        if (siteService.findSitesBySiteId(siteDTO.getSiteId())!=null) {
-            bindingResult.rejectValue("siteId",null,"Site ID đã tồn tại trong hệ thống");
-            return "site/site-create";
-        }
+        SiteValidator siteValidator = new SiteValidator(this.siteService);
+        siteValidator.validate(siteDTO,bindingResult);
         if (bindingResult.hasErrors()){
             return "site/site-create";
         }
