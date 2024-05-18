@@ -1,5 +1,6 @@
 package com.mobifone.transmission.service.impl;
 
+import com.mobifone.transmission.dto.inf.RouterViewDTO;
 import com.mobifone.transmission.model.Router;
 import com.mobifone.transmission.model.Site;
 import com.mobifone.transmission.repository.IRouterRepository;
@@ -44,5 +45,20 @@ public class RouterService implements IRouterService {
     @Override
     public boolean update(Router router) {
         return routerRepository.save(router)!=null;
+    }
+
+    @Override
+    public Router findRouterByName(String routerName) {
+        return routerRepository.findRouterByName(routerName);
+    }
+
+    @Override
+    public Router findRouterByIp(String ip) {
+        return routerRepository.findRouterByIp(ip);
+    }
+
+    @Override
+    public List<RouterViewDTO> findBy(Class<RouterViewDTO> routerViewDTOClass) {
+        return routerRepository.findBy(routerViewDTOClass);
     }
 }

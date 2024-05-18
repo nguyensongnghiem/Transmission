@@ -1,11 +1,9 @@
 package com.mobifone.transmission.dto;
 
 import com.mobifone.transmission.model.*;
-import com.mobifone.transmission.validator.SiteExists;
+import com.mobifone.transmission.validator.custom.SiteExists;
 import jakarta.validation.constraints.Digits;
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Positive;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.validation.Errors;
@@ -13,7 +11,7 @@ import org.springframework.validation.Validator;
 
 @Getter
 @Setter
-public class SiteDTO implements Validator {
+public class SiteDTO {
     @NotNull(message = "Thông tin bắt buộc")
     @SiteExists
     private String siteId;
@@ -39,17 +37,4 @@ public class SiteDTO implements Validator {
     private String note;
 
     private Province province;
-
-    @Override
-    public boolean supports(Class<?> clazz) {
-        return false;
-    }
-
-    @Override
-    public void validate(Object target, Errors errors) {
-        SiteDTO siteDTO = (SiteDTO) target;
-
-
-
-    }
 }

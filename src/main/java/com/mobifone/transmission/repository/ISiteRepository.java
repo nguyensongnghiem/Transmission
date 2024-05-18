@@ -1,18 +1,19 @@
 package com.mobifone.transmission.repository;
 
-import com.mobifone.transmission.dto.SiteViewDTO;
+import com.mobifone.transmission.dto.inf.SiteViewDTO;
 import com.mobifone.transmission.model.Site;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 
 public interface ISiteRepository extends JpaRepository<Site,Long> {
+    <T> List<T> findBy(Class<T> classType);
+    <T> Page<T> findSitesBySiteIdContainingIgnoreCaseAndProvince_NameContainingIgnoreCase(String siteId, String provinceName, Pageable pageable,Class<T> classType);
 public Site findSitesBySiteId(String siteId);
     Page<Site> findSiteBySiteIdContainingIgnoreCase(String siteId,Pageable pageable);
-    Page<Site> findSitesBySiteIdContainingIgnoreCaseAndProvince_NameContainingIgnoreCase(String siteId, String provinceName, Pageable pageable);
+//    Page<Site> findSitesBySiteIdContainingIgnoreCaseAndProvince_NameContainingIgnoreCase(String siteId, String provinceName, Pageable pageable);
 
     Site findSitesBySiteId2(String siteId2);
 //    @Query(name = "select s.id, s.site_id as siteId, s.site_id2 as siteId2, s.latitude, s.longitude, s.address, so.name as siteOwner, smt.name as siteTransmissionType, p.name as province\n" +

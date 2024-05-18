@@ -1,4 +1,4 @@
-package com.mobifone.transmission.validator;
+package com.mobifone.transmission.validator.custom;
 
 import jakarta.validation.Constraint;
 

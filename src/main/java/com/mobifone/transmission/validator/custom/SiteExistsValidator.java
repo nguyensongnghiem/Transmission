@@ -1,13 +1,9 @@
-package com.mobifone.transmission.validator;
+package com.mobifone.transmission.validator.custom;
 
-import com.mobifone.transmission.dto.SiteDTO;
-import com.mobifone.transmission.model.Site;
 import com.mobifone.transmission.service.ISiteService;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 import org.springframework.beans.factory.annotation.Autowired;
-
-import java.lang.annotation.Annotation;
 
 public class SiteExistsValidator implements ConstraintValidator<SiteExists, String> {
     @Autowired

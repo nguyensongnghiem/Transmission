@@ -1,5 +1,6 @@
 package com.mobifone.transmission.service.impl;
 
+import com.mobifone.transmission.dto.inf.SiteViewDTO;
 import com.mobifone.transmission.model.Site;
 import com.mobifone.transmission.repository.ISiteRepository;
 import com.mobifone.transmission.service.ISiteService;
@@ -55,13 +56,19 @@ public class SiteService implements ISiteService {
     }
 
     @Override
-    public Page<Site> findSitesBySiteIdAndProvince_Name(String siteId, String provinceName, Pageable pageable) {
-        return siteRepository.findSitesBySiteIdContainingIgnoreCaseAndProvince_NameContainingIgnoreCase(siteId, provinceName,pageable);
+    public Page<SiteViewDTO> findSitesBySiteIdAndProvince_Name(String siteId, String provinceName, Pageable pageable,Class<SiteViewDTO> siteViewDTOClass) {
+        return siteRepository.findSitesBySiteIdContainingIgnoreCaseAndProvince_NameContainingIgnoreCase(siteId, provinceName,pageable,siteViewDTOClass);
     }
 
     @Override
     public Site findSitesBySiteId2(String siteId2) {
         return siteRepository.findSitesBySiteId2(siteId2);
     }
+
+    @Override
+    public List<SiteViewDTO> findBy(Class<SiteViewDTO> siteViewDTOClass) {
+        return siteRepository.findBy(siteViewDTOClass);
+    }
+
 
 }

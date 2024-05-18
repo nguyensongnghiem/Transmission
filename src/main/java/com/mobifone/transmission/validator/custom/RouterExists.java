@@ -1,0 +1,15 @@
+package com.mobifone.transmission.validator.custom;
+
+import jakarta.validation.Constraint;
+
+import java.lang.annotation.*;
+
+@Target({ElementType.FIELD})
+@Retention(RetentionPolicy.RUNTIME)
+@Documented
+@Constraint(validatedBy=RouterExistsValidator.class)
+public @interface RouterExists {
+    String message() default "Tên thiết bị đã tồn tại trong hệ thống";
+    Class[] groups() default {};
+    Class[] payload() default {};
+}

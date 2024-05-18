@@ -65,19 +65,19 @@
                                     <tbody>
                                     <tr th:each="router,stats:${routerList}">
                                         <td  class="text-center" th:text="${stats.count}">
-                                        <td  class="text-center" th:text="${router.site.province.name}">
+                                        <td  class="text-center" th:text="${router.getSite().getProvince().getName()}">
                                         <td  class="text-center">
-                                        <a th:href="@{/site/detail(siteId=${router.site.siteId})}" th:text="${router.site.siteId}"></a>
+                                        <a th:href="@{/site/detail(siteId=${router.getSite().getId()})}" th:text="${router.site.getSiteId()}"></a>
                                         </td>
                                         <td  class="text-center" th:text="${router.name}">
-                                        <td  class="text-center" th:text="${router.routerType?.name}">
-                                        <td  class="text-center" th:text="${router.transmissionDeviceType.name}">
+                                        <td  class="text-center" th:text="${router.getRouterType()?.getName()}">
+                                        <td  class="text-center" th:text="${router.getTransmissionDeviceType()?.getName()}">
                                         <td  class="text-center" th:text="${router.ip}">
                                         <td  class="text-center" th:text="${router.note}">
                                         <td class="text-center" >
                                             <div class="btn-group btn-group-sm" role="group" aria-label="Basic mixed styles example">
                                                 <a th:href="@{'/router/edit/'+${router.id}}" type="button" class="btn btn-warning">Sửa</a>
-                                                <button th:data-id="${router.id}" th:data-router-name="${router.name}"
+                                                <button th:data-id="${router.getId()}" th:data-router-name="${router.getName()}"
                                                         th:onclick="deleteRouter(this.getAttribute('data-id'),this.getAttribute('data-router-name'))"
                                                         type="button" class="btn btn-danger" data-bs-toggle="modal"
                                                         data-bs-target="#deleteModal">Xóa

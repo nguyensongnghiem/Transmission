@@ -1,5 +1,6 @@
 package com.mobifone.transmission.controller;
 
+import com.mobifone.transmission.dto.inf.RouterViewDTO;
 import com.mobifone.transmission.model.*;
 import com.mobifone.transmission.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,7 +55,8 @@ public class RouterController {
     @GetMapping("/list")
     public String list(Model model) {
         List<Router> routerList = routerService.findAll();
-        model.addAttribute("routerList", routerList);
+        List<RouterViewDTO> routerViewDTOList = routerService.findBy(RouterViewDTO.class);
+        model.addAttribute("routerList", routerViewDTOList);
         return "/router/router-list";
     }
 //    @GetMapping("/site/list/{pageNumber}")

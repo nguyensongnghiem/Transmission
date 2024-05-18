@@ -1,11 +1,10 @@
 package com.mobifone.transmission.controller;
 
 import com.mobifone.transmission.dto.SiteDTO;
-import com.mobifone.transmission.dto.SiteViewDTO;
 //import com.mobifone.transmission.mapper.SiteMapper;
+import com.mobifone.transmission.dto.inf.SiteViewDTO;
 import com.mobifone.transmission.model.*;
 import com.mobifone.transmission.service.*;
-import com.mobifone.transmission.validator.SiteValidator;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -17,7 +16,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -78,18 +76,15 @@ public class SiteController {
 //            siteViewDTOList.add(SiteMapper.toSiteViewDTO(site));
 //        }
 
-        Pageable pageable = PageRequest.of(pageNumber, 20);
+        Pageable pageable = PageRequest.of(pageNumber, 15);
         if (searchSiteId == null) searchSiteId = "";
         if (searchProvince == null) searchProvince = "";
 //        Pageable pageable = Pageable.unpaged();
 //        Page<Site> page = siteService.findAll(pageable);
 //        Page<Site> page = siteService.findSiteBySiteIdContainingIgnoreCase(searchSiteId,pageable);
-        Page<Site> page = siteService.findSitesBySiteIdAndProvince_Name(searchSiteId, searchProvince, pageable);
-        Page<SiteViewDTO> pageDTO= page.map(SiteViewDTO::new);
-//        int totalPages = page.getTotalPages();
-//        long totalElements = page.getTotalElements();
-//        List<Site> siteList = page.getContent();
-        model.addAttribute("page", pageDTO);
+        Page<SiteViewDTO> page = siteService.findSitesBySiteIdAndProvince_Name(searchSiteId, searchProvince, pageable,SiteViewDTO.class);
+//
+        model.addAttribute("page", page);
         model.addAttribute("searchSiteId", searchSiteId);
         model.addAttribute("searchProvince", searchProvince);
 //        model.addAttribute("siteList", siteList);
