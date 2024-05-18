@@ -59,7 +59,7 @@
                             <div class="row g-3">
                                 <div class="mb-1 col-lg col-md-6 col-sm-6">
                                     <label class="form-label fw-bold" for="latitude">Vĩ độ</label>
-                                    <input type="number" id="latitude"
+                                    <input type="number" step="any" id="latitude"
                                            th:classappend="${#fields.hasErrors('latitude')}?'is-invalid'"
                                            class="form-control" th:field="*{latitude}" th:required="required">
                                     <small class="invalid-feedback fw-bold text-end"
@@ -67,7 +67,7 @@
                                 </div>
                                 <div class="mb-1 col-lg col-md-6 col-sm-6">
                                     <label class="form-label fw-bold" for="longitude">Kinh độ</label>
-                                    <input type="number" id="longitude" class="form-control"
+                                    <input type="number" step="any" id="longitude" class="form-control"
                                            th:classappend="${#fields.hasErrors('longitude')}?'is-invalid'"
                                            th:field="*{longitude}" th:required="required">
                                     <small class="invalid-feedback fw-bold text-end"

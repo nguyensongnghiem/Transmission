@@ -59,4 +59,9 @@ public class SiteService implements ISiteService {
         return siteRepository.findSitesBySiteIdContainingIgnoreCaseAndProvince_NameContainingIgnoreCase(siteId, provinceName,pageable);
     }
 
+    @Override
+    public Site findSitesBySiteId2(String siteId2) {
+        return siteRepository.findSitesBySiteId2(siteId2);
+    }
+
 }

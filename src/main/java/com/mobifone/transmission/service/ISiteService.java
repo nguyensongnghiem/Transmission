@@ -26,4 +26,5 @@ public interface ISiteService {
     Page<Site> findSitesBySiteIdAndProvince_Name(String siteId,String provinceName, Pageable pageable);
 
 
+    Site findSitesBySiteId2(String siteId2);
 }
