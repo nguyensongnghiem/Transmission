@@ -36,7 +36,7 @@
                                 Sửa đổi thông tin trạm
                             </div>
                             <div class="card-body">
-                                <form th:action="@{/site/create}" method="post" th:object="${site}">
+                                <form th:action="@{/site/edit}" method="post" th:object="${site}">
                                     <div class="row g-3">
                                         <input type="text" class="form-control" th:field="*{id}" th:value="*{id}" hidden>
                                         <div class="mb-3 col">
