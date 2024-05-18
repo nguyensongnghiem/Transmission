@@ -31,16 +31,16 @@
                 </ol>
                 <div class="row">
                     <div class="col-12 col-md-4 ">
-                        <div class="card mb-4 text-bg-light">
-                            <div class="card-header">
-                                <i class="fas fa-search me-1"></i>
-                                Tìm trạm
-                            </div>
-                            <div class="card-body">
+                        <div class="card mb-4">
+<!--                            <div class="card-header">-->
+<!--                                <i class="fas fa-search me-1"></i>-->
+<!--                                Tìm trạm-->
+<!--                            </div>-->
+                            <div class="card-body text-bg-light ">
                                 <div class="row g-3">
                                     <form th:action="@{/site/detail}" method="get">
                                         <div class="mb-3 col fw-bold">
-                                            <label for="siteId" class="form-label">Site ID</label>
+                                            <label for="siteId" class="form-label">Tìm theo Site ID</label>
                                             <input list="siteList" type="text" id="siteId" class="form-control" th:name="siteId"
                                                    th:value="${site?.siteId}"
                                                    th:required="required">
