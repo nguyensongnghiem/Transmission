@@ -34,15 +34,26 @@
                                 Thêm mới thiết bị
                             </div>
                             <div class="card-body">
-                                <form th:action="@{/router/create}" method="post" th:object="${router}">
+                                <form th:action="@{/router/create}" method="post" th:object="${routerDTO}">
                                     <div class="row g3">
                                         <div class="mb-3 col">
                                             <label class="form-label fw-bold">Tên Router</label>
-                                            <input type="text" class="form-control" th:field="*{name}" th:required="required">
+                                            <input type="text" class="form-control"
+                                                   th:field="*{name}"
+                                                   th:required="required"
+                                                   th:classappend="${#fields.hasErrors('name')}?'is-invalid'"
+                                            >
+                                            <small class="invalid-feedback fw-bold text-end"
+                                                   th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></small>
                                         </div>
                                         <div class="mb-3 col">
                                             <label class="form-label fw-bold">Ip quản lý</label>
-                                            <input type="text" class="form-control" th:field="*{ip}" th:required="required">
+                                            <input type="text" class="form-control"
+                                                   th:field="*{ip}"
+                                                   th:required="required"
+                                                   th:classappend="${#fields.hasErrors('ip')}?'is-invalid'">
+                                            <small class="invalid-feedback fw-bold text-end"
+                                                   th:if="${#fields.hasErrors('ip')}" th:errors="*{ip}"></small>
                                         </div>
                                         <div class="mb-3 col">
                                             <label class="form-label fw-bold">Site Id</label>

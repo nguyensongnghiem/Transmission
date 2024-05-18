@@ -1,11 +1,15 @@
 package com.mobifone.transmission.controller;
 
+import com.mobifone.transmission.dto.RouterDTO;
 import com.mobifone.transmission.dto.inf.RouterViewDTO;
 import com.mobifone.transmission.model.*;
 import com.mobifone.transmission.service.*;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -75,14 +79,19 @@ public class RouterController {
 // show the create form
     @GetMapping("/create")
     public String showCreateForm(Model model) {
-        model.addAttribute("router",new Router());
+        model.addAttribute("routerDTO",new RouterDTO());
         return "/router/router-create";
     }
 
 //    save new site to DB
     @PostMapping("/create")
-    public String create(@ModelAttribute Router router) {
-        routerService.save(router);
+    public String create(@Validated @ModelAttribute RouterDTO routerDTO, BindingResult bindingResult) {
+        Router targetRouter =new Router();
+        if (bindingResult.hasErrors()){
+            return "router/router-create";
+        }
+        BeanUtils.copyProperties(routerDTO,targetRouter);
+        routerService.save(targetRouter);
         return "redirect:/router/list";
     }
     @PostMapping("/delete")

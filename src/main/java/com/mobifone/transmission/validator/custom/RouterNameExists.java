@@ -7,8 +7,8 @@ import java.lang.annotation.*;
 @Target({ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
-@Constraint(validatedBy=RouterExistsValidator.class)
-public @interface RouterExists {
+@Constraint(validatedBy= RouterNameExistsValidator.class)
+public @interface RouterNameExists {
     String message() default "Tên thiết bị đã tồn tại trong hệ thống";
     Class[] groups() default {};
     Class[] payload() default {};

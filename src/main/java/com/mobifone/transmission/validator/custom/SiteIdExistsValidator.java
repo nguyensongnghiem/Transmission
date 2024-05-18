@@ -5,12 +5,12 @@ import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 import org.springframework.beans.factory.annotation.Autowired;
 
-public class SiteExistsValidator implements ConstraintValidator<SiteExists, String> {
+public class SiteIdExistsValidator implements ConstraintValidator<SiteIdExists, String> {
     @Autowired
     private ISiteService siteService;
 
     @Override
-    public void initialize(SiteExists constraintAnnotation) {
+    public void initialize(SiteIdExists constraintAnnotation) {
         ConstraintValidator.super.initialize(constraintAnnotation);
     }
     @Override
