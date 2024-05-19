@@ -14,16 +14,7 @@ import java.util.List;
 public class LeaseLineController {
     @Autowired
     private ISiteService siteService;
-    //    @Autowired
-//    private IProvinceService provinceService;
-//    @Autowired
-//    private ISiteOwnerService siteOwnerService;
-//    @Autowired
-//    private IRouterTypeService routerTypeService;
-//    @Autowired
-//    private ITransmissionDeviceTypeService transmissionDeviceTypeService;
-//    @Autowired
-//    private IRouterService routerService;
+
     @Autowired
     private ILeaseLineService leaseLineService;
     @Autowired
@@ -31,18 +22,6 @@ public class LeaseLineController {
     @Autowired
     private ITransmissionOwnerService transmissionOwnerService;
 
-    //    @ModelAttribute("provinces")
-//    public List<Province> getProvinces(){
-//        return provinceService.findAll();
-//    }
-//    @ModelAttribute("siteOwners")
-//    public List<SiteOwner> getSiteOwners(){
-//        return siteOwnerService.findAll();
-//    }
-//    @ModelAttribute("totalSites")
-//    public int getTotalSites(){
-//        return siteService.findAll().size();
-//    }
     @ModelAttribute("siteList")
     public List<Site> getSiteList() {
         return siteService.findAll();
@@ -51,15 +30,11 @@ public class LeaseLineController {
     public List<TransmissionOwner> getTransOwner(){
         return transmissionOwnerService.findAll();
     }
+    @ModelAttribute("totalLeaseLine")
+    public int getTotalLeaseLine(){
+        return leaseLineService.findAll().size();
+    }
 
-    //    @ModelAttribute("routerTypes")
-//    public List<RouterType> getRouterTypes(){
-//        return routerTypeService.findAll();
-//    }
-//    @ModelAttribute("transDevTypes")
-//    public List<TransmissionDeviceType> getTransDevTypes(){
-//        return transmissionDeviceTypeService.findAll();
-//    }
     @ModelAttribute("leaseLineConnectTypes")
     public List<LeaseLineConnectType> getLeaseLineConnectTypes() {
         return leaseLineConnectTypeService.findAll();
@@ -71,20 +46,10 @@ public class LeaseLineController {
         model.addAttribute("leaseLineList", leaseLineList);
         return "/leaseline/leaseline-list";
     }
-
-    //    @GetMapping("/site/list/{pageNumber}")
-//    public String listByPage(Model model, @PathVariable("pageNumber") int currentPage) {
-//        Page<Site> page = siteService.findAll(currentPage);
-//        int totalPages = page.getTotalPages();
-//        long totalElements = page.getTotalElements();
-//        List<Site> siteList = page.getContent();
-//        model.addAttribute("currentPage", currentPage);
-//        model.addAttribute("siteList", siteList);
-//        model.addAttribute("totalPages", totalPages);
-//        model.addAttribute("totalElements", totalElements);
-//        return "/site/site-list";
-//    }
-//
+    @GetMapping("/list-api")
+    public String listByPageApi() {
+        return "/leaseline/leaseline-list-api";
+    }
 // show the create form
     @GetMapping("/create")
     public String showCreateForm(Model model) {

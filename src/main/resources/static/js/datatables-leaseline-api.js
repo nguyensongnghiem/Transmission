@@ -9,14 +9,12 @@
 // });
 
 $(document).ready(function () {
-    let $fileName = 'Danh sách trạm'
+    let $fileName = 'Danh sách kênh thuê'
     var contextPath = window.location.origin
-    console.log(contextPath)
-
-    $('#siteDatatablesApi').DataTable({
-        scrollY: 400,
-        deferRender: true,
-        scroller: true,
+    $('#leaseLineDataTablesApi').DataTable({
+        scrollY:        400,
+        deferRender:    true,
+        scroller:       true,
         fixedHeader: true,
         colReorder: true,
         responsive: true,
@@ -56,6 +54,7 @@ $(document).ready(function () {
                     input.placeholder = title;
                     column.footer().replaceChildren(input);
                     input.classList.add('form-control')
+
                     // Event listener for user input
                     input.addEventListener('keyup', () => {
                         if (column.search() !== this.value) {
@@ -65,31 +64,23 @@ $(document).ready(function () {
                 });
         },
         ajax: {
-            url: "/site/api/list",
+            url: "/leaseline/api/list",
             dataSrc: ''
         },
         columns: [
-            {data: 'province.name'},
-            {
-                data: 'siteId',
-                className: 'dt-center editor-edit',
-                render: function (data,type,row) {
-                    return `<a href="${contextPath}/site/detail?siteId=${row.siteId}" >${row.siteId}</a>`
-                },
-                orderable: false
-            },
-            {data: 'siteName'},
-            {data: 'latitude'},
-            {data: 'longitude'},
-            {data: 'siteOwner.name'},
-            {data: 'siteTransmissionType.name'},
+            {data: 'site.province.name'},
+            {data: 'site.siteId'},
             {data: 'transmissionOwner.name'},
+            {data: 'leaseLineConnectType.name'},
+            {data: 'speed'},
+            {data: 'cost'},
+            {data: 'quantity'},
             {data: 'note'},
             {
                 data: 'id',
                 className: 'dt-center editor-edit',
                 render: function (data,type,row) {
-                    return `<a href="${contextPath}/site/edit/${row.id}" class="btn btn-warning btn-sm"><i class="fa fa-pencil fa-sm"/></a>`
+                    return `<a href="${contextPath}/leaseline/edit/${row.id}" class="btn btn-warning btn-sm"><i class="fa fa-pencil fa-sm"/></a>`
                 },
                 orderable: false
             },
@@ -98,7 +89,7 @@ $(document).ready(function () {
                 className: 'dt-center editor-edit',
                 render: function (data,type,row) {
                     return `<button class="btn btn-danger btn-edit btn-sm"
-                   onclick="deleteSite(${row.id},\'${row.siteId}\')"
+                   onclick="deleteLeaseLine(${row.id},\'${row.site.siteId}\')"
                    data-bs-toggle="modal" 
                    data-bs-target="#deleteModal">
                    <i class="fa fa-trash fa-sm"></i>

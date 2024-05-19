@@ -2,21 +2,19 @@
 //     // Simple-DataTables
 //     // https://github.com/fiduswriter/Simple-DataTables/wiki
 //
-//     const sitesDatatable = document.getElementById('siteDatatables');
-//     if (sitesDatatable) {
-//         new simpleDatatables.DataTable(sitesDatatable);
+//     const routersDatatable = document.getElementById('routerDatatables');
+//     if (routersDatatable) {
+//         new simpleDatatables.DataTable(routersDatatable);
 //     }
 // });
-
-$(document).ready(function () {
-    let $fileName = 'Danh sách trạm'
+$(document).ready(function() {
+    let $fileName = 'Danh sách thiết bị'
     var contextPath = window.location.origin
     console.log(contextPath)
-
-    $('#siteDatatablesApi').DataTable({
-        scrollY: 400,
-        deferRender: true,
-        scroller: true,
+    $('#routerDatatablesApi').DataTable({
+        scrollY:        400,
+        deferRender:    true,
+        scroller:       true,
         fixedHeader: true,
         colReorder: true,
         responsive: true,
@@ -26,8 +24,7 @@ $(document).ready(function () {
         ],
         columnDefs: [{
             "defaultContent": "",
-            "className": "dt-center",
-            "targets": "_all",
+            "targets": "_all"
         }],
         dom: 'Blfrtip',
         buttons: [
@@ -65,31 +62,22 @@ $(document).ready(function () {
                 });
         },
         ajax: {
-            url: "/site/api/list",
+            url: "/router/api/list",
             dataSrc: ''
         },
         columns: [
-            {data: 'province.name'},
-            {
-                data: 'siteId',
-                className: 'dt-center editor-edit',
-                render: function (data,type,row) {
-                    return `<a href="${contextPath}/site/detail?siteId=${row.siteId}" >${row.siteId}</a>`
-                },
-                orderable: false
-            },
-            {data: 'siteName'},
-            {data: 'latitude'},
-            {data: 'longitude'},
-            {data: 'siteOwner.name'},
-            {data: 'siteTransmissionType.name'},
-            {data: 'transmissionOwner.name'},
+            {data: 'site.province.name'},
+            {data: 'site.siteId'},
+            {data: 'name'},
+            {data: 'routerType.name'},
+            {data: 'transmissionDeviceType.name'},
+            {data: 'ip'},
             {data: 'note'},
             {
                 data: 'id',
                 className: 'dt-center editor-edit',
                 render: function (data,type,row) {
-                    return `<a href="${contextPath}/site/edit/${row.id}" class="btn btn-warning btn-sm"><i class="fa fa-pencil fa-sm"/></a>`
+                    return `<a href="${contextPath}/router/edit/${row.id}" class="btn btn-warning btn-sm"><i class="fa fa-pencil fa-sm"/></a>`
                 },
                 orderable: false
             },
@@ -98,7 +86,7 @@ $(document).ready(function () {
                 className: 'dt-center editor-edit',
                 render: function (data,type,row) {
                     return `<button class="btn btn-danger btn-edit btn-sm"
-                   onclick="deleteSite(${row.id},\'${row.siteId}\')"
+                   onclick="deleteRouter(${row.id},\'${row.name}\')"
                    data-bs-toggle="modal" 
                    data-bs-target="#deleteModal">
                    <i class="fa fa-trash fa-sm"></i>

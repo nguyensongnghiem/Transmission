@@ -1,5 +1,6 @@
 package com.mobifone.transmission.service.impl;
 
+import com.mobifone.transmission.dto.inf.LeaseLineViewDTO;
 import com.mobifone.transmission.model.LeaseLine;
 import com.mobifone.transmission.model.Vendor;
 import com.mobifone.transmission.repository.ILeaseLineRepository;
@@ -38,5 +39,10 @@ public class LeaseLineService implements ILeaseLineService {
     @Override
     public boolean update(LeaseLine leaseLine) {
         return false;
+    }
+
+    @Override
+    public List<LeaseLineViewDTO> findBy(Class<LeaseLineViewDTO> leaseLineViewDTOClass) {
+        return leaseLineRepository.findBy(LeaseLineViewDTO.class);
     }
 }

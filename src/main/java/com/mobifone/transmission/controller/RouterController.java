@@ -30,6 +30,7 @@ public class RouterController {
     private IRouterService routerService;
 
 
+
     @ModelAttribute("provinces")
     public List<Province> getProvinces(){
         return provinceService.findAll();
@@ -62,6 +63,12 @@ public class RouterController {
         List<RouterViewDTO> routerViewDTOList = routerService.findBy(RouterViewDTO.class);
         model.addAttribute("routerList", routerViewDTOList);
         return "/router/router-list";
+    }
+
+    @GetMapping("/list-api")
+    public String listByPageApi(Model model) {
+        model.addAttribute("totalRouters", routerService.findAll().size());
+        return "/router/router-list-api";
     }
 //    @GetMapping("/site/list/{pageNumber}")
 //    public String listByPage(Model model, @PathVariable("pageNumber") int currentPage) {

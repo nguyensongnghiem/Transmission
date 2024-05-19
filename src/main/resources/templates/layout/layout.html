@@ -67,7 +67,7 @@
                     <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                         <nav class="sb-sidenav-menu-nested nav">
                             <a class="nav-link" th:href="@{/site/detail}">Tra cứu thông tin trạm</a>
-                            <a class="nav-link" th:href="@{/site/list}">Danh sách trạm</a>
+                            <a class="nav-link" th:href="@{/site/list-api}">Danh sách trạm</a>
                             <a class="nav-link" th:href="@{/site/create}">Thêm mới</a>
                         </nav>
                     </div>
@@ -86,7 +86,7 @@
                             </a>
                             <div class="collapse" id="pagesCollapseAuth" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages">
                                 <nav class="sb-sidenav-menu-nested nav">
-                                    <a class="nav-link" th:href="@{/router/list}">Danh sách thiết bị</a>
+                                    <a class="nav-link" th:href="@{/router/list-api}">Danh sách thiết bị</a>
                                     <a class="nav-link" th:href="@{/router/create}">Thêm mới</a>
                                 </nav>
                             </div>
@@ -129,7 +129,7 @@
                             </a>
                             <div class="collapse" id="pagesCollapseLL" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages">
                                 <nav class="sb-sidenav-menu-nested nav">
-                                    <a class="nav-link" th:href="@{/leaseline/list}">Danh sách</a>
+                                    <a class="nav-link" th:href="@{/leaseline/list-api}">Danh sách</a>
                                     <a class="nav-link" th:href="@{/leaseline/create}">Thêm mới</a>
                                 </nav>
                             </div>
@@ -176,6 +176,8 @@
     <script th:src="@{/js/datatables-leaseline.js}"></script>
     <script th:src="@{/js/datatables-site-detail.js}"></script>
     <script th:src="@{/js/datatables-sites-api.js}"></script>
+    <script th:src="@{/js/datatables-routers-api.js}"></script>
+    <script th:src="@{/js/datatables-leaseline-api.js}"></script>
 
 </div>
 <div th:fragment="footer">
