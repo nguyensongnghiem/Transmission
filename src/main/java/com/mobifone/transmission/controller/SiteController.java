@@ -69,7 +69,7 @@ public class SiteController {
             @RequestParam(required = false, defaultValue = "") String searchSiteId,
             @RequestParam(required = false, defaultValue = "") String searchProvince,
             @RequestParam(required = false, defaultValue = "0") int pageNumber) {
-        List<Site> siteList = siteService.findAll();
+//        List<Site> siteList = siteService.findAll();
 
 //        List<SiteViewDTO> siteViewDTOList= new ArrayList<>();
 //        for (Site site:siteList) {
@@ -82,7 +82,7 @@ public class SiteController {
 //        Pageable pageable = Pageable.unpaged();
 //        Page<Site> page = siteService.findAll(pageable);
 //        Page<Site> page = siteService.findSiteBySiteIdContainingIgnoreCase(searchSiteId,pageable);
-        Page<SiteViewDTO> page = siteService.findSitesBySiteIdAndProvince_Name(searchSiteId, searchProvince, pageable,SiteViewDTO.class);
+        Page<SiteViewDTO> page = siteService.searchBySiteIdAndProvince(searchSiteId, searchProvince, pageable,SiteViewDTO.class);
 //
         model.addAttribute("page", page);
         model.addAttribute("searchSiteId", searchSiteId);
@@ -91,6 +91,22 @@ public class SiteController {
 //        model.addAttribute("totalPages", totalPages);
 //        model.addAttribute("totalElements", totalElements);
         return "/site/site-list";
+    }
+
+    @GetMapping("/list-api")
+    public String listByPageApi(
+            Model model,
+            @RequestParam(required = false, defaultValue = "") String searchSiteId,
+            @RequestParam(required = false, defaultValue = "") String searchProvince,
+            @RequestParam(required = false, defaultValue = "0") int pageNumber) {
+//        Pageable pageable = PageRequest.of(pageNumber, 15);
+//        if (searchSiteId == null) searchSiteId = "";
+//        if (searchProvince == null) searchProvince = "";
+//        Page<SiteViewDTO> page = siteService.searchBySiteIdAndProvince(searchSiteId, searchProvince, pageable,SiteViewDTO.class);
+//        model.addAttribute("page", page);
+//        model.addAttribute("searchSiteId", searchSiteId);
+//        model.addAttribute("searchProvince", searchProvince);
+        return "/site/site-list-api";
     }
 
     // show the create form
