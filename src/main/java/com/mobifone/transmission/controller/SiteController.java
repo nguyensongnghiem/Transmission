@@ -154,11 +154,7 @@ public class SiteController {
         model.addAttribute("siteList", siteService.findAll());
         return "/site/site-detail";
     }
-    @GetMapping("/api/list")
-    @ResponseBody
-    public Object getSiteList() {
-        return siteService.findBy(SiteViewDTO.class);
-    }
+
 
 }
 

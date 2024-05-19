@@ -26,9 +26,5 @@ public class SiteValidator implements Validator {
     }
     @Override
     public void validate(Object target, Errors errors) {
-        SiteDTO siteDTO = (SiteDTO) target;
-        if (siteService.findSitesBySiteId(siteDTO.getSiteId())!=null || siteService.findSitesBySiteId2(siteDTO.getSiteId())!=null) {
-            errors.rejectValue("siteId",null,"Site ID đã tồn tại trong hệ thống");
-        }
     }
 }

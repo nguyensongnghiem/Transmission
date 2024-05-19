@@ -10,8 +10,11 @@
 
 $(document).ready(function () {
     let $fileName = 'Danh sách trạm'
+    var contextPath = window.location.origin
+    console.log(contextPath)
+
     $('#siteDatatablesApi').DataTable({
-        // scrollY: 400,
+        scrollY: 400,
         deferRender: true,
         scroller: true,
         fixedHeader: true,
@@ -76,15 +79,24 @@ $(document).ready(function () {
             {data: 'transmissionOwner.name'},
             {data: 'note'},
             {
-                data: 'null',
+                data: 'id',
                 className: 'dt-center editor-edit',
-                defaultContent: '<button class="btn btn-warning "><i class="fa fa-pencil"/></button>',
+                render: function (data,type,row) {
+                    return `<a href="${contextPath}/site/edit/${row.id}" class="btn btn-warning"><i class="fa fa-pencil"/></a>`
+                },
                 orderable: false
             },
             {
-                data: 'null',
+                data: 'id',
                 className: 'dt-center editor-edit',
-                defaultContent: '<button class="btn btn-danger"><i class="fa fa-trash"/></button>',
+                render: function (data,type,row) {
+                    return `<button class="btn btn-danger btn-edit"
+                   onclick="deleteSite(${row.id},\'${row.siteId}\')"
+                   data-bs-toggle="modal" 
+                   data-bs-target="#deleteModal">
+                   <i class="fa fa-pencil"></i>
+                </button>`;
+                },
                 orderable: false
             }
         ]

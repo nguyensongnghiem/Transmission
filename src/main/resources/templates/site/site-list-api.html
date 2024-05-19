@@ -36,31 +36,8 @@
                         <i class="fas fa-table me-1"></i>
                         Danh sách trạm
                     </div>
-                    <div class="card-body table-responsive">
-                        <!--                        <form action="/site/list" method="get">-->
-                        <!--                            <lable> Tìm theo Site ID</lable>-->
-                        <!--                            <input name="searchSiteId" placeholder="Nhập Site Id" th:value="${searchSiteId}">-->
-                        <!--                            <button>Tìm kiếm</button>-->
-                        <!--                        </form>-->
-<!--                        <form action="/site/list-api" method="get" class="form-control">-->
-
-<!--                                <button class="btn btn-primary"><i class="fas fa-search me-1"></i></button>-->
-<!--                                <select class=" form-control" name="searchProvince">-->
-<!--                                    <option th:selected="${searchProvince==''}"-->
-<!--                                            value=""-->
-<!--                                    >Tất cả-->
-<!--                                    </option>-->
-<!--                                    <option th:each="province:${provinces}"-->
-<!--                                            th:value="${province.name}"-->
-<!--                                            th:text="${province.name}"-->
-<!--                                            th:selected="(${searchProvince} == ${province.name})">-->
-<!--                                    </option>-->
-<!--                                </select>-->
-<!--                                <input class="form-control" name="searchSiteId" placeholder="Nhập Site Id"-->
-<!--                                       th:value="${searchSiteId}">-->
-
-<!--                        </form>-->
-                        <table id="siteDatatablesApi" class="table table-bordered table-striped ">
+                    <div class="card-body">
+                        <table id="siteDatatablesApi" class="table table-bordered table-striped " cellspacing="0" width="100%">
                             <thead>
                             <tr>
 <!--                                <th class="text-center">STT</th>-->
@@ -79,7 +56,6 @@
                             </tr>
                             </thead>
                             <tfoot>
-
                             <tr>
                                 <!--                                <th class="text-center">STT</th>-->
                                 <th class="text-center">Tỉnh</th>
@@ -96,46 +72,7 @@
                                 <th class="text-center">Xóa</th>
                             </tr>
                             </tfoot>
-
                         </table>
-<!--                        <nav aria-label="...">-->
-<!--                            <ul class="pagination">-->
-<!--                                <li class="page-item" th:classappend="${!page.hasPrevious()} ? disabled">-->
-<!--                                    <a class="page-link"-->
-<!--                                       th:href="@{/site/list(pageNumber=0,searchName=${searchName},searchSiteId=${searchSiteId})}"-->
-<!--                                       aria-label="Previous">-->
-<!--                                        <span aria-hidden="true">&laquo;</span>-->
-<!--                                    </a>-->
-<!--                                </li>-->
-<!--                                <li class="page-item" th:classappend="${!page.hasPrevious()} ? disabled">-->
-<!--                                    <a class="page-link"-->
-<!--                                       th:href="@{/site/list(pageNumber=${page.getNumber()-1},searchName=${searchName},searchSiteId=${searchSiteId})}">Previous</a>-->
-<!--                                </li>-->
-
-<!--                                <li th:each="p:${#numbers.sequence(page.getNumber()-3,page.getNumber()+3)}"-->
-<!--                                    th:if="${p>=0&&p<page.getTotalPages()}"-->
-<!--                                    th:classappend="${p==page.getNumber()} ? active"-->
-<!--                                    class="page-item">-->
-<!--                                    <a class="page-link"-->
-<!--                                       th:href="@{/site/list(pageNumber=${p},searchName=${searchName},searchSiteId=${searchSiteId})}"-->
-<!--                                       th:text="${p+1}"></a>-->
-<!--                                </li>-->
-
-<!--                                <li class="page-item" th:if="${page.hasNext()}">-->
-<!--                                    <a class="page-link"-->
-<!--                                       th:href="@{/site/list(pageNumber=${page.getNumber()+1},searchName=${searchName},searchSiteId=${searchSiteId})}">Next</a>-->
-<!--                                </li>-->
-<!--                                <li class="page-item" th:classappend="${!page.hasNext()} ? disabled">-->
-<!--                                    <a class="page-link"-->
-<!--                                       th:href="@{/site/list(pageNumber=${page.getTotalPages()-1},searchName=${searchName},searchSiteId=${searchSiteId})}"-->
-<!--                                       aria-label="Previous">-->
-<!--                                        <span aria-hidden="true">&raquo;</span>-->
-<!--                                    </a>-->
-<!--                                </li>-->
-<!--                            </ul>-->
-<!--                        </nav>-->
-<!--                        <span th:text="${'Đang hiển thị trang ' + (page.getNumber()+1) + ' trong ' + page.totalPages}"></span>-->
-
                     </div>
                 </div>
             </div>
