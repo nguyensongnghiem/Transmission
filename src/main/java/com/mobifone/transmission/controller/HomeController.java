@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -50,6 +51,9 @@ public class HomeController {
     public String home(Model model) {
         List<String>  provinceLabels = getProvincesLabel();
         List<Integer> siteChartData  = getSiteChartData();
+
+        ZoneId defaultZone = ZoneId.systemDefault();
+        System.out.println("Múi giờ mặc định của ứng dụng: " + defaultZone);
 
         model.addAttribute("provinces",provinceService.findAll());
         model.addAttribute("transOwners",transmissionOwnerService.findAll());

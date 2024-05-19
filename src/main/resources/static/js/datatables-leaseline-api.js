@@ -69,7 +69,14 @@ $(document).ready(function () {
         },
         columns: [
             {data: 'site.province.name'},
-            {data: 'site.siteId'},
+            {
+                data: 'site.siteId',
+                className: 'dt-center editor-edit',
+                render: function (data,type,row) {
+                    return `<a href="${contextPath}/site/detail?siteId=${row.site.siteId}" >${row.site.siteId}</a>`
+                },
+                orderable: false
+            },
             {data: 'transmissionOwner.name'},
             {data: 'leaseLineConnectType.name'},
             {data: 'speed'},
