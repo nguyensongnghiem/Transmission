@@ -22,7 +22,7 @@
             <div id="layoutSidenav_content">
                 <main>
                     <div class="container-fluid px-4">
-                        <h4 class="mt-4">Danh sách Kênh thuê <span class="badge text-bg-success rounded-pill" th:text="${leaseLineList.size()}"></span></h4>
+                        <h4 class="mt-4">Danh sách Kênh thuê <span class="badge text-bg-success rounded-pill" th:text="${totalLeaseLine}"></span></h4>
                         <ol class="breadcrumb mb-4">
                             <li class="breadcrumb-item active"><a th:href="@{/}">Tổng quan</a></li>
                             <li class="breadcrumb-item active">Kênh thuê</li>
@@ -35,10 +35,9 @@
                                 Danh sách kênh thuê
                             </div>
                             <div class="card-body">
-                                <table id="leaseLineDataTables" class="table table-striped table-sm table-bordered">
-                                    <thead >
+                                <table id="leaseLineDataTablesApi" class="table table-striped table-sm table-bordered table-light " cellspacing="0" width="100%">
+                                    <thead class="table-success">
                                         <tr>
-                                            <th class="text-center" >STT</th>
                                             <th class="text-center" >Tỉnh</th>
                                             <th class="text-center" >Site ID</th>
                                             <th class="text-center" >Nhà cung cấp</th>
@@ -47,12 +46,12 @@
                                             <th class="text-center" >Đơn giá thuê(Chưa VAT)</th>
                                             <th class="text-center" >Số lượng</th>
                                             <th class="text-center" >Ghi chú</th>
-                                            <th class="text-center" >Tác vụ</th>
+                                            <th class="text-center" >Sửa</th>
+                                            <th class="text-center" >Xóa</th>
                                         </tr>
                                     </thead>
                                     <tfoot>
                                         <tr>
-                                            <th class="text-center" >STT</th>
                                             <th class="text-center" >Tỉnh</th>
                                             <th class="text-center" >Site ID</th>
                                             <th class="text-center" >Nhà cung cấp</th>
@@ -61,30 +60,10 @@
                                             <th class="text-center" >Đơn giá thuê(Chưa VAT)</th>
                                             <th class="text-center" >Số lượng</th>
                                             <th class="text-center" >Ghi chú</th>
-                                            <th class="text-center" >Tác vụ</th>
+                                            <th class="text-center" >Sửa</th>
+                                            <th class="text-center" >Xóa</th>
                                         </tr>
                                     </tfoot>
-                                    <tbody><tr th:each="ll,stats:${leaseLineList}">
-                                        <td class="text-center" th:text="${stats.count}">
-                                        <td class="text-center" th:text="${ll.site?.province?.name}">
-                                        <td class="text-center" th:text="${ll.site?.siteId}">
-                                        <td class="text-center" th:text="${ll.transmissionOwner.name}">
-                                        <td class="text-center" th:text="${ll.leaseLineConnectType.name}">
-                                        <td class="text-center" th:text="${ll.speed}">
-                                        <td class="text-end" th:text="${#numbers.formatDecimal(ll.cost, 1, 'POINT', 0, 'COMMA')}">
-                                        <td class="text-center" th:text="${ll.quantity}">
-                                        <td th:text="${ll.note}">
-                                        <td>
-                                            <div class="btn-group btn-group-sm" role="group" aria-label="Basic mixed styles example">
-                                                <a th:href="@{'/leaseline/edit/'+${ll.id}}" type="button" class="btn btn-warning">Sửa</a>
-                                                <button th:data-id="${ll.id}" th:data-name="${ll.site.siteId}"
-                                                        th:onclick="deleteLeaseLine(this.getAttribute('data-id'),this.getAttribute('data-name'))"
-                                                        type="button" class="btn btn-danger" data-bs-toggle="modal"
-                                                        data-bs-target="#deleteModal">Xóa
-                                                </button>
-                                            </div>
-                                        </td>
-                                    </tr></tbody>
                                 </table>
                             </div>
                         </div>

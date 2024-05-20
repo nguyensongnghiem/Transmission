@@ -63,7 +63,7 @@ public class SiteController {
 //        model.addAttribute("siteList", siteList);
 //        return "/site/site-list";
 //    }
-    @GetMapping("/list")
+    @GetMapping("/list-old")
     public String listByPage(
             Model model,
             @RequestParam(required = false, defaultValue = "") String searchSiteId,
@@ -90,15 +90,11 @@ public class SiteController {
 //        model.addAttribute("siteList", siteList);
 //        model.addAttribute("totalPages", totalPages);
 //        model.addAttribute("totalElements", totalElements);
-        return "/site/site-list";
+        return "site-list-old";
     }
 
-    @GetMapping("/list-api")
-    public String listByPageApi(
-            Model model,
-            @RequestParam(required = false, defaultValue = "") String searchSiteId,
-            @RequestParam(required = false, defaultValue = "") String searchProvince,
-            @RequestParam(required = false, defaultValue = "0") int pageNumber) {
+    @GetMapping("/list")
+    public String listByPageApi(Model model) {
 //        Pageable pageable = PageRequest.of(pageNumber, 15);
 //        if (searchSiteId == null) searchSiteId = "";
 //        if (searchProvince == null) searchProvince = "";
@@ -106,7 +102,7 @@ public class SiteController {
 //        model.addAttribute("page", page);
 //        model.addAttribute("searchSiteId", searchSiteId);
 //        model.addAttribute("searchProvince", searchProvince);
-        return "/site/site-list-api";
+        return "/site/site-list";
     }
 
     // show the create form

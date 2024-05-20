@@ -22,7 +22,7 @@
             <div id="layoutSidenav_content">
                 <main>
                     <div class="container-fluid px-4">
-                        <h4 class="mt-4">Danh sách router <span class="badge text-bg-success rounded-pill" th:text="${routerList.size()}"></span> </h4>
+                        <h4 class="mt-4">Danh sách router <span class="badge text-bg-success rounded-pill" th:text="${totalRouters}"></span> </h4>
                         <ol class="breadcrumb mb-4">
                             <li class="breadcrumb-item active"><a th:href="@{/}">Tổng quan</a></li>
                             <li class="breadcrumb-item active">Thiết bị</li>
@@ -35,10 +35,9 @@
                                 Danh sách thiết bị
                             </div>
                             <div class="card-body">
-                                <table id="routerDatatables" class="table table-bordered table-striped table-sm">
-                                    <thead >
+                                <table id="routerDatatablesApi" class="table table-sm table-bordered table-striped table-light" cellspacing="0" width="100%">
+                                    <thead class="table-success">
                                         <tr>
-                                            <th class="text-center" >STT</th>
                                             <th class="text-center" >Tỉnh</th>
                                             <th class="text-center" >Site ID</th>
                                             <th class="text-center" >Tên router</th>
@@ -46,12 +45,12 @@
                                             <th class="text-center" >Loại thiết bị TD</th>
                                             <th class="text-center" >Ip quản lý</th>
                                             <th class="text-center" >Ghi chú</th>
-                                            <th class="text-center" >Tác vụ</th>
+                                            <th class="text-center" >Sửa</th>
+                                            <th class="text-center" >Xóa</th>
                                         </tr>
                                     </thead>
                                     <tfoot>
                                         <tr>
-                                            <th class="text-center" >STT</th>
                                             <th class="text-center" >Tỉnh</th>
                                             <th class="text-center" >Site ID</th>
                                             <th class="text-center" >Tên router</th>
@@ -59,32 +58,33 @@
                                             <th class="text-center" >Loại thiết bị TD</th>
                                             <th class="text-center" >Ip quản lý</th>
                                             <th class="text-center" >Ghi chú</th>
-                                            <th class="text-center" >Tác vụ</th>
+                                            <th class="text-center" >Sửa</th>
+                                            <th class="text-center" >Xóa</th>
                                         </tr>
                                     </tfoot>
-                                    <tbody>
-                                    <tr th:each="router,stats:${routerList}">
-                                        <td  class="text-center" th:text="${stats.count}">
-                                        <td  class="text-center" th:text="${router.getSite().getProvince().getName()}">
-                                        <td  class="text-center">
-                                        <a th:href="@{/site/detail(siteId=${router.getSite().getId()})}" th:text="${router.site.getSiteId()}"></a>
-                                        </td>
-                                        <td  class="text-center" th:text="${router.name}">
-                                        <td  class="text-center" th:text="${router.getRouterType()?.getName()}">
-                                        <td  class="text-center" th:text="${router.getTransmissionDeviceType()?.getName()}">
-                                        <td  class="text-center" th:text="${router.ip}">
-                                        <td  class="text-center" th:text="${router.note}">
-                                        <td class="text-center" >
-                                            <div class="btn-group btn-group-sm" role="group" aria-label="Basic mixed styles example">
-                                                <a th:href="@{'/router/edit/'+${router.id}}" type="button" class="btn btn-warning">Sửa</a>
-                                                <button th:data-id="${router.getId()}" th:data-router-name="${router.getName()}"
-                                                        th:onclick="deleteRouter(this.getAttribute('data-id'),this.getAttribute('data-router-name'))"
-                                                        type="button" class="btn btn-danger" data-bs-toggle="modal"
-                                                        data-bs-target="#deleteModal">Xóa
-                                                </button>
-                                            </div>
-                                        </td>
-                                    </tr></tbody>
+<!--                                    <tbody>-->
+<!--                                    <tr th:each="router,stats:${routerList}">-->
+<!--                                        <td  class="text-center" th:text="${stats.count}">-->
+<!--                                        <td  class="text-center" th:text="${router.getSite().getProvince().getName()}">-->
+<!--                                        <td  class="text-center">-->
+<!--                                        <a th:href="@{/site/detail(siteId=${router.getSite().getId()})}" th:text="${router.site.getSiteId()}"></a>-->
+<!--                                        </td>-->
+<!--                                        <td  class="text-center" th:text="${router.name}">-->
+<!--                                        <td  class="text-center" th:text="${router.getRouterType()?.getName()}">-->
+<!--                                        <td  class="text-center" th:text="${router.getTransmissionDeviceType()?.getName()}">-->
+<!--                                        <td  class="text-center" th:text="${router.ip}">-->
+<!--                                        <td  class="text-center" th:text="${router.note}">-->
+<!--                                        <td class="text-center" >-->
+<!--                                            <div class="btn-group btn-group-sm" role="group" aria-label="Basic mixed styles example">-->
+<!--                                                <a th:href="@{'/router/edit/'+${router.id}}" type="button" class="btn btn-warning">Sửa</a>-->
+<!--                                                <button th:data-id="${router.getId()}" th:data-router-name="${router.getName()}"-->
+<!--                                                        th:onclick="deleteRouter(this.getAttribute('data-id'),this.getAttribute('data-router-name'))"-->
+<!--                                                        type="button" class="btn btn-danger" data-bs-toggle="modal"-->
+<!--                                                        data-bs-target="#deleteModal">Xóa-->
+<!--                                                </button>-->
+<!--                                            </div>-->
+<!--                                        </td>-->
+<!--                                    </tr></tbody>-->
                                 </table>
                             </div>
                         </div>

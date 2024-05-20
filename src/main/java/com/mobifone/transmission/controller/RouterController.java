@@ -57,18 +57,18 @@ public class RouterController {
         return transmissionDeviceTypeService.findAll();
     }
 
-    @GetMapping("/list")
+    @GetMapping("/list-old")
     public String list(Model model) {
         List<Router> routerList = routerService.findAll();
         List<RouterViewDTO> routerViewDTOList = routerService.findBy(RouterViewDTO.class);
         model.addAttribute("routerList", routerViewDTOList);
-        return "/router/router-list";
+        return "router-list-old";
     }
 
-    @GetMapping("/list-api")
+    @GetMapping("/list")
     public String listByPageApi(Model model) {
         model.addAttribute("totalRouters", routerService.findAll().size());
-        return "/router/router-list-api";
+        return "/router/router-list";
     }
 //    @GetMapping("/site/list/{pageNumber}")
 //    public String listByPage(Model model, @PathVariable("pageNumber") int currentPage) {

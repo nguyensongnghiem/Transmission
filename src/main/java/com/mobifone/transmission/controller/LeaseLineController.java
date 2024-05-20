@@ -40,15 +40,15 @@ public class LeaseLineController {
         return leaseLineConnectTypeService.findAll();
     }
 
-    @GetMapping("/list")
+    @GetMapping("/list-old")
     public String list(Model model) {
         List<LeaseLine> leaseLineList = leaseLineService.findAll();
         model.addAttribute("leaseLineList", leaseLineList);
-        return "/leaseline/leaseline-list";
+        return "leaseline-list-old";
     }
-    @GetMapping("/list-api")
+    @GetMapping("/list")
     public String listByPageApi() {
-        return "/leaseline/leaseline-list-api";
+        return "/leaseline/leaseline-list";
     }
 // show the create form
     @GetMapping("/create")
