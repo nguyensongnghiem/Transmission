@@ -1,6 +1,7 @@
 package com.mobifone.transmission.service.impl;
 
 import com.mobifone.transmission.dto.inf.RouterViewDTO;
+import com.mobifone.transmission.dto.inf.SimpleRouterDTO;
 import com.mobifone.transmission.model.Router;
 import com.mobifone.transmission.model.Site;
 import com.mobifone.transmission.repository.IRouterRepository;
@@ -60,5 +61,10 @@ public class RouterService implements IRouterService {
     @Override
     public List<RouterViewDTO> findBy(Class<RouterViewDTO> routerViewDTOClass) {
         return routerRepository.findBy(routerViewDTOClass);
+    }
+
+    @Override
+    public List<SimpleRouterDTO> findAllSimpleRouter() {
+        return routerRepository.findAllSimpleRouter();
     }
 }

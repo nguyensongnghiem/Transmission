@@ -1,7 +1,6 @@
 package com.mobifone.transmission.restcontroller;
 
 import com.mobifone.transmission.dto.inf.RouterViewDTO;
-import com.mobifone.transmission.dto.inf.SiteViewDTO;
 import com.mobifone.transmission.service.IRouterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,7 +16,12 @@ public class RouterRestController {
 
     @GetMapping("/api/list")
     @ResponseBody
-    public Object getSiteList() {
+    public Object getRouterList() {
         return routerService.findBy(RouterViewDTO.class);
+    }
+    @GetMapping("/api/simple-list")
+    @ResponseBody
+    public Object getSimpleRouterList() {
+        return routerService.findAllSimpleRouter();
     }
 }

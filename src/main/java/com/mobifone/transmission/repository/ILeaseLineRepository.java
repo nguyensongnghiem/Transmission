@@ -7,4 +7,5 @@ import java.util.List;
 
 public interface ILeaseLineRepository extends JpaRepository<LeaseLine,Integer> {
     <T> List<T> findBy(Class<T> classType);
+
 }

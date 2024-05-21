@@ -1,6 +1,7 @@
 package com.mobifone.transmission.service;
 
 import com.mobifone.transmission.dto.inf.RouterViewDTO;
+import com.mobifone.transmission.dto.inf.SimpleRouterDTO;
 import com.mobifone.transmission.model.Router;
 import com.mobifone.transmission.model.Site;
 import org.springframework.data.domain.Page;
@@ -20,4 +21,5 @@ public interface IRouterService {
     Router findRouterByIp(String ip);
 
     List<RouterViewDTO> findBy(Class<RouterViewDTO> routerViewDTOClass);
+    List<SimpleRouterDTO> findAllSimpleRouter();
 }
