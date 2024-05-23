@@ -65,13 +65,13 @@ public class LeaseLineController {
     }
 
     @PostMapping("/delete")
-    public String deleteRouter(@RequestParam int deleteId) {
+    public String deleteRouter(@RequestParam(name = "deleteId") int deleteId) {
         leaseLineService.deleteById(deleteId);
         return "redirect:/leaseline/list";
     }
 
     @GetMapping("/edit/{editId}")
-    public String showEditForm(Model model, @PathVariable int editId) {
+    public String showEditForm(Model model, @PathVariable(name = "editId") int editId) {
         LeaseLine leaseLine = leaseLineService.findById(editId);
         model.addAttribute("leaseLine", leaseLine);
         return "leaseline/leaseline-edit";

@@ -102,12 +102,12 @@ public class RouterController {
         return "redirect:/router/list";
     }
     @PostMapping("/delete")
-    public String deleteRouter(@RequestParam Long deleteId) {
+    public String deleteRouter(@RequestParam(name= "deleteId") Long deleteId) {
         routerService.deleteById(deleteId);
         return "redirect:/router/list";
     }
     @GetMapping("/edit/{editId}")
-    public String showEditForm(Model model, @PathVariable Long editId) {
+    public String showEditForm(Model model, @PathVariable(name = "editId") Long editId) {
         Router router = routerService.findById(editId);
         model.addAttribute("router",router);
         return "router/router-edit";

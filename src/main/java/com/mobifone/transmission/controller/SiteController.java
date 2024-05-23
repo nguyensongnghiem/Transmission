@@ -66,9 +66,9 @@ public class SiteController {
     @GetMapping("/list-old")
     public String listByPage(
             Model model,
-            @RequestParam(required = false, defaultValue = "") String searchSiteId,
-            @RequestParam(required = false, defaultValue = "") String searchProvince,
-            @RequestParam(required = false, defaultValue = "0") int pageNumber) {
+            @RequestParam(required = false, defaultValue = "", name = "searchSiteId") String searchSiteId,
+            @RequestParam(required = false, defaultValue = "",name = "searchProvince") String searchProvince,
+            @RequestParam(required = false, defaultValue = "0", name = "pageNumber") int pageNumber) {
 //        List<Site> siteList = siteService.findAll();
 
 //        List<SiteViewDTO> siteViewDTOList= new ArrayList<>();
@@ -125,13 +125,13 @@ public class SiteController {
     }
 
     @PostMapping("/delete")
-    public String deleteSite(@RequestParam Long deleteId) {
+    public String deleteSite(@RequestParam(name = "deleteId") Long deleteId) {
         siteService.deleteById(deleteId);
         return "redirect:/site/list";
     }
 
     @GetMapping("/edit/{editId}")
-    public String showEditForm(Model model, @PathVariable Long editId) {
+    public String showEditForm(Model model, @PathVariable(name = "editId") Long editId) {
         Site site = siteService.findById(editId);
         model.addAttribute("site", site);
         return "/site/site-edit";
@@ -144,7 +144,7 @@ public class SiteController {
     }
 
     @GetMapping("/detail")
-    public String showDetail(Model model, @RequestParam(required = false, defaultValue = "") String siteId) {
+    public String showDetail(Model model, @RequestParam(required = false, defaultValue = "",name = "siteId") String siteId) {
         Site site = siteService.findSitesBySiteId(siteId);
         model.addAttribute("site", site);
         model.addAttribute("siteList", siteService.findAll());
