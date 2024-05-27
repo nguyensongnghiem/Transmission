@@ -4,12 +4,9 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.SoftDelete;
-import org.hibernate.annotations.SourceType;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import org.hibernate.annotations.UpdateTimestamp;
 
-import java.time.Instant;
+import java.sql.Timestamp;
 import java.util.List;
 @Setter
 @Getter
@@ -61,6 +58,9 @@ public class Site {
 
     @OneToMany(mappedBy = "site", cascade = CascadeType.ALL)
     private List<Router> routerList;
-
-
+    @CreationTimestamp
+    @Column(updatable = false)
+    private Timestamp createdOn;
+    @UpdateTimestamp
+    private Timestamp updatedOn;
 }

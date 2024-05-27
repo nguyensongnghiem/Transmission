@@ -4,6 +4,9 @@ import com.mobifone.transmission.model.*;
 import com.mobifone.transmission.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.WebDataBinder;
@@ -67,7 +70,7 @@ public class HomeController {
         for (LeaseLine ll : leaseLines) {
             cost += ll.getCost()*ll.getQuantity();
         }
-
+        model.addAttribute("username", getUserName());
         model.addAttribute("totalLeaseLineCostPerMonth",cost);
         model.addAttribute("totalRouters",routerService.findAll().size());
         model.addAttribute("provinceLabels",provinceLabels);
@@ -107,6 +110,13 @@ public class HomeController {
         }
         return siteNumber;
     }
-
+ public String getUserName() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication != null && authentication.getPrincipal() instanceof UserDetails) {
+            UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+            return userDetails.getUsername();
+        }
+        return "Anonymous";
+    }
 
 }

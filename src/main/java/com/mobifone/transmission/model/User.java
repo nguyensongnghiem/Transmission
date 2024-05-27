@@ -20,17 +20,25 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;    
-    @Column(nullable = false)
-    private String name;
+    @Column(nullable = false,unique = true,length = 30)
+    private String username;
     @Column(nullable = false,unique = true)
     private String email;
-    private String hashed_password;
+    @Column(nullable = false,length = 100)
+    private String password;
     private State state;
 
-    public User(String name, String email, String hashed_password, State state) {
-        this.name = name;
+    public User(String username, String email, String password, State state) {
+        this.username = username;
         this.email = email;
-        this.hashed_password = hashed_password;
+        this.password = password;
         this.state = state;
     }
+    public User(String username, String email, String password) {
+        this.username = username;
+        this.email = email;
+        this.password = password;
+        this.state = State.PENDING;
+    }
 }
+    

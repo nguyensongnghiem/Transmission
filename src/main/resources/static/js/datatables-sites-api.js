@@ -66,7 +66,7 @@ $(document).ready(function () {
         },
         ajax: {
             url: "/site/api/list",
-            dataSrc: ''
+            dataSrc: ''           
         },
         columns: [
             {data: 'province.name'},

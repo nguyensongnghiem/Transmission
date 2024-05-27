@@ -4,7 +4,12 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.sql.Timestamp;
+
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.SoftDelete;
+import org.hibernate.annotations.UpdateTimestamp;
 
 @Setter
 @Getter
@@ -35,6 +40,11 @@ public class Router {
     private String ip;
 
     private String note;
+        @CreationTimestamp
+    @Column(updatable = false)
+    private Timestamp createdOn;
+    @UpdateTimestamp
+    private Timestamp updatedOn;
 
 }
 

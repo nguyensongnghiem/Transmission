@@ -3,6 +3,9 @@ package com.mobifone.transmission.controller;
 import com.mobifone.transmission.model.*;
 import com.mobifone.transmission.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -81,6 +84,14 @@ public class LeaseLineController {
     public String edit(@ModelAttribute LeaseLine leaseLine) {
         leaseLineService.save(leaseLine);
         return "redirect:/leaseline/list";
+    }
+    public String getUserName() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication != null && authentication.getPrincipal() instanceof UserDetails) {
+            UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+            return userDetails.getUsername();
+        }
+        return "Anonymous";
     }
 }
 

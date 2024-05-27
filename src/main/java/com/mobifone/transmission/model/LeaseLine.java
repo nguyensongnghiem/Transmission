@@ -5,9 +5,10 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import java.sql.Timestamp;
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.SoftDelete;
-import org.hibernate.annotations.SoftDeleteType;
-
+import org.hibernate.annotations.UpdateTimestamp;
 
 @Setter
 @Getter
@@ -31,5 +32,10 @@ public class LeaseLine {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "siteId",nullable = false)
     private Site site;
+    @CreationTimestamp
+    @Column(updatable = false)
+    private Timestamp createdOn;
+    @UpdateTimestamp
+    private Timestamp updatedOn;
 
 }
