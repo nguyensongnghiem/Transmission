@@ -1,27 +1,42 @@
 package com.mobifone.transmission.config;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
-import org.hibernate.annotations.Comment;
+import com.mobifone.transmission.model.Role;
+import com.mobifone.transmission.model.User;
+import com.mobifone.transmission.model.UserRole;
+import com.mobifone.transmission.repository.IUserRoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
-import com.mobifone.transmission.model.User;
-import com.mobifone.transmission.service.IUserService;
 
-public class CustomUserDetails implements UserDetails{
-    private User user;    
-    public CustomUserDetails(User user) {
+public class CustomUserDetails implements UserDetails {
+    private User user;
+
+    private IUserRoleRepository userRoleRepository;
+
+    public CustomUserDetails(User user, IUserRoleRepository userRoleRepository) {
         super();
         this.user = user;
+        this.userRoleRepository = userRoleRepository;
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        // TODO Auto-generated method stub
-        return null;
+        List<GrantedAuthority> grantedAuthorities = new ArrayList<>();
+        List<UserRole> userRoles = userRoleRepository.findUserRoleByUser(user);
+        if (userRoles != null) {
+            for (UserRole userRole : userRoles) {
+                GrantedAuthority authority = new SimpleGrantedAuthority(userRole.getRole().getName());
+                grantedAuthorities.add(authority);
+            }
+        }
+        return grantedAuthorities;
     }
 
     @Override
