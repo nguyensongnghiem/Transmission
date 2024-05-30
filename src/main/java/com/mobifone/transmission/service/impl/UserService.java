@@ -1,10 +1,10 @@
 package com.mobifone.transmission.service.impl;
 
+import com.mobifone.transmission.model.User;
 import com.mobifone.transmission.model.State;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.mobifone.transmission.model.User;
 import com.mobifone.transmission.repository.IUserRepository;
 import com.mobifone.transmission.service.IUserService;
 
@@ -35,7 +35,7 @@ public class UserService implements IUserService {
     @Override
     public boolean isUserActivated(String name) {
         User foundUser = userRepository.findUserByUsername(name);
-        if (foundUser!=null){
+        if (foundUser !=null){
         return foundUser.getState()== State.ACTIVE;
         }
         return false;
