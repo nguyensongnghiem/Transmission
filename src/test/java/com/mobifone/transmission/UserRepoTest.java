@@ -21,8 +21,8 @@ public class UserRepoTest {
     PasswordEncoder encoder;
     @Test
     public void addUser() {
-        String hashedPass = encoder.encode("cuong");
-        User user = new User("Cuong","cuong@gmail.com",hashedPass,State.ACTIVE);
+        String hashedPass = encoder.encode("nghiem");
+        User user = new User("nghiem","nghiem@gmail.com",hashedPass,State.ACTIVE);
         userRepository.save(user);
         assertNotNull(userRepository.findById(user.getId()));
 
@@ -30,7 +30,7 @@ public class UserRepoTest {
     @Test
     public void addUserPending() {
         String hashedPass = encoder.encode("quang");
-        User user = new User("Quang","quang@gmail.com",hashedPass);
+        User user = new User("quang","quang@gmail.com",hashedPass);
         userRepository.save(user);
         assertNotNull(userRepository.findById(user.getId()));
     }

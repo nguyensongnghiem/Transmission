@@ -26,6 +26,9 @@ public class CustomUserDetails implements UserDetails {
         this.userRoleRepository = userRoleRepository;
     }
 
+    public CustomUserDetails() {
+    }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         List<GrantedAuthority> grantedAuthorities = new ArrayList<>();
