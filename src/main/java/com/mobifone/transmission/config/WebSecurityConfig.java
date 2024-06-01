@@ -41,13 +41,14 @@ public class WebSecurityConfig {
         http.csrf(AbstractHttpConfigurer::disable);
         // các đường dẫn không phải login
         http.authorizeHttpRequests((authorize) -> authorize
-                .requestMatchers("/", "/login", "/logout", "/logoutSuccessful", "/403","/vendor/**" ).permitAll());
+                .requestMatchers("/", "/login", "/logout", "/logoutSuccessful", "/403","/vendor/**", "/site/list", "/router/list","/leaseline/list",
+                        "/*/api/list","/*/detail").permitAll());
         // cấp quyền cho user
-        http.authorizeHttpRequests((authorize) -> authorize
-                .requestMatchers("/site/list","/site/api/list","/router/api/list","/leaseline/api/list").hasAnyRole("USER", "ADMIN"));
+//        http.authorizeHttpRequests((authorize) -> authorize
+//                .requestMatchers("/*/edit","/*/delete").hasAnyRole("USER", "ADMIN"));
 
         http.authorizeHttpRequests((authorize) -> authorize
-                .requestMatchers("/site/create","/site/delete","site/edit/**").hasRole("ADMIN"));
+                .requestMatchers("/*/create","/*/delete","*/edit/**","/**/detail/**").hasAnyRole("USER", "ADMIN"));
         // cấp quyền cho user và admin
 //        http.authorizeHttpRequests((authorize) -> authorize
 //                .requestMatchers("/userInfo", "/blog/create").hasAnyRole("USER", "ADMIN"));
@@ -61,13 +62,14 @@ public class WebSecurityConfig {
                 .passwordParameter("password")// trung với tên trong form đăng nhập
         );
         // cấu hình logout
-        http.logout(form -> form.logoutUrl("/logout").logoutSuccessUrl("/logoutSuccessful"));
+        http.logout(form -> form.logoutUrl("/logout").logoutSuccessUrl("/"));
 
         // cấu hình remember-me : lưu trạng thái đăng nhập khi tắt trình duyệt => mở lại không cần login
 //        http.rememberMe(remember -> remember.tokenRepository(persistentTokenRepository()));
 
         // cấu hình trả về trang 403 khi không có quyền (role) truy cập
         http.exceptionHandling(ex -> ex.accessDeniedPage("/403"));
+
         http.requestCache((cache) -> cache
                 .requestCache(requestCache));
         return http.build();

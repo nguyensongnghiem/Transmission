@@ -78,6 +78,7 @@ $(document).ready(function () {
                 },
                 orderable: false
             },
+            {data: 'siteId2'},
             {data: 'siteName'},
             {data: 'latitude'},
             {data: 'longitude'},

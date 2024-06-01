@@ -25,7 +25,6 @@ public class UserRepoTest {
         User user = new User("nghiem","nghiem@gmail.com",hashedPass,State.ACTIVE);
         userRepository.save(user);
         assertNotNull(userRepository.findById(user.getId()));
-
     }
     @Test
     public void addUserPending() {
