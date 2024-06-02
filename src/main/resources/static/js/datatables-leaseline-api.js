@@ -12,7 +12,7 @@ $(document).ready(function () {
     let $fileName = 'Danh sách kênh thuê'
     var contextPath = window.location.origin
     $('#leaseLineDataTablesApi').DataTable({
-        scrollY:        400,
+        // scrollY:        400,
         deferRender:    true,
         scroller:       true,
         fixedHeader: true,

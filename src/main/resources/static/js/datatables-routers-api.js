@@ -12,7 +12,7 @@ $(document).ready(function() {
     var contextPath = window.location.origin
     console.log(contextPath)
     $('#routerDatatablesApi').DataTable({
-        scrollY:        400,
+        // scrollY:        400,
         deferRender:    true,
         scroller:       true,
         fixedHeader: true,

@@ -14,7 +14,7 @@ $(document).ready(function () {
     console.log(contextPath)
 
     $('#siteDatatablesApi').DataTable({
-        scrollY: 400,
+        // scrollY: 400,
         deferRender: true,
         scroller: true,
         fixedHeader: true,

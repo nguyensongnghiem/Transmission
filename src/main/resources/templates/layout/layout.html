@@ -14,72 +14,75 @@
 </th:block>
 
 <div th:fragment="topbar">
-    <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
+    <header>
+        <nav class="sb-topnav navbar navbar-expand bg-body-tertiary bg-gradient shadow">
 
-        <!-- Navbar Brand-->
-        <a class="navbar-brand ps-3" th:href="@{/}">
-            <img class="img-fluid" th:src="@{/img/mobifone.png}"/>
-        </a>
+            <!-- Navbar Brand-->
+            <a class="navbar-brand ps-3" th:href="@{/}">
+                <img class="img-fluid" th:src="@{/img/mobifone.png}"/>
+            </a>
 
-        <!-- Sidebar Toggle-->
-        <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i
-                class="fas fa-bars"></i></button>
+            <!-- Sidebar Toggle-->
+            <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i
+                    class="fas fa-bars"></i></button>
 
-        <!--         Navbar Search-->
-        <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
-            <div class="input-group">
-                <input class="form-control" type="text" placeholder="Search for..." aria-label="Search for..."
-                       aria-describedby="btnNavbarSearch"/>
-                <button class="btn btn-primary" id="btnNavbarSearch" type="button"><i class="fas fa-search"></i>
-                </button>
-            </div>
-        </form>
-
-
-
-        <!-- Navbar Search-->
-        <!--        <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">-->
-        <!--            <div class="input-group">-->
-        <!--                <input class="form-control" type="text" placeholder="Search for..." aria-label="Search for..."-->
-        <!--                       aria-describedby="btnNavbarSearch"/>-->
-        <!--                <button class="btn btn-primary" id="btnNavbarSearch" type="button"><i class="fas fa-search"></i>-->
-        <!--                </button>-->
-        <!--            </div>-->
-        <!--        </form>-->
+            <!--         Navbar Search-->
+            <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
+                <div class="input-group">
+                    <input class="form-control" type="text" placeholder="Search for..." aria-label="Search for..."
+                           aria-describedby="btnNavbarSearch"/>
+                    <button class="btn btn-primary" id="btnNavbarSearch" type="button"><i class="fas fa-search"></i>
+                    </button>
+                </div>
+            </form>
 
 
-        <!--         Navbar--> <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
+            <!-- Navbar Search-->
+            <!--        <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">-->
+            <!--            <div class="input-group">-->
+            <!--                <input class="form-control" type="text" placeholder="Search for..." aria-label="Search for..."-->
+            <!--                       aria-describedby="btnNavbarSearch"/>-->
+            <!--                <button class="btn btn-primary" id="btnNavbarSearch" type="button"><i class="fas fa-search"></i>-->
+            <!--                </button>-->
+            <!--            </div>-->
+            <!--        </form>-->
 
 
-        <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
-            <li class="nav-item" sec:authorize="!isAuthenticated()">
-                <a class="nav-link btn btn-link" th:href="@{/login}" role="button"
-                   aria-expanded="false">
-                    <span sec:authorize="!isAuthenticated()" >Đăng nhập</span>
-                </a>
-            </li>
+            <!--         Navbar-->
 
-            <li class="nav-item dropdown" sec:authorize="isAuthenticated()">
 
-                <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown"
-                   aria-expanded="false">
-                    <i class="fas fa-user fa-fw"></i>
-                    <span sec:authentication="name"></span>
-                </a>
-                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                    <li><a class="dropdown-item" href="#!">Settings</a></li>
-                    <li><a class="dropdown-item" href="#!">Activity Log</a></li>
-                    <li sec:authorize="isAuthenticated()">
-                        <hr class="dropdown-divider"/>
-                    </li>
-                    <li sec:authorize="isAuthenticated()">
-                        <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#logoutModal">Đăng xuất
-                        </a>
-                    </li>
-                </ul>
-            </li>
-        </ul>
-    </nav>
+            <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
+                <li class="nav-item" sec:authorize="!isAuthenticated()">
+                    <a class="nav-link btn btn-link" th:href="@{/login}" role="button"
+                       aria-expanded="false">
+                        <span sec:authorize="!isAuthenticated()">Đăng nhập</span>
+                    </a>
+                </li>
+
+                <li class="nav-item dropdown" sec:authorize="isAuthenticated()">
+
+                    <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button"
+                       data-bs-toggle="dropdown"
+                       aria-expanded="false">
+                        <i class="fas fa-user fa-fw"></i>
+                        <span sec:authentication="name"></span>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" href="#!">Settings</a></li>
+                        <li><a class="dropdown-item" href="#!">Activity Log</a></li>
+                        <li sec:authorize="isAuthenticated()">
+                            <hr class="dropdown-divider"/>
+                        </li>
+                        <li sec:authorize="isAuthenticated()">
+                            <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#logoutModal">Đăng
+                                xuất
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+    </header>
 </div>
 
 <th:block th:fragment="sidebar">
@@ -198,28 +201,63 @@
     </div>
 
     <!-- Modal Logout-->
-    <div class="modal fade" id="logoutModal" tabindex="-1" aria-labelledby="logoutModalLabel" aria-hidden="true">
+    <div class="modal fade modal-sm" id="logoutModal" tabindex="-1" aria-labelledby="logoutModalLabel"
+         aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                <form th:action="@{/logout}" method="post">
+                <div class="modal-header">
+                    <h5 class="modal-title " id="logoutModalLabel">Đăng xuất</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="modal-body">
+                        <p>Bạn có muốn đăng xuất ?</p>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                    <a th:href="@{/logout}" class="btn btn-primary">Đăng xuất</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Login-->
+    <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form th:action="@{/process-login}" method="post">
                     <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="logoutModalLabel">Đăng xuất</h1>
+                        <h5 class="modal-title " id="loginModalLabel">Đăng nhập</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
                         <div class="modal-body">
-                            Bạn có muốn đăng xuất ?
+                            <div class="input-group flex-nowrap mb-3">
+                                <span class="input-group-text"><i class="fa fa-user fa-fw"></i></span>
+                                <input type="text" class="form-control" name="username" placeholder="Username"
+                                       aria-label="Username" aria-describedby="addon-wrapping">
+                            </div>
+                            <div class="input-group flex-nowrap mb-3">
+                                <span class="input-group-text"><i class="fa fa-key fa-fw"></i></span>
+                                <input type="text" class="form-control" name="password" placeholder="Password"
+                                       aria-label="password" aria-describedby="addon-wrapping">
+                            </div>
+                            <div class="form-check mb-3">
+                                <input class="form-check-input" id="inputRememberPassword" type="checkbox" value=""/>
+                                <label class="form-check-label" for="inputRememberPassword">Ghi nhớ mật khẩu</label>
+                            </div>
                         </div>
-                        <input name="deleteId" type="hidden" id="hidden-delete-id">
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
-                        <button type="submit" class="btn btn-primary">Đăng xuất</button>
+                        <button type="submit" class="btn btn-primary">Đăng nhập</button>
                     </div>
                 </form>
             </div>
         </div>
     </div>
+
 </th:block>
 
 
