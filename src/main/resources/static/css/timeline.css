@@ -1,0 +1,43 @@
+.horizontal-timeline .items {
+    /*border-top: 3px solid #e9ecef;*/
+}
+
+.horizontal-timeline .items .items-list {
+    border-top: 3px solid #e9ecef;
+    display: block;
+    position: relative;
+    text-align: center;
+    padding-top: 20px;
+    margin-right: 0;
+}
+
+.horizontal-timeline .items .items-list:before {
+    content: "";
+    position: absolute;
+    height: 25px;
+    border-right: 2px dashed #dee2e6;
+    top: 0;
+}
+
+.horizontal-timeline .items .items-list .event-date {
+    position: absolute;
+    top: -15px;
+    left: 0;
+    right: 0;
+    width: 100px;
+    margin: 0 auto;
+    font-size: 0.9rem;
+    padding-top: 8px;
+}
+
+@media (min-width: 1140px) {
+    .horizontal-timeline .items .items-list {
+        display: inline-block;
+        width: 24%;
+        padding-top: 20px;
+    }
+
+    .horizontal-timeline .items .items-list .event-date {
+        top: -15px;
+    }
+}

@@ -45,6 +45,8 @@ public class HomeController {
     private ILeaseLineService leaseLineService;
     @Autowired
     private ILeaseLineConnectTypeService leaseLineConnectTypeService;
+    @Autowired
+    private IFoContractService foContractService;
 
 
 
@@ -63,6 +65,8 @@ public class HomeController {
         model.addAttribute("siteTransTypes",siteTransmissionTypeService.findAll());
         model.addAttribute("siteOwners",siteOwnerService.findAll());
         model.addAttribute("totalSites",siteService.findAll().size());
+        model.addAttribute("topDueContract",foContractService.findContractEndIn5Month());
+
         model.addAttribute("totalFoSites",siteTransmissionTypeService.findById(1).getSiteList().size()
                 + siteTransmissionTypeService.findById(2).getSiteList().size() );
         List<LeaseLine> leaseLines = leaseLineService.findAll();
