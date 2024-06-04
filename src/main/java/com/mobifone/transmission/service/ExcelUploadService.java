@@ -38,12 +38,10 @@ public class ExcelUploadService {
                     rowIndex++;
                     continue;
                 }
-                Iterator<Cell> cellIterator = row.iterator();
-                int cellIndex = 0;
                 HiredFoLine hiredFoLine = new HiredFoLine();
-                while (cellIterator.hasNext()){
-                    Cell cell = cellIterator.next();
-                    switch (cellIndex){
+                for (int i = 0; i<row.getLastCellNum() ; i++) {
+                    Cell cell = row.getCell(i, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
+                    switch (i){
                         case 0 -> hiredFoLine.setFoContract(foContractRepository.findByContractNumber(cell.getStringCellValue()));
                         case 1 -> hiredFoLine.setNearSite(siteRepository.findSitesBySiteId(cell.getStringCellValue()));
                         case 2 -> hiredFoLine.setFarSite(siteRepository.findSitesBySiteId(cell.getStringCellValue()));
@@ -55,7 +53,6 @@ public class ExcelUploadService {
                         default -> {
                         }
                     }
-                    cellIndex++;
                 }
                 hiredFoLines.add(hiredFoLine);
             }
