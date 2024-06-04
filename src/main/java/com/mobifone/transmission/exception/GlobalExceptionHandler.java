@@ -12,7 +12,7 @@ public class GlobalExceptionHandler {
     }
     @ExceptionHandler(InvalidFileTypeException.class)
     public ResponseEntity<ErrorResponse> InvalidFileTypeExceptionHandler(InvalidFileTypeException ex) {
-        ErrorResponse error = new ErrorResponse(HttpStatus.BAD_REQUEST.value(), ex.getMessage(), ex.getMessage());
+        ErrorResponse error = new ErrorResponse(HttpStatus.BAD_REQUEST.value(), ex.getMessage(), ex.toString());
         return new ResponseEntity<>(error,HttpStatus.BAD_REQUEST);
     }
 }
