@@ -42,7 +42,7 @@ public class WebSecurityConfig {
         // các đường dẫn không phải login
         http.authorizeHttpRequests((authorize) -> authorize
                 .requestMatchers("/", "/login", "/logout", "/logoutSuccessful", "/403","/vendor/**", "/site/list", "/router/list","/leaseline/list",
-                        "/*/api/list","/*/detail").permitAll());
+                        "/*/api/list","/*/detail","/*/api/upload-excel").permitAll());
         // cấp quyền cho user
 //        http.authorizeHttpRequests((authorize) -> authorize
 //                .requestMatchers("/*/edit","/*/delete").hasAnyRole("USER", "ADMIN"));

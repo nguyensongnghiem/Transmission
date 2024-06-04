@@ -7,4 +7,5 @@ import java.util.List;
 public interface IFoContractService {
     public List<FoContract> findFirst10ByOrderByEndDateDesc();
     public List<FoContract> findContractEndIn5Month();
+    public FoContract findByContractNumber(String name);
 }

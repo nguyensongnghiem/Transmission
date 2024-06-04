@@ -14,11 +14,13 @@ import java.util.List;
 public class HiredFoService implements IHiredFoService {
     @Autowired
     private IHiredFoLineRepository hiredFoLineRepository;
+    @Autowired
+    private ExcelUploadService excelUploadService;
     @Override
     public void uploadExcelFile(MultipartFile file) {
-        if(ExcelUploadService.isValidExcelFile(file)){
+        if(excelUploadService.isValidExcelFile(file)){
             try {
-                List<HiredFoLine> hiredFoLines = ExcelUploadService.getHiredFoDataFromExcel(file.getInputStream());
+                List<HiredFoLine> hiredFoLines = excelUploadService.getHiredFoDataFromExcel(file.getInputStream());
                 hiredFoLineRepository.saveAll(hiredFoLines);
             } catch (IOException e) {
                 throw new IllegalArgumentException("Không phải file Excel");

@@ -13,5 +13,5 @@ public interface IFoContractRepository extends JpaRepository<FoContract,Integer>
     public List<FoContract> findContractEndIn5Month();
 
 
-    FoContract findByContractName(String name);
+    FoContract findByContractNumber(String contractNumber);
 }

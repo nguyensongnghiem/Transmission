@@ -10,12 +10,12 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Map;
 
-@RequestMapping("/api/hiredFo")
+@RequestMapping("hiredFo")
 @RestController
 public class HiredFoController {
     @Autowired
     private IHiredFoService hiredFoService;
-    @PostMapping("/upload-excel")
+    @PostMapping("/api/upload-excel")
     public ResponseEntity<?> updateExcelFile(MultipartFile file) {
         hiredFoService.uploadExcelFile(file);
         return ResponseEntity.ok(Map.of("message" , "Danh sách tuyến cáp thuê đã được upload và cập nhật thành công"));
