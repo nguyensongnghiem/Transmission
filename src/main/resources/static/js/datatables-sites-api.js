@@ -65,7 +65,7 @@ $(document).ready(function () {
                 });
         },
         ajax: {
-            url: "/site/api/list",
+            url: "/api/sites",
             dataSrc: ''           
         },
         columns: [

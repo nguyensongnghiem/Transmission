@@ -3,9 +3,19 @@ package com.mobifone.transmission.service;
 import com.mobifone.transmission.model.FoContract;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface IFoContractService {
     public List<FoContract> findFirst10ByOrderByEndDateDesc();
     public List<FoContract> findContractEndIn5Month();
     public FoContract findByContractNumber(String name);
+
+
+    List<FoContract> findAll();
+
+    void save(FoContract foContract);
+
+    void deleteById(int deleteId);
+
+    Optional<FoContract> findById(int editId);
 }

@@ -1,5 +1,6 @@
 package com.mobifone.transmission.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,8 +17,10 @@ public class TransmissionOwner {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
     private String name;
+    @JsonIgnore
     @OneToMany(mappedBy = "transmissionOwner", cascade = CascadeType.ALL)
     private List<Site> siteList;
+    @JsonIgnore
     @OneToMany(mappedBy = "transmissionOwner", cascade = CascadeType.ALL)
     private List<LeaseLine> leaseLineList;
 }

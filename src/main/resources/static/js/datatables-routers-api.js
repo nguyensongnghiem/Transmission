@@ -63,7 +63,7 @@ $(document).ready(function() {
                 });
         },
         ajax: {
-            url: "/router/api/list",
+            url: "/api/routers",
             dataSrc: ''
         },
         columns: [

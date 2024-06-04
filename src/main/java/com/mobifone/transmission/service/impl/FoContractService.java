@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
+
 @NoArgsConstructor
 @Service
 public class FoContractService implements IFoContractService {
@@ -25,6 +27,26 @@ public class FoContractService implements IFoContractService {
     @Override
     public FoContract findByContractNumber(String contractNumber) {
         return foContractRepository.findByContractNumber(contractNumber);
+    }
+
+    @Override
+    public List<FoContract> findAll() {
+        return foContractRepository.findAll();
+    }
+
+    @Override
+    public void save(FoContract foContract) {
+        foContractRepository.save(foContract);
+    }
+
+    @Override
+    public void deleteById(int deleteId) {
+        foContractRepository.deleteById(deleteId);
+    }
+
+    @Override
+    public Optional<FoContract> findById(int editId) {
+        return foContractRepository.findById(editId);
     }
 
 }

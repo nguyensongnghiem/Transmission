@@ -9,9 +9,9 @@
 // });
 
 $(document).ready(function () {
-    let $fileName = 'Danh sách kênh thuê'
+    let $fileName = 'Danh sách hợp đồng thuê FO'
     var contextPath = window.location.origin
-    $('#leaseLineDataTablesApi').DataTable({
+    $('#contractDataTablesApi').DataTable({
         // scrollY:        400,
         deferRender:    true,
         scroller:       true,
@@ -64,30 +64,29 @@ $(document).ready(function () {
                 });
         },
         ajax: {
-            url: "/api/leaselines",
+            url: "/api/contracts",
             dataSrc: ''
         },
         columns: [
-            {data: 'site.province.name'},
+
             {
-                data: 'site.siteId',
+                data: 'contractNumber',
                 className: 'dt-center editor-edit',
                 render: function (data,type,row) {
-                    return `<a href="${contextPath}/site/detail?siteId=${row.site.siteId}" >${row.site.siteId}</a>`
+                    return `<a href="${contextPath}/contract/detail?contractNumber=${row.contractNumber}" >${row.contractNumber}</a>`
                 },
                 orderable: false
             },
+            {data: 'contractName'},
             {data: 'transmissionOwner.name'},
-            {data: 'leaseLineConnectType.name'},
-            {data: 'speed'},
-            {data: 'cost'},
-            {data: 'quantity'},
+            {data: 'signedDate'},
+            {data: 'endDate'},
             {data: 'note'},
             {
                 data: 'id',
                 className: 'dt-center editor-edit',
                 render: function (data,type,row) {
-                    return `<a href="${contextPath}/leaseline/edit/${row.id}" class="btn btn-warning btn-sm"><i class="fa fa-pencil fa-sm"/></a>`
+                    return `<a href="${contextPath}/contract/edit/${row.id}" class="btn btn-warning btn-sm"><i class="fa fa-pencil fa-sm"/></a>`
                 },
                 orderable: false
             },
@@ -96,7 +95,7 @@ $(document).ready(function () {
                 className: 'dt-center editor-edit',
                 render: function (data,type,row) {
                     return `<button class="btn btn-danger btn-edit btn-sm"
-                   onclick="deleteLeaseLine(${row.id},\'${row.site.siteId}\')"
+                   onclick="deleteContract(${row.id},\'${row.contractNumber}\')"
                    data-bs-toggle="modal" 
                    data-bs-target="#deleteModal">
                    <i class="fa fa-trash fa-sm"></i>

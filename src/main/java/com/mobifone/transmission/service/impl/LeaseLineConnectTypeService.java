@@ -1,11 +1,8 @@
 package com.mobifone.transmission.service.impl;
 
-import com.mobifone.transmission.model.LeaseLine;
 import com.mobifone.transmission.model.LeaseLineConnectType;
 import com.mobifone.transmission.repository.ILeaseLineConnectTypeRepository;
-import com.mobifone.transmission.repository.ILeaseLineRepository;
 import com.mobifone.transmission.service.ILeaseLineConnectTypeService;
-import com.mobifone.transmission.service.ILeaseLineService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

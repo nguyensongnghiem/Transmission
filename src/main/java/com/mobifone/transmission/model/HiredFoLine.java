@@ -1,5 +1,7 @@
 package com.mobifone.transmission.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -16,15 +18,19 @@ public class HiredFoLine {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="foContractId")
     private FoContract foContract;
     private Integer coreQuantity;
+
     @ManyToOne(fetch =FetchType.EAGER)
     @JoinColumn(name = "nearSiteId")
     private Site nearSite;
+
     @ManyToOne(fetch =FetchType.EAGER)
     @JoinColumn(name = "farSiteId")
+
     private Site farSite;
     private Integer cost;
     private float designedDistance;

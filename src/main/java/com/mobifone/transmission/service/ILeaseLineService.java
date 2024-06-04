@@ -1,9 +1,7 @@
 package com.mobifone.transmission.service;
 
 import com.mobifone.transmission.dto.inf.LeaseLineViewDTO;
-import com.mobifone.transmission.dto.inf.RouterViewDTO;
 import com.mobifone.transmission.model.LeaseLine;
-import com.mobifone.transmission.model.Router;
 
 import java.util.List;
 

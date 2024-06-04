@@ -41,14 +41,14 @@ public class WebSecurityConfig {
         http.csrf(AbstractHttpConfigurer::disable);
         // các đường dẫn không phải login
         http.authorizeHttpRequests((authorize) -> authorize
-                .requestMatchers("/", "/login", "/logout", "/logoutSuccessful", "/403","/vendor/**", "/site/list", "/router/list","/leaseline/list",
-                        "/*/api/list","/*/detail","/*/api/upload-excel").permitAll());
+                .requestMatchers("/", "/login", "/logout", "/logoutSuccessful", "/403","/vendor/**", "/api/**",
+                        "/*/api/list","/*/detail","/*/api/upload-excel","/*/list").permitAll());
         // cấp quyền cho user
 //        http.authorizeHttpRequests((authorize) -> authorize
 //                .requestMatchers("/*/edit","/*/delete").hasAnyRole("USER", "ADMIN"));
 
         http.authorizeHttpRequests((authorize) -> authorize
-                .requestMatchers("/*/create","/*/delete","*/edit/**","/**/detail/**").hasAnyRole("USER", "ADMIN"));
+                .requestMatchers("/*/create","/*/delete","*/edit/*","/*/detail/*").hasAnyRole("USER", "ADMIN"));
         // cấp quyền cho user và admin
 //        http.authorizeHttpRequests((authorize) -> authorize
 //                .requestMatchers("/userInfo", "/blog/create").hasAnyRole("USER", "ADMIN"));

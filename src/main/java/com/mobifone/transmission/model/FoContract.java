@@ -1,5 +1,7 @@
 package com.mobifone.transmission.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -30,11 +32,13 @@ public class FoContract {
     private LocalDate signedDate;
     @Column(nullable = false)
     private LocalDate endDate;
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "transmissionOwnerId",nullable = false)
     private TransmissionOwner transmissionOwner;
     @OneToMany(mappedBy = "foContract", cascade = CascadeType.ALL)
-    List<HiredFoLine> hiredFoLineList ;
+            @JsonIgnore
+     List<HiredFoLine> hiredFoLineList ;
     private String note;
     @CreationTimestamp
     @Column(updatable = false)
