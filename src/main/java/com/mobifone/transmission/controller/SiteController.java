@@ -135,7 +135,7 @@ public class SiteController {
 
     @GetMapping("/edit/{editId}")
     public String showEditForm(Model model, @PathVariable(name = "editId") Long editId) {
-        Site site = siteService.findById(editId);
+        Site site = siteService.findById(editId, Site.class);
         model.addAttribute("site", site);
         return "/site/site-edit";
     }

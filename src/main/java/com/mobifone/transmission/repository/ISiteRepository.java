@@ -11,6 +11,8 @@ import java.util.List;
 @Repository
 public interface ISiteRepository extends JpaRepository<Site,Long> {
     <T> List<T> findBy(Class<T> classType);
+    <T> T findById(Long id, Class<T> classType);
+
     <T> Page<T> findSitesBySiteIdContainingIgnoreCaseAndProvince_NameContainingIgnoreCase(String siteId, String provinceName, Pageable pageable,Class<T> classType);
 public Site findSitesBySiteId(String siteId);
     Page<Site> findSiteBySiteIdContainingIgnoreCase(String siteId,Pageable pageable);

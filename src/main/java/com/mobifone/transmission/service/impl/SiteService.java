@@ -36,8 +36,8 @@ public class SiteService implements ISiteService {
     }
 
     @Override
-    public Site findById(Long editId) {
-        return siteRepository.findById(editId).get();
+    public <T> T findById(Long editId,Class<T> classType) {
+        return siteRepository.findById(editId,classType);
     }
 
     @Override

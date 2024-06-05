@@ -4,15 +4,20 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.context.request.WebRequest;
+
+import java.util.Date;
+
 @ControllerAdvice
 public class GlobalExceptionHandler {
     @ExceptionHandler(SiteNotFoundException.class)
     public String SiteNotFoundExceptionHandler(SiteNotFoundException ex) {
         return "site-not-found";
     }
-    @ExceptionHandler(InvalidFileTypeException.class)
-    public ResponseEntity<ErrorResponse> InvalidFileTypeExceptionHandler(InvalidFileTypeException ex) {
-        ErrorResponse error = new ErrorResponse(HttpStatus.BAD_REQUEST.value(), ex.getMessage(), ex.toString());
-        return new ResponseEntity<>(error,HttpStatus.BAD_REQUEST);
+
+    private boolean isApiRequest(WebRequest request) {
+        String acceptHeader = request.getHeader("Accept");
+        return acceptHeader != null && acceptHeader.contains("application/json");
     }
 }
+

@@ -16,7 +16,7 @@ public interface ISiteService {
 
     public void deleteById(Long id);
 
-    public Site findById(Long editId);
+    public <T> T findById(Long editId,Class<T> classType);
 
     public boolean update(Site site);
 
