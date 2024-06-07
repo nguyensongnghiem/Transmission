@@ -6,6 +6,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.SoftDelete;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.List;
 @Setter
@@ -27,11 +28,11 @@ public class Site {
 
     private String siteName;
 
-    @Column(nullable = false)
-    private Float latitude;
+    @Column(nullable = false,precision = 10, scale = 5)
+    private BigDecimal latitude;
 
-    @Column(nullable = false)
-    private Float longitude;
+    @Column(nullable = false, precision = 10, scale = 5)
+    private BigDecimal longitude;
 
     private String address;
 
