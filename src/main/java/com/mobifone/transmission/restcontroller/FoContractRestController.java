@@ -34,5 +34,4 @@ public class FoContractRestController {
         return new ResponseEntity<>(hiredFoLineViewDTOList,HttpStatus.OK);
     }
 
-
 }

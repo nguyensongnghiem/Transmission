@@ -18,5 +18,6 @@ public interface IFoContractService {
 
     void deleteById(int deleteId);
 
-    Optional<FoContract> findById(int editId);
+
+    FoContractViewDTO findViewDTOById(int editId);
 }

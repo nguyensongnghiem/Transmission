@@ -1,22 +1,23 @@
 package com.mobifone.transmission.controller;
 
 import com.mobifone.transmission.dto.inf.FoContractViewDTO;
-import com.mobifone.transmission.model.*;
-import com.mobifone.transmission.service.*;
+import com.mobifone.transmission.model.FoContract;
+import com.mobifone.transmission.model.Site;
+import com.mobifone.transmission.model.TransmissionOwner;
+import com.mobifone.transmission.service.IFoContractService;
+import com.mobifone.transmission.service.IHiredFoService;
+import com.mobifone.transmission.service.ISiteService;
+import com.mobifone.transmission.service.ITransmissionOwnerService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
-@RequestMapping("/contract")
+@RequestMapping("/hired-fo")
 @Controller
-public class FoContractController {
+public class HiredFoLineController {
     @Autowired
     private ISiteService siteService;
     @Autowired
@@ -34,9 +35,9 @@ public class FoContractController {
     public List<TransmissionOwner> getTransOwner(){
         return transmissionOwnerService.findAll();
     }
-    @ModelAttribute("totalContract")
+    @ModelAttribute("totalHiredFoLine")
     public int getTotalContract(){
-        return foContractService.findAllViewDTO().size();
+        return hiredFoService.getAllHiredFoLineViewDTO().size();
     }
 
 

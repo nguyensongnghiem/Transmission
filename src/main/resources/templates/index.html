@@ -111,7 +111,7 @@
                                                             <div class="event-date badge bg-warning" th:text="${contract.endDate}"></div>
                                                             <h5 class="pt-2" th:text="${contract.getContractNumber()}"></h5>
 <!--                                                            <p class="text-muted" th:text="${contract.endDate - #dates.createToday()} + ' ngày'"></p>-->
-                                                            <a class="icon-link icon-link-hover" href="#">
+                                                            <a class="icon-link icon-link-hover" th:href="@{'/contract/detail?id='+ ${contract.id}}">
                                                                 Chi tiết
                                                                 <svg class="bi" aria-hidden="true"><use xlink:href="#arrow-right"></use></svg>
                                                             </a>

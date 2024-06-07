@@ -46,8 +46,8 @@ public class FoContractService implements IFoContractService {
     }
 
     @Override
-    public Optional<FoContract> findById(int editId) {
-        return foContractRepository.findById(editId);
+    public FoContractViewDTO findViewDTOById(int editId) {
+        return foContractRepository.findById(editId, FoContractViewDTO.class);
     }
 
 }

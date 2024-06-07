@@ -9,9 +9,9 @@
 // });
 
 $(document).ready(function () {
-    let $fileName = 'Danh sách hợp đồng thuê FO'
+    let $fileName = 'Chi tiết hợp đồng thuê FO'
     var contextPath = window.location.origin
-    $('#contractDataTablesApi').DataTable({
+    $('#allHiredFoDataTablesApi').DataTable({
         // scrollY:        400,
         deferRender:    true,
         scroller:       true,
@@ -64,23 +64,17 @@ $(document).ready(function () {
                 });
         },
         ajax: {
-            url: "/api/contracts",
+            url: `/api/contracts/${contractId}/hired-fo`,
             dataSrc: ''
         },
         columns: [
 
-            {
-                data: 'contractNumber',
-                className: 'dt-center editor-edit',
-                render: function (data,type,row) {
-                    return `<a href="${contextPath}/contract/detail?id=${row.id}" >${row.contractNumber}</a>`
-                },
-                orderable: false
-            },
-            {data: 'contractName'},
-            {data: 'transmissionOwner.name'},
-            {data: 'signedDate'},
-            {data: 'endDate'},
+            {data: 'foContract.contractNumber'},
+            {data: 'nearSite.siteId'},
+            {data: 'farSite.siteId'},
+            {data: 'coreQuantity'},
+            {data: 'finalDistance'},
+            {data: 'cost'},
             {data: 'note'},
             {
                 data: 'id',
@@ -95,7 +89,7 @@ $(document).ready(function () {
                 className: 'dt-center editor-edit',
                 render: function (data,type,row) {
                     return `<button class="btn btn-danger btn-edit btn-sm"
-                   onclick="deleteContract(${row.id},\'${row.contractNumber}\')"
+                   onclick="deleteContract(${row.id},${row.id})"
                    data-bs-toggle="modal" 
                    data-bs-target="#deleteModal">
                    <i class="fa fa-trash fa-sm"></i>

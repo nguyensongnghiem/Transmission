@@ -6,7 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
         <meta name="author" content="" />
-        <title>Chi tiết hợp đồng thuê FO</title>
+        <title>Danh sách tuyến thuê FO</title>
         <div th:replace="~{layout/layout::library}"></div>
     </head>
     <body class="sb-nav-fixed">
@@ -25,22 +25,19 @@
                         <h4 class="mt-4">Chi tiết hợp đồng thuê FO <span class="badge text-bg-success rounded-pill" th:text="${hiredFoList.size()}"></span></h4>
                         <ol class="breadcrumb mb-4">
                             <li class="breadcrumb-item active"><a th:href="@{/}">Tổng quan</a></li>
-                            <li class="breadcrumb-item active">Chi tiết hợp đồng thuê FO</li>
+                            <li class="breadcrumb-item active">Danh sách tuyến thuê FO</li>
 
                         </ol>
-                        <div class="alert alert-danger" role="alert" th:text="'Số hợp đồng : '+${foContract.getContractNumber()}">
-
-                        </div>
-
                         <div class="card mb-4">
                             <div class="card-header">
                                 <i class="fas fa-table me-1"></i>
                                 Danh sách tuyến quang thuê
                             </div>
                             <div class="card-body">
-                                <table id="hiredFoDataTablesApi" class="table  table-sm  table-light " cellspacing="0" width="100%">
+                                <table id="allHiredFoDataTablesApi" class="table  table-sm  table-light " cellspacing="0" width="100%">
                                     <thead class="table-success">
                                         <tr>
+                                            <th class="text-center" >Số hợp đồng</th>
                                             <th class="text-center" >Trạm A</th>
                                             <th class="text-center" >Trạm B</th>
                                             <th class="text-center" >Số core</th>
@@ -53,6 +50,7 @@
                                     </thead>
                                     <tfoot>
                                         <tr>
+                                            <th class="text-center" >Số hợp đồng</th>
                                             <th class="text-center" >Trạm A</th>
                                             <th class="text-center" >Trạm B</th>
                                             <th class="text-center" >Số core</th>
