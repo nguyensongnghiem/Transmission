@@ -1,5 +1,6 @@
 package com.mobifone.transmission.service.impl;
 
+import com.mobifone.transmission.dto.inf.FoContractViewDTO;
 import com.mobifone.transmission.model.FoContract;
 import com.mobifone.transmission.repository.IFoContractRepository;
 import com.mobifone.transmission.service.IFoContractService;
@@ -30,8 +31,8 @@ public class FoContractService implements IFoContractService {
     }
 
     @Override
-    public List<FoContract> findAll() {
-        return foContractRepository.findAll();
+    public List<FoContractViewDTO> findAllViewDTO() {
+        return foContractRepository.findBy(FoContractViewDTO.class);
     }
 
     @Override

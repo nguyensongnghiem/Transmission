@@ -14,4 +14,6 @@ public interface IFoContractRepository extends JpaRepository<FoContract,Integer>
 
 
     FoContract findByContractNumber(String contractNumber);
+    <T> T findById(int id,Class<T> classType);
+    <T> List<T> findBy(Class<T> classType);
 }

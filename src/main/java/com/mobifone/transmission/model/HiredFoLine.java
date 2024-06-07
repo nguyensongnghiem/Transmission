@@ -30,8 +30,8 @@ public class HiredFoLine {
 
     @ManyToOne(fetch =FetchType.EAGER)
     @JoinColumn(name = "farSiteId")
-
     private Site farSite;
+
     private Integer cost;
     private float designedDistance;
     private float finalDistance;

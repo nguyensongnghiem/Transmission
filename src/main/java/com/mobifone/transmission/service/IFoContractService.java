@@ -1,5 +1,6 @@
 package com.mobifone.transmission.service;
 
+import com.mobifone.transmission.dto.inf.FoContractViewDTO;
 import com.mobifone.transmission.model.FoContract;
 
 import java.util.List;
@@ -11,7 +12,7 @@ public interface IFoContractService {
     public FoContract findByContractNumber(String name);
 
 
-    List<FoContract> findAll();
+    List<FoContractViewDTO> findAllViewDTO();
 
     void save(FoContract foContract);
 

@@ -1,4 +1,17 @@
 package com.mobifone.transmission.dto.inf;
 
-public class FoContractViewDTO {
+import java.time.LocalDate;
+
+public interface FoContractViewDTO {
+    int getId();
+    String getContractNumber();
+    String getContractName();
+    LocalDate getSignedDate();
+    LocalDate getEndDate();
+    String getNote();
+    TransmissionOwnerWithName getTransmissionOwner();
+    interface TransmissionOwnerWithName {
+        String getName();
+    }
+
 }

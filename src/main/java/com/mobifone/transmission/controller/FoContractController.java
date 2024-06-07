@@ -1,5 +1,6 @@
 package com.mobifone.transmission.controller;
 
+import com.mobifone.transmission.dto.inf.FoContractViewDTO;
 import com.mobifone.transmission.model.*;
 import com.mobifone.transmission.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,7 +34,7 @@ public class FoContractController {
     }
     @ModelAttribute("totalContract")
     public int getTotalContract(){
-        return foContractService.findAll().size();
+        return foContractService.findAllViewDTO().size();
     }
 
 
@@ -72,6 +73,12 @@ public class FoContractController {
     public String edit(@ModelAttribute FoContract contract) {
         foContractService.save(contract);
         return "redirect:/contract/list";
+    }
+    @GetMapping("/{id}")
+    public String getContractDetail(@PathVariable int id) {
+        FoContract contract = foContractService.findById(id).get();
+
+        return "contract/contract-detail";
     }
 
 }

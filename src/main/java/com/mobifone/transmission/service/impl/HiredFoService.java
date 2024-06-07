@@ -1,5 +1,7 @@
 package com.mobifone.transmission.service.impl;
 
+import com.mobifone.transmission.dto.inf.FoContractViewDTO;
+import com.mobifone.transmission.dto.inf.HiredFoLineViewDTO;
 import com.mobifone.transmission.exception.InvalidFileTypeException;
 import com.mobifone.transmission.model.HiredFoLine;
 import com.mobifone.transmission.repository.IHiredFoLineRepository;
@@ -32,5 +34,25 @@ public class HiredFoService implements IHiredFoService {
             throw new InvalidFileTypeException("Invalid excel file.");
 
         }
+    }
+
+    @Override
+    public List<HiredFoLineViewDTO> getAllHiredFoLineViewDTO() {
+        return hiredFoLineRepository.findBy(HiredFoLineViewDTO.class);
+    }
+
+    @Override
+    public HiredFoLineViewDTO getHiredFoLineViewDTOById(int id) {
+        return hiredFoLineRepository.findById(id, HiredFoLineViewDTO.class);
+    }
+
+    @Override
+    public List<HiredFoLineViewDTO> getHiredFoLineViewDTOByContractNumber(String contractNumber) {
+        return hiredFoLineRepository.findByFoContract_ContractNumber(contractNumber,HiredFoLineViewDTO.class);
+    }
+
+    @Override
+    public List<HiredFoLineViewDTO> getHiredFoLineViewDTOByContractId(int id) {
+        return hiredFoLineRepository.findByFoContract_Id(id, HiredFoLineViewDTO.class);
     }
 }
