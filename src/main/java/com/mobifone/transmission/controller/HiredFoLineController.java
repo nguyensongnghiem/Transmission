@@ -2,6 +2,7 @@ package com.mobifone.transmission.controller;
 
 import com.mobifone.transmission.dto.inf.FoContractViewDTO;
 import com.mobifone.transmission.model.FoContract;
+import com.mobifone.transmission.model.HiredFoLine;
 import com.mobifone.transmission.model.Site;
 import com.mobifone.transmission.model.TransmissionOwner;
 import com.mobifone.transmission.service.IFoContractService;
@@ -36,27 +37,27 @@ public class HiredFoLineController {
         return transmissionOwnerService.findAll();
     }
     @ModelAttribute("totalHiredFoLine")
-    public int getTotalContract(){
+    public int getTotalHiredFoLine(){
         return hiredFoService.getAllHiredFoLineViewDTO().size();
     }
 
 
     @GetMapping("/list")
     public String listByPageApi() {
-        return "/contract/contract-list";
+        return "/hiredFo/hired-fo-list";
     }
 // show the create form
     @GetMapping("/create")
     public String showCreateForm(Model model) {
-        model.addAttribute("contract", new FoContract());
-        return "/contract/contract-create";
+        model.addAttribute("hiredFo", new HiredFoLine());
+        return "/hiredFo/hired-fo-create";
     }
 
     //    save new  to DB
     @PostMapping("/create")
-    public String create(@ModelAttribute FoContract foContract) {
-        foContractService.save(foContract);
-        return "redirect:/contract/list";
+    public String create(@ModelAttribute HiredFoLine hiredFoLine) {
+        hiredFoService.save(hiredFoLine);
+        return "redirect:/hired-fo-list/hired-fo-list";
     }
 
     @PostMapping("/delete")

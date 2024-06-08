@@ -18,11 +18,10 @@
     <!-- Sidebar -->
         <div id="layoutSidenav">
             <div th:replace="~{layout/layout::sidebar}"></div>
-
             <div id="layoutSidenav_content">
                 <main>
                     <div class="container-fluid px-4">
-                        <h4 class="mt-4">Chi tiết hợp đồng thuê FO <span class="badge text-bg-success rounded-pill" th:text="${hiredFoList.size()}"></span></h4>
+                        <h4 class="mt-4">Danh sách FO thuê <span class="badge text-bg-success rounded-pill" th:text="${totalHiredFoLine}"></span></h4>
                         <ol class="breadcrumb mb-4">
                             <li class="breadcrumb-item active"><a th:href="@{/}">Tổng quan</a></li>
                             <li class="breadcrumb-item active">Danh sách tuyến thuê FO</li>
@@ -34,14 +33,13 @@
                                 Danh sách tuyến quang thuê
                             </div>
                             <div class="card-body">
-                                <table id="allHiredFoDataTablesApi" class="table  table-sm  table-light " cellspacing="0" width="100%">
-                                    <thead class="table-success">
+                                <table id="allHiredFoDataTablesApi" class="table  table-sm  table-striped table-bordered" cellspacing="0" width="100%">
+                                    <thead class="table-header table-dark">
                                         <tr>
+                                            <th class="text-center" >Tên tuyến</th>
                                             <th class="text-center" >Số hợp đồng</th>
-                                            <th class="text-center" >Trạm A</th>
-                                            <th class="text-center" >Trạm B</th>
                                             <th class="text-center" >Số core</th>
-                                            <th class="text-center" >Khoảng cách tính cước (km)</th>
+                                            <th class="text-center" >Khoảng cách (km)</th>
                                             <th class="text-center" >Đơn giá (VNĐ)</th>
                                             <th class="text-center" >Ghi chú</th>
                                             <th class="text-center" >Sửa</th>
@@ -50,11 +48,10 @@
                                     </thead>
                                     <tfoot>
                                         <tr>
+                                            <th class="text-center" >Tên tuyến</th>
                                             <th class="text-center" >Số hợp đồng</th>
-                                            <th class="text-center" >Trạm A</th>
-                                            <th class="text-center" >Trạm B</th>
                                             <th class="text-center" >Số core</th>
-                                            <th class="text-center" >Khoảng cách tính cước (km)</th>
+                                            <th class="text-center" >Khoảng cách (km)</th>
                                             <th class="text-center" >Đơn giá (VNĐ)</th>
                                             <th class="text-center" >Ghi chú</th>
                                             <th class="text-center" >Sửa</th>
@@ -75,14 +72,14 @@
     <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                <form th:action="@{/contract/delete}" method="post">
+                <form th:action="@{/hired-fo/delete}" method="post">
                     <div class="modal-header">
                         <h1 class="modal-title fs-5" id="deleteModalLabel">Xác nhận xóa dữ liệu !</h1>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
                         <div class="modal-body">
-                            Bạn có muốn thực hiện xóa hợp đồng <span style="color: red" id="delete-name"></span> ?
+                            Bạn có muốn thực hiện xóa tuyến <span style="color: red" id="delete-name"></span> ?
                         </div>
                         <input name="deleteId" type="hidden" id="hidden-delete-id">
                     </div>
@@ -98,18 +95,14 @@
     </script>
 
     <script>
-        function deleteContract(id, name) {
+        function deleteHiredFoLine(id, name) {
             document.getElementById("delete-name").innerHTML = name;
             document.getElementById("hidden-delete-id").value = id;
         }
     </script>
-
     <!-- JS Libs-->
     <div th:replace="~{layout/layout::js-libs}"></div>
-    <script th:inline="javascript">
+    <script th:src="@{/js/datatables-all-hired-fo-api.js}"></script>
 
-        var contractId = [[${foContract.id}]];
-
-    </script>
     </body>
 </html>

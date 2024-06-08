@@ -35,8 +35,8 @@
                                 Danh sách thiết bị
                             </div>
                             <div class="card-body">
-                                <table id="routerDatatablesApi" class="table table-sm table-bordered table-striped table-light" cellspacing="0" width="100%">
-                                    <thead class="table-success">
+                                <table id="routerDatatablesApi" class="table  table-sm  table-striped table-bordered" cellspacing="0" width="100%">
+                                    <thead class="table-dark table-header">
                                         <tr>
                                             <th class="text-center" >Tỉnh</th>
                                             <th class="text-center" >Site ID</th>
@@ -127,7 +127,8 @@
             document.getElementById("hidden-delete-id").value = id;
         }
     </script>
-
+<!--    <script th:src="@{/js/datatables-routers.js}"></script>-->
     <div th:replace="~{layout/layout::js-libs}"></div>
+    <script th:src="@{/js/datatables-routers-api.js}"></script>
     </body>
 </html>

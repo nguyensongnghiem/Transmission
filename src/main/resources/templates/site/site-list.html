@@ -38,8 +38,8 @@
                         Danh sách trạm
                     </div>
                     <div class="card-body">
-                        <table id="siteDatatablesApi" class="table table-sm table-bordered table-striped table-light" cellspacing="0" width="100%">
-                            <thead class="table-success">
+                        <table id="siteDatatablesApi" class="table  table-sm  table-striped table-bordered" cellspacing="0" width="100%">
+                            <thead class="table-dark table-header">
                             <tr>
 <!--                                <th class="text-center">STT</th>-->
                                 <th class="text-center">Tỉnh</th>
@@ -116,7 +116,8 @@
         document.getElementById("hidden-delete-id").value = id;
     }
 </script>
-
+<!--<script th:src="@{/js/datatables-sites.js}"></script>-->
 <div th:replace="~{layout/layout::js-libs}"></div>
+<script th:src="@{/js/datatables-sites-api.js}"></script>
 </body>
 </html>

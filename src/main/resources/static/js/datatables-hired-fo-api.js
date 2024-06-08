@@ -13,8 +13,8 @@ $(document).ready(function () {
     var contextPath = window.location.origin
     $('#hiredFoDataTablesApi').DataTable({
         // scrollY:        400,
-        deferRender:    true,
-        scroller:       true,
+        deferRender: true,
+        scroller: true,
         fixedHeader: true,
         colReorder: true,
         responsive: true,
@@ -68,9 +68,15 @@ $(document).ready(function () {
             dataSrc: ''
         },
         columns: [
-
-            {data: 'nearSite.siteId'},
-            {data: 'farSite.siteId'},
+            {
+                className: 'dt-center editor-edit',
+                render: function (data, type, row) {
+                    let nearSite = row.nearSite!=null?row.nearSite.siteId:'UnknownSite'
+                    let farSite = row.farSite!=null?row.farSite.siteId:'UnknownSite'
+                    return `${nearSite} - ${farSite}`
+                },
+                orderable: false
+            },
             {data: 'coreQuantity'},
             {data: 'finalDistance'},
             {data: 'cost'},
@@ -78,17 +84,20 @@ $(document).ready(function () {
             {
                 data: 'id',
                 className: 'dt-center editor-edit',
-                render: function (data,type,row) {
-                    return `<a href="${contextPath}/contract/edit/${row.id}" class="btn btn-warning btn-sm"><i class="fa fa-pencil fa-sm"/></a>`
+                render: function (data, type, row) {
+                    return `<a href="${contextPath}/hired-fo/edit/${row.id}" class="btn btn-warning btn-sm"><i class="fa fa-pencil fa-sm"/></a>`
                 },
                 orderable: false
             },
             {
                 data: 'id',
                 className: 'dt-center editor-edit',
-                render: function (data,type,row) {
+                render: function (data, type, row) {
+                    let nearSite = row.nearSite!=null?row.nearSite.siteId:'UnknownSite'
+                    let farSite = row.farSite!=null?row.farSite.siteId:'UnknownSite'
+                    let foLine = `${nearSite} - ${farSite}`
                     return `<button class="btn btn-danger btn-edit btn-sm"
-                   onclick="deleteContract(${row.id},${row.id})"
+                   onclick="deleteHiredFoLine(${row.id},\'${foLine}\')"                    
                    data-bs-toggle="modal" 
                    data-bs-target="#deleteModal">
                    <i class="fa fa-trash fa-sm"></i>

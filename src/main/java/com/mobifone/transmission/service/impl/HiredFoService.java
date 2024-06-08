@@ -55,4 +55,9 @@ public class HiredFoService implements IHiredFoService {
     public List<HiredFoLineViewDTO> getHiredFoLineViewDTOByContractId(int id) {
         return hiredFoLineRepository.findByFoContract_Id(id, HiredFoLineViewDTO.class);
     }
+
+    @Override
+    public void save(HiredFoLine hiredFoLine) {
+        hiredFoLineRepository.save(hiredFoLine);
+    }
 }

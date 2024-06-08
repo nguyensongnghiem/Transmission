@@ -1,117 +1,145 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-    <head>
-        <meta charset="utf-8" />
-        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-        <meta name="description" content="" />
-        <meta name="author" content="" />
-        <title>Chi tiết hợp đồng thuê FO</title>
-        <div th:replace="~{layout/layout::library}"></div>
-    </head>
-    <body class="sb-nav-fixed">
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <meta name="description" content=""/>
+    <meta name="author" content=""/>
+    <title>Chi tiết hợp đồng thuê FO</title>
+    <div th:replace="~{layout/layout::library}"></div>
+</head>
+<body class="sb-nav-fixed">
 
-    <!-- Topbar -->
-    <   <div th:replace="~{layout/layout::topbar}"></div>
-    <!-- End of Topbar -->
+<!-- Topbar -->
+<
+<div th:replace="~{layout/layout::topbar}"></div>
+<!-- End of Topbar -->
 
-    <!-- Sidebar -->
-        <div id="layoutSidenav">
-            <div th:replace="~{layout/layout::sidebar}"></div>
+<!-- Sidebar -->
+<div id="layoutSidenav">
+    <div th:replace="~{layout/layout::sidebar}"></div>
 
-            <div id="layoutSidenav_content">
-                <main>
-                    <div class="container-fluid px-4">
-                        <h4 class="mt-4">Chi tiết hợp đồng thuê FO <span class="badge text-bg-success rounded-pill" th:text="${hiredFoList.size()}"></span></h4>
-                        <ol class="breadcrumb mb-4">
-                            <li class="breadcrumb-item active"><a th:href="@{/}">Tổng quan</a></li>
-                            <li class="breadcrumb-item active">Chi tiết hợp đồng thuê FO</li>
-
-                        </ol>
-                        <div class="alert alert-danger" role="alert" th:text="'Số hợp đồng : '+${foContract.getContractNumber()}">
-
+    <div id="layoutSidenav_content">
+        <main>
+            <div class="container-fluid px-4">
+                <h4 class="mt-4">Chi tiết hợp đồng thuê FO <span class="badge text-bg-success rounded-pill"
+                                                                 th:text="${hiredFoList.size()}"></span></h4>
+                <ol class="breadcrumb mb-4">
+                    <li class="breadcrumb-item active"><a th:href="@{/}">Tổng quan</a></li>
+                    <li class="breadcrumb-item active">Chi tiết hợp đồng thuê FO</li>
+                </ol>
+                <ol class="list-group ">
+                    <li class="list-group-item list-group-item-info d-flex justify-content-between align-items-start">
+                        <div class="ms-2 me-auto">
+                            <div class="fw-bold">Số hợp đồng</div>
+                            <span th:text="${foContract.getContractNumber()}"></span>
                         </div>
-
-                        <div class="card mb-4">
-                            <div class="card-header">
-                                <i class="fas fa-table me-1"></i>
-                                Danh sách tuyến quang thuê
-                            </div>
-                            <div class="card-body">
-                                <table id="hiredFoDataTablesApi" class="table  table-sm  table-light " cellspacing="0" width="100%">
-                                    <thead class="table-success">
-                                        <tr>
-                                            <th class="text-center" >Trạm A</th>
-                                            <th class="text-center" >Trạm B</th>
-                                            <th class="text-center" >Số core</th>
-                                            <th class="text-center" >Khoảng cách tính cước (km)</th>
-                                            <th class="text-center" >Đơn giá (VNĐ)</th>
-                                            <th class="text-center" >Ghi chú</th>
-                                            <th class="text-center" >Sửa</th>
-                                            <th class="text-center" >Xóa</th>
-                                        </tr>
-                                    </thead>
-                                    <tfoot>
-                                        <tr>
-                                            <th class="text-center" >Trạm A</th>
-                                            <th class="text-center" >Trạm B</th>
-                                            <th class="text-center" >Số core</th>
-                                            <th class="text-center" >Khoảng cách tính cước (km)</th>
-                                            <th class="text-center" >Đơn giá (VNĐ)</th>
-                                            <th class="text-center" >Ghi chú</th>
-                                            <th class="text-center" >Sửa</th>
-                                            <th class="text-center" >Xóa</th>
-                                        </tr>
-                                    </tfoot>
-                                </table>
-                            </div>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-start">
+                        <div class="ms-2 me-auto">
+                            <div class="fw-bold">Số tuyến</div>
+                            <span th:text="${hiredFoList.size()}"></span>
                         </div>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-start">
+                        <div class="ms-2 me-auto">
+                            <div class="fw-bold">Tổng số km</div>
+                            <span th:text="${totalLength.intValue()}"></span>
+                        </div>
+                    <li class="list-group-item d-flex justify-content-between align-items-start">
+                        <div class="ms-2 me-auto">
+                            <div class="fw-bold">Chi phí/ tháng </div>
+                            <span th:text="${#numbers.formatDecimal(totalCostPerMonth.intValue(), 1, 'POINT', 0, 'COMMA')} + ' VNĐ'"></span>
+                        </div>
+                    </li>
+                    </li>
+                </ol>
+<!--                <div class="alert alert-danger" role="alert"-->
+<!--                     th:text="'Số hợp đồng : '+${foContract.getContractNumber()}">-->
+<!--                </div>-->
+
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <i class="fas fa-table me-1"></i>
+                        Danh sách tuyến quang thuê
                     </div>
-                </main>
-                <div th:replace="~{layout/layout::footer}"></div>
+                    <div class="card-body">
+                        <table id="hiredFoDataTablesApi" class="table  table-sm  table-striped table-bordered" cellspacing="0"
+                               width="100%">
+                            <thead class="table-dark table-header">
+                            <tr>
+                                <th class="text-center">Tên tuyến</th>
+                                <th class="text-center">Số core</th>
+                                <th class="text-center">Khoảng cách (km)</th>
+                                <th class="text-center">Đơn giá (VNĐ)</th>
+                                <th class="text-center">Ghi chú</th>
+                                <th class="text-center">Sửa</th>
+                                <th class="text-center">Xóa</th>
+                            </tr>
+                            </thead>
+                            <tfoot>
+                            <tr>
+                                <th class="text-center">Tên tuyến</th>
+                                <th class="text-center">Số core</th>
+                                <th class="text-center">Khoảng cách (km)</th>
+                                <th class="text-center">Đơn giá (VNĐ)</th>
+                                <th class="text-center">Ghi chú</th>
+                                <th class="text-center">Sửa</th>
+                                <th class="text-center">Xóa</th>
+                            </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
             </div>
-        </div>
+        </main>
+        <div th:replace="~{layout/layout::footer}"></div>
+    </div>
+</div>
 
-    <!-- MODAL TÁC VỤ XÓA-->
-    <<!-- Modal -->
-    <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <form th:action="@{/contract/delete}" method="post">
-                    <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="deleteModalLabel">Xác nhận xóa dữ liệu !</h1>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
+<!-- MODAL TÁC VỤ XÓA-->
+<<!-- Modal -->
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form th:action="@{/hired-fo/delete}" method="post">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="deleteModalLabel">Xác nhận xóa dữ liệu !</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
                     <div class="modal-body">
-                        <div class="modal-body">
-                            Bạn có muốn thực hiện xóa hợp đồng <span style="color: red" id="delete-name"></span> ?
-                        </div>
-                        <input name="deleteId" type="hidden" id="hidden-delete-id">
+                        Bạn có muốn thực hiện xóa tuyến <span style="color: red" id="delete-name"></span> ?
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
-                        <button type="submit" class="btn btn-danger">Xóa dữ liệu</button>
-                    </div>
-                </form>
-            </div>
+                    <input name="deleteId" type="hidden" id="hidden-delete-id">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                    <button type="submit" class="btn btn-danger">Xóa dữ liệu</button>
+                </div>
+            </form>
         </div>
     </div>
-    <script th:inline="javascript">
-    </script>
+</div>
+<script th:inline="javascript">
+</script>
 
-    <script>
-        function deleteContract(id, name) {
-            document.getElementById("delete-name").innerHTML = name;
-            document.getElementById("hidden-delete-id").value = id;
-        }
-    </script>
+<script>
+    function deleteHiredFoLine(id, name) {
+        console.log(name)
+        document.getElementById("delete-name").innerHTML = name;
+        document.getElementById("hidden-delete-id").value = id;
+    }
+</script>
 
-    <!-- JS Libs-->
-    <div th:replace="~{layout/layout::js-libs}"></div>
-    <script th:inline="javascript">
+<!-- JS Libs-->
+<div th:replace="~{layout/layout::js-libs}"></div>
+<script th:src="@{/js/datatables-hired-fo-api.js}"></script>
+<script th:inline="javascript">
 
-        var contractId = [[${foContract.id}]];
+    var contractId = [[${foContract.id}]];
 
-    </script>
-    </body>
+</script>
+</body>
 </html>

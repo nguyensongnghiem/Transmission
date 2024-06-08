@@ -1,6 +1,7 @@
 package com.mobifone.transmission.controller;
 
 import com.mobifone.transmission.dto.inf.FoContractViewDTO;
+import com.mobifone.transmission.dto.inf.HiredFoLineViewDTO;
 import com.mobifone.transmission.model.*;
 import com.mobifone.transmission.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -79,8 +80,13 @@ public class FoContractController {
     @GetMapping("/detail")
     public String showDetail(Model model, @RequestParam(required = false, defaultValue = "",name = "id") int id) {
         FoContractViewDTO foContract = foContractService.findViewDTOById(id);
-        model.addAttribute("foContract", foContract);
-        model.addAttribute("hiredFoList", hiredFoService.getHiredFoLineViewDTOByContractId(id));
+        List<HiredFoLineViewDTO> hiredFoList = hiredFoService.getHiredFoLineViewDTOByContractId(id);
+        double totalLength = hiredFoList.stream().mapToDouble(HiredFoLineViewDTO::getFinalDistance).sum();
+        double totalCostPerMonth = hiredFoList.stream().mapToDouble(h-> h.getCost()*h.getFinalDistance()).sum();
+        model.addAttribute("hiredFoList", hiredFoList);
+        model.addAttribute ("foContract", foContract);
+        model.addAttribute ("totalLength", totalLength);
+        model.addAttribute ("totalCostPerMonth", totalCostPerMonth);
         return "/contract/contract-detail";
     }
 

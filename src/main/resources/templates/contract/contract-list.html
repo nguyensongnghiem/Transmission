@@ -35,8 +35,8 @@
                                 Danh sách hợp đồng thuê FO
                             </div>
                             <div class="card-body">
-                                <table id="contractDataTablesApi" class="table  table-sm  table-light " cellspacing="0" width="100%">
-                                    <thead class="table-success">
+                                <table id="contractDataTablesApi" class="table  table-sm  table-striped table-bordered"cellspacing="0" width="100%">
+                                    <thead class="table-dark table-header">
                                         <tr>
                                             <th class="text-center" >Số hợp đồng</th>
                                             <th class="text-center" >Tên hợp đồng</th>
@@ -102,8 +102,8 @@
             document.getElementById("hidden-delete-id").value = id;
         }
     </script>
-
     <!-- JS Libs-->
     <div th:replace="~{layout/layout::js-libs}"></div>
+    <script th:src="@{/js/datatables-contract-api.js}"></script>
     </body>
 </html>
