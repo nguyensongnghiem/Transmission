@@ -48,7 +48,7 @@ public class WebSecurityConfig {
 //                .requestMatchers("/*/edit","/*/delete").hasAnyRole("USER", "ADMIN"));
 
         http.authorizeHttpRequests((authorize) -> authorize
-                .requestMatchers("/*/create","/*/delete","/*/edit/**").hasAnyRole("USER", "ADMIN"));
+                .requestMatchers("/*/create","/*/delete","/*/edit/**","/*/download-template").hasAnyRole("USER", "ADMIN"));
         // cấp quyền cho user và admin
 //        http.authorizeHttpRequests((authorize) -> authorize
 //                .requestMatchers("/userInfo", "/blog/create").hasAnyRole("USER", "ADMIN"));

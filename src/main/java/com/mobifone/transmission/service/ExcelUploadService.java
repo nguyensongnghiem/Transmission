@@ -61,4 +61,37 @@ public class ExcelUploadService {
         }
         return hiredFoLines;
     }
+    public List<HiredFoLine> getSimpleHiredFoDataFromExcel(InputStream inputStream){
+        List<HiredFoLine> hiredFoLines = new ArrayList<>();
+        try {
+            XSSFWorkbook workbook = new XSSFWorkbook(inputStream);
+            XSSFSheet sheet = workbook.getSheet("data");
+            int rowIndex =0;
+            for (Row row : sheet){
+                if (rowIndex ==0){
+                    rowIndex++;
+                    continue;
+                }
+                HiredFoLine hiredFoLine = new HiredFoLine();
+                for (int i = 0; i<row.getLastCellNum() ; i++) {
+                    Cell cell = row.getCell(i, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
+                    switch (i){
+                        case 0 -> hiredFoLine.setNearSite(siteRepository.findSitesBySiteId(cell.getStringCellValue()));
+                        case 1 -> hiredFoLine.setFarSite(siteRepository.findSitesBySiteId(cell.getStringCellValue()));
+                        case 2 -> hiredFoLine.setCoreQuantity((int) cell.getNumericCellValue());
+                        case 3 -> hiredFoLine.setDesignedDistance((float) cell.getNumericCellValue());
+                        case 4 -> hiredFoLine.setFinalDistance((float) cell.getNumericCellValue());
+                        case 5 -> hiredFoLine.setCost((int) cell.getNumericCellValue());
+                        case 6 -> hiredFoLine.setNote(cell.getStringCellValue());
+                        default -> {
+                        }
+                    }
+                }
+                hiredFoLines.add(hiredFoLine);
+            }
+        } catch (IOException e) {
+            e.getStackTrace();
+        }
+        return hiredFoLines;
+    }
 }
