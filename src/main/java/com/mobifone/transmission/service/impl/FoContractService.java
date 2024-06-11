@@ -8,8 +8,12 @@ import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.Period;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @NoArgsConstructor
 @Service
@@ -22,7 +26,11 @@ public class FoContractService implements IFoContractService {
 
     @Override
     public List<FoContract> findContractEndIn5Month() {
-        return foContractRepository.findContractEndIn5Month();
+        List<FoContract> foContracts = foContractRepository.findAll();
+        return foContracts.stream()
+                .filter(f -> (Period.between(LocalDate.now(),f.getEndDate()).getMonths()<3) && f.getEndDate().isAfter(LocalDate.now()))
+                .sorted(Comparator.comparing(FoContract::getEndDate))
+                .toList();
     }
 
     @Override
