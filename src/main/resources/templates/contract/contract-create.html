@@ -50,17 +50,25 @@
                                 <div class="mb-1 col-lg-4 col-md-6 col-sm-12">
                                     <label class="form-label fw-bold">Tên hợp đồng</label>
                                     <input type="text" class="form-control" th:field="*{contractName}">
+                                    <small class="invalid-feedback fw-bold text-end"
+                                           th:if="${#fields.hasErrors('contractName')}" th:errors="*{contractName}"></small>
                                 </div>
 
                             </div>
                             <div class="row g-3">
                                 <div class="mb-1 col-lg-4 col-md-12 col-sm-12">
                                     <label class="form-label fw-bold">Ngày ký hợp đồng</label>
-                                    <input type="date" class="form-control" th:field="*{signedDate}">
+                                    <input type="date" class="form-control" th:field="*{signedDate}" th:required="required"
+                                           th:classappend="${#fields.hasErrors('signedDate')}?'is-invalid'">
+                                    <small class="invalid-feedback fw-bold text-end"
+                                           th:if="${#fields.hasErrors('signedDate')}" th:errors="*{signedDate}"></small>
                                 </div>
                                 <div class="mb-1 col-lg-4 col-md-12 col-sm-12">
                                     <label class="form-label fw-bold">Ngày hết hạn hợp đồng</label>
-                                    <input type="date" class="form-control" th:field="*{endDate}">
+                                    <input type="date" class="form-control" th:field="*{endDate}" th:required="required"
+                                           th:classappend="${#fields.hasErrors('endDate')}?'is-invalid'">
+                                    <small class="invalid-feedback fw-bold text-end"
+                                           th:if="${#fields.hasErrors('endDate')}" th:errors="*{endDate}"></small>
                                 </div>
 
                             </div>

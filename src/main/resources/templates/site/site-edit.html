@@ -36,112 +36,100 @@
                                 Sửa đổi thông tin trạm
                             </div>
                             <div class="card-body">
-                                <form th:action="@{/site/edit}" method="post" th:object="${site}">
+                                <form th:action="@{/site/edit}" method="post" th:object="${siteDTO}">
+                                    <input type="text" class="form-control" th:field="*{id}" hidden>
                                     <div class="row g-3">
-                                        <input type="text" class="form-control" th:field="*{id}" th:value="*{id}" hidden>
-                                        <div class="mb-3 col">
-                                            <label class="form-label fw-bold">Site ID</label>
-                                            <input type="text" class="form-control" th:field="*{siteId}" th:value="*{siteId}" th:required="required">
+                                        <div class="mb-1 col-lg-4 col-md-6 col-sm-12">
+                                            <label for="siteId" class="form-label fw-bold">Site ID</label>
+                                            <input type="text" id="siteId"
+                                                   th:classappend="${#fields.hasErrors('siteId')}?'is-invalid'"
+                                                   class="form-control" th:field="*{siteId}" th:required="required">
+                                            <small class="invalid-feedback fw-bold text-end"
+                                                   th:if="${#fields.hasErrors('siteId')}" th:errors="*{siteId}"></small>
                                         </div>
-                                        <div class="mb-3 col">
+                                        <div class="mb-1 col-lg-4 col-md-6 col-sm-12">
                                             <label class="form-label fw-bold">Site ID khác (Nếu có)</label>
-                                            <input type="text" class="form-control" th:field="*{siteId2}" th:value="*{siteId2}">
+                                            <input type="text" class="form-control" th:field="*{siteId2}">
                                         </div>
-                                        <div class="mb-3 col">
+                                        <div class="mb-1 col-lg-4 col-md-12 col-sm-12">
                                             <label class="form-label fw-bold">Tên trạm</label>
-                                            <input type="text" class="form-control" th:field="*{siteName}" th:value="*{siteName}">
+                                            <input type="text" class="form-control" th:field="*{siteName}">
                                         </div>
                                     </div>
                                     <div class="row g-3">
-                                        <div class="mb-3 col-2">
-                                            <label class="form-label fw-bold">Vĩ độ</label>
-                                            <input type="number" step="any" class="form-control" th:field="*{latitude}" th:value="*{latitude}" th:required="required">
+                                        <div class="mb-1 col-lg col-md-6 col-sm-6">
+                                            <label class="form-label fw-bold" for="latitude">Vĩ độ</label>
+                                            <input type="number" step="any" id="latitude"
+                                                   th:classappend="${#fields.hasErrors('latitude')}?'is-invalid'"
+                                                   class="form-control" th:field="*{latitude}" th:required="required">
+                                            <small class="invalid-feedback fw-bold text-end"
+                                                   th:if="${#fields.hasErrors('latitude')}" th:errors="*{latitude}"></small>
                                         </div>
-                                        <div class="mb-3 col-2">
-                                            <label class="form-label fw-bold">Kinh độ</label>
-                                            <input type="number" step="any" class="form-control" th:field="*{longitude}" th:value="*{longitude}" th:required="required">
+                                        <div class="mb-1 col-lg col-md-6 col-sm-6">
+                                            <label class="form-label fw-bold" for="longitude">Kinh độ</label>
+                                            <input type="number" step="any" id="longitude" class="form-control"
+                                                   th:classappend="${#fields.hasErrors('longitude')}?'is-invalid'"
+                                                   th:field="*{longitude}" th:required="required">
+                                            <small class="invalid-feedback fw-bold text-end"
+                                                   th:if="${#fields.hasErrors('longitude')}" th:errors="*{longitude}"></small>
                                         </div>
-                                        <div class="mb-3 col">
+                                        <div class="mb-1 col-lg col-md col-sm">
                                             <label class="form-label fw-bold">Địa chỉ</label>
-                                            <input type="text" class="form-control" th:field="*{address}" th:value="*{address}">
+                                            <input type="text" class="form-control" th:field="*{address}">
                                         </div>
                                     </div>
                                     <div class=" row g-3">
                                         <div class="col-lg-6">
-                                            <div class="mb-3">
+                                            <div class="mb-1">
                                                 <label class="form-label fw-bold">Tỉnh</label>
                                                 <select class=" form-control "
                                                         aria-hidden="true" th:field="*{province}">
-                                                    <option th:each="province1:${provinces}" th:value="${province1.id}" th:selected="(${province1.id} == *{province.id})"
+                                                    <option th:each="province1:${provinces}"
+                                                            th:value="${province1.id}"
                                                             th:text="${province1.name}"></option>
+
                                                 </select>
                                             </div>
                                         </div>
                                         <div class="col-lg-6">
-                                            <div class="mb-3">
+                                            <div class="mb-1">
                                                 <label class="form-label fw-bold">Đơn vị sở hữu trạm</label>
-                                                <select class=" form-control "
-                                                        aria-hidden="true" th:field="*{siteOwner}" >
-                                                    <option th:value="null" th:selected="*{siteOwner==null}"
-                                                    >-- Chọn đơn vị sở hữu --</option>
-                                                    <option th:each="siteOwner1:${siteOwners}" th:value="${siteOwner1.id}"
-                                                            th:selected="(${siteOwner1?.id} == *{siteOwner?.id})"
+                                                <select class=" form-control " aria-hidden="true" th:field="*{siteOwner}">
+                                                    <option th:value="null" th:selected="true">-- Chọn đơn vị sở hữu --</option>
+                                                    <option th:each="siteOwner1:${siteOwners}"
+                                                            th:value="${siteOwner1.id}"
                                                             th:text="${siteOwner1.name}"></option>
                                                 </select>
                                             </div>
                                         </div>
                                         <div class="col-lg-6">
-                                            <div class="mb-3">
+                                            <div class="mb-1">
                                                 <label class="form-label fw-bold">Loại TD trạm</label>
-                                                <select class=" form-control "
-                                                        aria-hidden="true" th:field="*{siteTransmissionType}" >
-                                                    <option th:value="null" th:selected="*{siteTransmissionType==null}">-- Chọn loại TD --</option>
+                                                <select class=" form-control " aria-hidden="true"
+                                                        th:field="*{siteTransmissionType}">
                                                     <option th:each="siteTransmissionType1:${siteTransTypes}"
                                                             th:value="${siteTransmissionType1.id}"
-                                                            th:selected="(${siteTransmissionType1?.id} == *{siteTransmissionType?.id})"
                                                             th:text="${siteTransmissionType1.name}"></option>
                                                 </select>
                                             </div>
                                         </div>
                                         <div class="col-lg-6">
-                                            <div class="mb-3">
-                                                <label class="form-label fw-bold ">Đơn vị sở hữu TD </label>
-                                                <select class=" form-control "
-                                                        aria-hidden="true" th:field="*{transmissionOwner}" >
-                                                    <option th:value="null" th:selected="*{transmissionOwner==null}"
-                                                    >-- Chọn chủ sở hữu TD --</option>
+                                            <div class="mb-1">
+                                                <label class="form-label fw-bold">Đơn vị sở hữu TD </label>
+                                                <select class=" form-control " aria-hidden="true"
+                                                        th:field="*{transmissionOwner}">
                                                     <option th:each="transmissionOwner1:${transOwners}"
                                                             th:value="${transmissionOwner1.id}"
-                                                            th:selected="(${transmissionOwner1?.id} == *{transmissionOwner?.id})"
                                                             th:text="${transmissionOwner1.name}"></option>
                                                 </select>
                                             </div>
                                         </div>
-<!--                                        <div class="col-lg-6">-->
-<!--                                            <div class="mb-3 form-group">-->
-<!--                                                <label class="form-label mb-3 fw-bold">Trạng thái hoạt động</label>-->
-<!--                                                <div class="form-check mb-3">-->
-<!--                                                    <input class="form-check-input " th:field="*{status}" type="radio" name="status" id="statusRadio1"-->
-<!--                                                           value="1"-->
-<!--                                                           th:checked="(*{status}=='1')">-->
-<!--                                                    <label class="form-check-label" for="statusRadio1">-->
-<!--                                                        Đang hoạt động-->
-<!--                                                    </label>-->
-<!--                                                </div>-->
-<!--                                                <div class="form-check form-check-inline mb-3">-->
-<!--                                                    <input class="form-check-input" th:field="*{status}" th:checked="(*{status}=='0')" type="radio" name="status" id="statusRadio2"-->
-<!--                                                           value="0">-->
-<!--                                                    <label class="form-check-label" for="statusRadio2">-->
-<!--                                                        Không hoạt động-->
-<!--                                                    </label>-->
-<!--                                                </div>-->
-<!--                                            </div>-->
-<!--                                        </div>-->
                                     </div>
                                     <div class="row g-3">
-                                        <div class="form-group col">
+                                        <div class="form-group col mb-2">
                                             <label for="exampleFormControlTextarea1" class="fw-bold">Ghi chú</label>
-                                            <textarea th:field="*{note}" th:value="*{note}" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                                            <textarea th:field="*{note}" class="form-control" id="exampleFormControlTextarea1"
+                                                      rows="3"></textarea>
                                         </div>
                                     </div>
                                     <button class="btn btn-primary mt-3">Cập nhật</button>
