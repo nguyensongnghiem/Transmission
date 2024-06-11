@@ -6,6 +6,7 @@ import com.mobifone.transmission.dto.inf.HiredFoLineViewDTO;
 import com.mobifone.transmission.exception.InvalidFileTypeException;
 import com.mobifone.transmission.model.*;
 import com.mobifone.transmission.service.*;
+import com.mobifone.transmission.validator.ContractValidator;
 import jakarta.validation.Valid;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -74,6 +75,7 @@ public class FoContractController {
     @PostMapping("/create")
     public String create(@Valid @ModelAttribute FoContractDTO foContractDTO, BindingResult bindingResult, @RequestParam MultipartFile file) {
         FoContract targetFoContract = new FoContract();
+        new ContractValidator().validate(foContractDTO,bindingResult);
         if (bindingResult.hasErrors()){
             return "contract/contract-create";
         }
@@ -104,7 +106,10 @@ public class FoContractController {
 
     @GetMapping("/edit/{editId}")
     public String showEditForm(Model model, @PathVariable(name = "editId") int editId) {
-        FoContractViewDTO foContractDTO = foContractService.findViewDTOById(editId);
+
+        FoContract foContract = foContractService.findById(editId);
+        FoContractDTO foContractDTO = new FoContractDTO();
+        BeanUtils.copyProperties(foContract,foContractDTO);
         model.addAttribute("foContractDTO", foContractDTO);
         return "contract/contract-edit";
     }
@@ -112,6 +117,7 @@ public class FoContractController {
     @PostMapping("/edit")
     public String edit(@Valid @ModelAttribute FoContractDTO foContractDTO, BindingResult bindingResult) {
         FoContract targetFoContract = new FoContract();
+        new ContractValidator().validate(foContractDTO,bindingResult);
         if (bindingResult.hasErrors()){
             return "contract/contract-edit";
         }

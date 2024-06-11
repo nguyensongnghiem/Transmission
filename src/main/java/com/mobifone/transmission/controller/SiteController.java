@@ -5,8 +5,11 @@ import com.mobifone.transmission.dto.SiteDTO;
 import com.mobifone.transmission.dto.inf.SiteViewDTO;
 import com.mobifone.transmission.model.*;
 import com.mobifone.transmission.service.*;
+import com.mobifone.transmission.validator.SiteValidator;
+import jakarta.validation.Valid;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -119,6 +122,7 @@ public class SiteController {
     @PostMapping("/create")
     public String create(@Validated @ModelAttribute SiteDTO siteDTO, BindingResult bindingResult) {
         Site targetSite = new Site();
+        new SiteValidator().validate(siteDTO,bindingResult);
         if (bindingResult.hasErrors()){
             return "site/site-create";
         }
@@ -136,13 +140,21 @@ public class SiteController {
     @GetMapping("/edit/{editId}")
     public String showEditForm(Model model, @PathVariable(name = "editId") Long editId) {
         Site site = siteService.findById(editId, Site.class);
-        model.addAttribute("site", site);
+        SiteDTO siteDTO = new SiteDTO();
+        BeanUtils.copyProperties(site,siteDTO);
+        model.addAttribute("siteDTO", siteDTO);
         return "/site/site-edit";
     }
 
     @PostMapping("/edit")
-    public String edit(@ModelAttribute Site site) {
-        siteService.save(site);
+    public String edit(@Valid @ModelAttribute SiteDTO siteDTO, BindingResult bindingResult) {
+        Site targetSite = new Site();
+        new SiteValidator().validate(siteDTO,bindingResult);
+        if (bindingResult.hasErrors()){
+            return "site/site-edit";
+        }
+        BeanUtils.copyProperties(siteDTO,targetSite);
+        siteService.save(targetSite);
         return "redirect:/site/list";
     }
 

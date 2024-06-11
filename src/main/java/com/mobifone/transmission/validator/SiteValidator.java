@@ -2,6 +2,7 @@ package com.mobifone.transmission.validator;
 
 import com.mobifone.transmission.dto.SiteDTO;
 import com.mobifone.transmission.model.Site;
+import com.mobifone.transmission.repository.ISiteRepository;
 import com.mobifone.transmission.service.ISiteService;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,14 +13,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 import java.util.List;
-@Configuration
-@Data
+@Component
 public class SiteValidator implements Validator {
-
-    private final ISiteService siteService;
-    public SiteValidator(ISiteService siteService) {
-        this.siteService = siteService;
-    }
+@Autowired
+ISiteRepository siteRepository;
     @Override
     public boolean supports(Class<?> clazz) {
         return false;

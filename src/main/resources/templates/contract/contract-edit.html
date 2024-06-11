@@ -34,7 +34,7 @@
                 <div class="card mb-4">
                     <div class="card-header">
                         <i class="fas fa-edit me-1"></i>
-                        Thêm mới trạm
+                        Sửa đổi hợp đồng thuê FO
                     </div>
                     <div class="card-body">
                         <form th:action="@{/contract/edit}" method="post" th:object="${foContractDTO}">
@@ -46,7 +46,8 @@
                                            th:classappend="${#fields.hasErrors('contractNumber')}?'is-invalid'"
                                            class="form-control" th:field="*{contractNumber}" th:required="required">
                                     <small class="invalid-feedback fw-bold text-end"
-                                           th:if="${#fields.hasErrors('contractNumber')}" th:errors="*{contractNumber}"></small>
+                                           th:if="${#fields.hasErrors('contractNumber')}"
+                                           th:errors="*{contractNumber}"></small>
                                 </div>
                                 <div class="mb-1 col-lg-4 col-md-6 col-sm-12">
                                     <label class="form-label fw-bold">Tên hợp đồng</label>
@@ -57,11 +58,19 @@
                             <div class="row g-3">
                                 <div class="mb-1 col-lg-4 col-md-12 col-sm-12">
                                     <label class="form-label fw-bold">Ngày ký hợp đồng</label>
-                                    <input type="date" class="form-control" th:field="*{signedDate}">
+                                    <input type="date" class="form-control" th:field="*{signedDate}"
+                                           th:classappend="${#fields.hasErrors('signedDate')}?'is-invalid'">
+                                    <small class="invalid-feedback fw-bold text-end"
+                                           th:if="${#fields.hasErrors('signedDate')}"
+                                           th:errors="*{signedDate}"></small>
                                 </div>
                                 <div class="mb-1 col-lg-4 col-md-12 col-sm-12">
                                     <label class="form-label fw-bold">Ngày hết hạn hợp đồng</label>
-                                    <input type="date" class="form-control" th:field="*{endDate}">
+                                    <input type="date" class="form-control" th:field="*{endDate}"
+                                           th:classappend="${#fields.hasErrors('endDate')}?'is-invalid'">
+                                    <small class="invalid-feedback fw-bold text-end"
+                                           th:if="${#fields.hasErrors('endDate')}"
+                                           th:errors="*{endDate}"></small>
                                 </div>
 
                             </div>
