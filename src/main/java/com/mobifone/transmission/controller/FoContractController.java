@@ -104,14 +104,19 @@ public class FoContractController {
 
     @GetMapping("/edit/{editId}")
     public String showEditForm(Model model, @PathVariable(name = "editId") int editId) {
-        FoContractViewDTO foContract = foContractService.findViewDTOById(editId);
-        model.addAttribute("foContract", foContract);
+        FoContractViewDTO foContractDTO = foContractService.findViewDTOById(editId);
+        model.addAttribute("foContractDTO", foContractDTO);
         return "contract/contract-edit";
     }
 
     @PostMapping("/edit")
-    public String edit(@ModelAttribute FoContract contract) {
-        foContractService.save(contract);
+    public String edit(@Valid @ModelAttribute FoContractDTO foContractDTO, BindingResult bindingResult) {
+        FoContract targetFoContract = new FoContract();
+        if (bindingResult.hasErrors()){
+            return "contract/contract-edit";
+        }
+        BeanUtils.copyProperties(foContractDTO,targetFoContract);
+        foContractService.save(targetFoContract);
         return "redirect:/contract/list";
     }
     @GetMapping("/detail")

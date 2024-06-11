@@ -20,7 +20,7 @@ public class FoContractDTO {
     @NotNull
     private String contractNumber;
     private String contractName;
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @DateTimeFormat(pattern = "yyyy/MM/dd")
     @PastOrPresent(message = "Không sau ngày hiện tại")
     private LocalDate signedDate;
     @DateTimeFormat(pattern = "yyyy-MM-dd")

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <meta name="description" content=""/>
+    <meta name="author" content=""/>
+    <title>Quản lý Truyền dẫn - MLMT</title>
+    <div th:replace="~{layout/layout::library}"></div>
+</head>
+<body class="sb-nav-fixed">
+
+<!-- Topbar -->
+<
+<div th:replace="~{layout/layout::topbar}"></div>
+<!-- End of Topbar -->
+
+<!-- Sidebar -->
+<div id="layoutSidenav">
+    <div th:replace="~{layout/layout::sidebar}"></div>
+
+    <div id="layoutSidenav_content">
+        <main>
+            <div class="container-fluid px-4">
+                <h1 class="mt-4">Sửa đổi hợp đồng thuê</h1>
+                <ol class="breadcrumb mb-4">
+                    <li class="breadcrumb-item active"><a th:href="@{/}">Tổng quan</a></li>
+                    <li class="breadcrumb-item active"><a th:href="@{/contract/list-api}">Hợp đồng thuê Fo</a></li>
+                    <li class="breadcrumb-item active">Sửa đổi</li>
+
+                </ol>
+
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <i class="fas fa-edit me-1"></i>
+                        Thêm mới trạm
+                    </div>
+                    <div class="card-body">
+                        <form th:action="@{/contract/edit}" method="post" th:object="${foContractDTO}">
+                            <div class="row g-3">
+                                <input th:field="*{id}" hidden>
+                                <div class="mb-1 col-lg-4 col-md-6 col-sm-12">
+                                    <label for="contractNumber" class="form-label fw-bold">Số hợp đồng</label>
+                                    <input id="contractNumber"
+                                           th:classappend="${#fields.hasErrors('contractNumber')}?'is-invalid'"
+                                           class="form-control" th:field="*{contractNumber}" th:required="required">
+                                    <small class="invalid-feedback fw-bold text-end"
+                                           th:if="${#fields.hasErrors('contractNumber')}" th:errors="*{contractNumber}"></small>
+                                </div>
+                                <div class="mb-1 col-lg-4 col-md-6 col-sm-12">
+                                    <label class="form-label fw-bold">Tên hợp đồng</label>
+                                    <input type="text" class="form-control" th:field="*{contractName}">
+                                </div>
+
+                            </div>
+                            <div class="row g-3">
+                                <div class="mb-1 col-lg-4 col-md-12 col-sm-12">
+                                    <label class="form-label fw-bold">Ngày ký hợp đồng</label>
+                                    <input type="date" class="form-control" th:field="*{signedDate}">
+                                </div>
+                                <div class="mb-1 col-lg-4 col-md-12 col-sm-12">
+                                    <label class="form-label fw-bold">Ngày hết hạn hợp đồng</label>
+                                    <input type="date" class="form-control" th:field="*{endDate}">
+                                </div>
+
+                            </div>
+                            <div class="row g-3">
+                                <div class="col-lg-4">
+                                    <div class="mb-1">
+                                        <label class="form-label fw-bold">Đơn vị cho thuê</label>
+                                        <select class=" form-control " aria-hidden="true"
+                                                th:field="*{transmissionOwner}">
+                                            <option th:each="transmissionOwner1:${transOwners}"
+                                                    th:value="${transmissionOwner1.id}"
+                                                    th:text="${transmissionOwner1.name}"></option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row g-3">
+                                <div class="form-group col mb-2">
+                                    <label for="exampleFormControlTextarea1" class="fw-bold">Ghi chú</label>
+                                    <textarea th:field="*{note}" class="form-control" id="exampleFormControlTextarea1"
+                                              rows="3"></textarea>
+                                </div>
+                            </div>
+
+                            <div class="row g-3">
+                                <div class="col-md-3 text-sm-center text-md-start mb-1 col-sm">
+                                    <button class="btn btn-primary ">Cập nhật</button>
+                                </div>
+
+                            </div>
+
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <div th:replace="~{layout/layout::footer}"></div>
+    </div>
+</div>
+
+<div th:replace="~{layout/layout::js-libs}"></div>
+</body>
+</html>
