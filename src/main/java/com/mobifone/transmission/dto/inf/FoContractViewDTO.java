@@ -1,6 +1,7 @@
 package com.mobifone.transmission.dto.inf;
 
 import java.time.LocalDate;
+import java.util.List;
 
 public interface FoContractViewDTO {
     int getId();
@@ -13,5 +14,5 @@ public interface FoContractViewDTO {
     interface TransmissionOwnerWithName {
         String getName();
     }
-
+    List<HiredFoLineViewDTO> getHiredFoLineList();
 }

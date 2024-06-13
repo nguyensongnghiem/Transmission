@@ -24,7 +24,7 @@ $(document).ready(function () {
         ],
         columnDefs: [{
             "defaultContent": "",
-            "className": "dt-center",
+            "className": "text-center",
             "targets": "_all",
         }],
         dom: 'Blfrtip',
@@ -69,7 +69,7 @@ $(document).ready(function () {
         },
         columns: [
             {
-                className: 'dt-center editor-edit',
+                className: 'text-center editor-edit',
                 render: function (data, type, row) {
                     let nearSite = row.nearSite!=null?row.nearSite.siteId:'UnknownSite'
                     let farSite = row.farSite!=null?row.farSite.siteId:'UnknownSite'
@@ -78,12 +78,14 @@ $(document).ready(function () {
                 orderable: false
             },
             {data: 'coreQuantity'},
-            {data: 'finalDistance'},
-            {data: 'cost'},
+            {data: 'finalDistance',
+                render: DataTable.render.number('.',',',2,null,null)},
+            {data: 'cost',
+            render: DataTable.render.number('.',',',0,null, ' VNĐ')},
             {data: 'note'},
             {
                 data: 'id',
-                className: 'dt-center editor-edit',
+                className: 'text-center editor-edit',
                 render: function (data, type, row) {
                     return `<a href="${contextPath}/hired-fo/edit/${row.id}" class="btn btn-warning btn-sm"><i class="fa fa-pencil fa-sm"/></a>`
                 },
@@ -91,7 +93,7 @@ $(document).ready(function () {
             },
             {
                 data: 'id',
-                className: 'dt-center editor-edit',
+                className: 'text-center editor-edit',
                 render: function (data, type, row) {
                     let nearSite = row.nearSite!=null?row.nearSite.siteId:'UnknownSite'
                     let farSite = row.farSite!=null?row.farSite.siteId:'UnknownSite'

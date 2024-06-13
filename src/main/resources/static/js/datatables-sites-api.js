@@ -26,7 +26,7 @@ $(document).ready(function () {
         ],
         columnDefs: [{
             "defaultContent": "",
-            "className": "dt-center",
+            "className": "text-center",
             "targets": "_all",
         }],
         dom: 'Blfrtip',
@@ -66,38 +66,48 @@ $(document).ready(function () {
         },
         ajax: {
             url: "/api/sites",
-            dataSrc: ''           
+            dataSrc: ''
         },
         columns: [
-            {data: 'province.name'},
+            {data: 'province.name',
+            width: '10%'},
             {
                 data: 'siteId',
-                className: 'dt-center editor-edit',
-                render: function (data,type,row) {
+                className: 'text-center editor-edit',
+                render: function (data, type, row) {
                     return `<a href="${contextPath}/site/detail?siteId=${row.siteId}" >${row.siteId}</a>`
                 },
                 orderable: false
             },
             {data: 'siteId2'},
-            {data: 'siteName'},
-            {data: 'latitude'},
-            {data: 'longitude'},
+            {
+                data: 'siteName',
+                width: '10%'
+            },
+            {
+                data: 'latitude',
+                render: DataTable.render.number(',', '.', 4, null, null)
+            },
+            {
+                data: 'longitude',
+                render: DataTable.render.number(',', '.', 4, null, null)
+            },
             {data: 'siteOwner.name'},
             {data: 'siteTransmissionType.name'},
             {data: 'transmissionOwner.name'},
             {data: 'note'},
             {
                 data: 'id',
-                className: 'dt-center editor-edit',
-                render: function (data,type,row) {
+                className: 'text-center editor-edit',
+                render: function (data, type, row) {
                     return `<a href="${contextPath}/site/edit/${row.id}" class="btn btn-warning btn-sm"><i class="fa fa-pencil fa-sm"/></a>`
                 },
                 orderable: false
             },
             {
                 data: 'id',
-                className: 'dt-center editor-edit',
-                render: function (data,type,row) {
+                className: 'text-center editor-edit',
+                render: function (data, type, row) {
                     return `<button class="btn btn-danger btn-edit btn-sm"
                    onclick="deleteSite(${row.id},\'${row.siteId}\')"
                    data-bs-toggle="modal" 

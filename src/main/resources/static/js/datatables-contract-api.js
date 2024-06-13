@@ -13,8 +13,8 @@ $(document).ready(function () {
     var contextPath = window.location.origin
     $('#contractDataTablesApi').DataTable({
         // scrollY:        400,
-        deferRender:    true,
-        scroller:       true,
+        deferRender: true,
+        scroller: true,
         fixedHeader: true,
         colReorder: true,
         responsive: true,
@@ -22,11 +22,13 @@ $(document).ready(function () {
             [10, 25, 50, -1],
             [10, 25, 50, 'All']
         ],
-        columnDefs: [{
-            "defaultContent": "",
-            "className": "dt-center",
-            "targets": "_all",
-        }],
+        columnDefs: [
+            {
+                "defaultContent": "",
+                "className": "text-center",
+                "targets": "_all",
+            }
+        ],
         dom: 'Blfrtip',
         buttons: [
             {
@@ -71,29 +73,41 @@ $(document).ready(function () {
 
             {
                 data: 'contractNumber',
-                className: 'dt-center editor-edit',
-                render: function (data,type,row) {
+                className: 'text-center editor-edit',
+                render: function (data, type, row) {
                     return `<a href="${contextPath}/contract/detail?id=${row.id}" >${row.contractNumber}</a>`
                 },
                 orderable: false
             },
-            {data: 'contractName'},
+            {
+                data: 'contractName',
+                className: "text-start",
+                width: "30%"
+            },
             {data: 'transmissionOwner.name'},
-            {data: 'signedDate'},
-            {data: 'endDate'},
+            {
+                data: 'signedDate',
+                render: DataTable.render.date('DD/MM/YYYY'),
+                className: "text-center"
+            },
+            {
+                data: 'endDate',
+                render: DataTable.render.date('DD/MM/YYYY'),
+                className: "text-center"
+            },
             {data: 'note'},
             {
                 data: 'id',
-                className: 'dt-center editor-edit',
-                render: function (data,type,row) {
+                className: 'text-center editor-edit',
+                render: function (data, type, row) {
                     return `<a href="${contextPath}/contract/edit/${row.id}" class="btn btn-warning btn-sm"><i class="fa fa-pencil fa-sm"/></a>`
                 },
                 orderable: false
             },
             {
                 data: 'id',
-                className: 'dt-center editor-edit',
-                render: function (data,type,row) {
+                className: 'text-center editor-edit',
+                render: function (data, type, row) {
                     return `<button class="btn btn-danger btn-edit btn-sm"
                    onclick="deleteContract(${row.id},\'${row.contractNumber}\')"
                    data-bs-toggle="modal" 

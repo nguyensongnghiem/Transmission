@@ -24,7 +24,7 @@ $(document).ready(function() {
         ],
         columnDefs: [{
             "defaultContent": "",
-            "className": "dt-center",
+            "className": "text-center",
             "targets": "_all",
         }],
         dom: 'Blfrtip',
@@ -70,7 +70,7 @@ $(document).ready(function() {
             {data: 'site.province.name'},
             {
                 data: 'site.siteId',
-                className: 'dt-center editor-edit',
+                className: 'text-center editor-edit',
                 render: function (data,type,row) {
                     return `<a href="${contextPath}/site/detail?siteId=${row.site.siteId}" >${row.site.siteId}</a>`
                 },
@@ -83,7 +83,7 @@ $(document).ready(function() {
             {data: 'note'},
             {
                 data: 'id',
-                className: 'dt-center editor-edit',
+                className: 'text-center editor-edit',
                 render: function (data,type,row) {
                     return `<a href="${contextPath}/router/edit/${row.id}" class="btn btn-warning btn-sm"><i class="fa fa-pencil fa-sm"/></a>`
                 },
@@ -91,7 +91,7 @@ $(document).ready(function() {
             },
             {
                 data: 'id',
-                className: 'dt-center editor-edit',
+                className: 'text-center editor-edit',
                 render: function (data,type,row) {
                     return `<button class="btn btn-danger btn-edit btn-sm"
                    onclick="deleteRouter(${row.id},\'${row.name}\')"
