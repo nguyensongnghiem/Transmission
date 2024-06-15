@@ -5,11 +5,10 @@ import com.mobifone.transmission.dto.SiteDTO;
 import com.mobifone.transmission.dto.inf.SiteViewDTO;
 import com.mobifone.transmission.model.*;
 import com.mobifone.transmission.service.*;
-import com.mobifone.transmission.validator.SiteValidator;
+import com.mobifone.transmission.validator.SiteCreationValidator;
 import jakarta.validation.Valid;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -19,7 +18,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -37,6 +35,9 @@ public class SiteController {
     private ISiteTransmissionTypeService siteTransmissionTypeService;
     @Autowired
     private ITransmissionOwnerService transmissionOwnerService;
+    @Autowired
+    private SiteCreationValidator siteCreationValidator;
+
 
     @ModelAttribute("transOwners")
     public List<TransmissionOwner> getTransOwner() {
@@ -120,9 +121,9 @@ public class SiteController {
 
     //    save new site to DB
     @PostMapping("/create")
-    public String create(@Validated @ModelAttribute SiteDTO siteDTO, BindingResult bindingResult) {
+    public String create(@Valid @ModelAttribute SiteDTO siteDTO, BindingResult bindingResult) {
         Site targetSite = new Site();
-        new SiteValidator().validate(siteDTO,bindingResult);
+        siteCreationValidator.validate(siteDTO,bindingResult);
         if (bindingResult.hasErrors()){
             return "site/site-create";
         }
@@ -149,7 +150,7 @@ public class SiteController {
     @PostMapping("/edit")
     public String edit(@Valid @ModelAttribute SiteDTO siteDTO, BindingResult bindingResult) {
         Site targetSite = new Site();
-        new SiteValidator().validate(siteDTO,bindingResult);
+//        new SiteCreationValidator().validate(siteDTO,bindingResult);
         if (bindingResult.hasErrors()){
             return "site/site-edit";
         }

@@ -16,7 +16,6 @@ import java.math.BigDecimal;
 public class SiteDTO {
     private Long id;
     @NotNull(message = "Thông tin bắt buộc")
-    @SiteIdExists
     private String siteId;
     private String siteId2;
     private String siteName;

@@ -12,16 +12,13 @@ import lombok.Setter;
 @Setter
 public class RouterDTO {
     @NotNull(message = "Thông tin bắt buộc")
-    @RouterNameExists
     private String name;
     private RouterType routerType;
     private TransmissionDeviceType transmissionDeviceType;
     @NotNull(message = "Thông tin bắt buộc")
     private Site site;
     @NotNull(message = "Thông tin bắt buộc")
-    @RouterIpExists
     @Pattern(regexp = "^((25[0-5]|(2[0-4]|1\\d|[1-9]|)\\d)\\.?\\b){4}$",message = "Format IP không đúng")
     private String ip;
-
     private String note;
 }

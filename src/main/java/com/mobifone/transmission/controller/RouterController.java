@@ -4,6 +4,7 @@ import com.mobifone.transmission.dto.RouterDTO;
 import com.mobifone.transmission.dto.inf.RouterViewDTO;
 import com.mobifone.transmission.model.*;
 import com.mobifone.transmission.service.*;
+import com.mobifone.transmission.validator.RouterCreationValidator;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -31,7 +32,8 @@ public class RouterController {
     private ITransmissionDeviceTypeService transmissionDeviceTypeService;
     @Autowired
     private IRouterService routerService;
-
+    @Autowired
+    private RouterCreationValidator routerCreationValidator;
 
 
     @ModelAttribute("provinces")
@@ -97,6 +99,7 @@ public class RouterController {
     @PostMapping("/create")
     public String create(@Validated @ModelAttribute RouterDTO routerDTO, BindingResult bindingResult) {
         Router targetRouter =new Router();
+        routerCreationValidator.validate(routerDTO,bindingResult);
         if (bindingResult.hasErrors()){
             return "router/router-create";
         }
@@ -117,8 +120,13 @@ public class RouterController {
     }
 
     @PostMapping("/edit")
-    public String edit(@ModelAttribute Router router) {
-        routerService.save(router);
+    public String edit(@ModelAttribute RouterDTO routerDTO,BindingResult bindingResult) {
+        Router targetRouter = new Router();
+        if (bindingResult.hasErrors()){
+            return "router/router-edit";
+        }
+        BeanUtils.copyProperties(routerDTO,targetRouter);
+        routerService.save(targetRouter);
         return "redirect:/router/list";
     }
     public String getUserName() {

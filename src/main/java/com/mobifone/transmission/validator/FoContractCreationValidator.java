@@ -2,20 +2,15 @@ package com.mobifone.transmission.validator;
 
 import com.mobifone.transmission.dto.FoContractDTO;
 import com.mobifone.transmission.repository.IFoContractRepository;
-import com.mobifone.transmission.service.IFoContractService;
-import com.mobifone.transmission.service.ISiteService;
-import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
 @Component
-public class ContractValidator implements Validator {
+public class FoContractCreationValidator implements Validator {
     @Autowired
     IFoContractRepository foContractRepository;
-
     @Override
     public boolean supports(Class<?> clazz) {
         return false;

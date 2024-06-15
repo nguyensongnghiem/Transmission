@@ -6,31 +6,23 @@ import com.mobifone.transmission.dto.inf.HiredFoLineViewDTO;
 import com.mobifone.transmission.exception.InvalidFileTypeException;
 import com.mobifone.transmission.model.*;
 import com.mobifone.transmission.service.*;
-import com.mobifone.transmission.validator.ContractValidator;
+import com.mobifone.transmission.validator.FoContractCreationValidator;
 import jakarta.validation.Valid;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
-import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
-import java.util.Optional;
 
 @RequestMapping("/contract")
 @Controller
@@ -46,6 +38,8 @@ public class FoContractController {
     private IFoContractService foContractService;
     @Autowired
     private ExcelUploadService excelUploadService;
+    @Autowired
+    private FoContractCreationValidator foContractCreationValidator;
     @ModelAttribute("siteList")
     public List<Site> getSiteList() {
         return siteService.findAll();
@@ -75,7 +69,7 @@ public class FoContractController {
     @PostMapping("/create")
     public String create(@Valid @ModelAttribute FoContractDTO foContractDTO, BindingResult bindingResult, @RequestParam MultipartFile file) {
         FoContract targetFoContract = new FoContract();
-        new ContractValidator().validate(foContractDTO,bindingResult);
+        foContractCreationValidator.validate(foContractDTO,bindingResult);
         if (bindingResult.hasErrors()){
             return "contract/contract-create";
         }
@@ -117,7 +111,7 @@ public class FoContractController {
     @PostMapping("/edit")
     public String edit(@Valid @ModelAttribute FoContractDTO foContractDTO, BindingResult bindingResult) {
         FoContract targetFoContract = new FoContract();
-        new ContractValidator().validate(foContractDTO,bindingResult);
+
         if (bindingResult.hasErrors()){
             return "contract/contract-edit";
         }
