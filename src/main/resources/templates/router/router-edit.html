@@ -35,23 +35,30 @@
                                 Sửa đổi thông tin thiết bị
                             </div>
                             <div class="card-body">
-                                <form th:action="@{/router/edit}" method="post" th:object="${router}">
+                                <form th:action="@{/router/edit}" method="post" th:object="${routerDTO}">
                                     <div class="row">
                                         <input type="text" class="form-control" th:field="*{id}" th:value="*{id}" hidden>
                                         <div class="mb-3 col">
                                             <label class="form-label fw-bold">Tên Router</label>
                                             <input type="text" class="form-control" th:field="*{name}" th:value="*{name}">
+
                                         </div>
                                         <div class="mb-3 col">
                                             <label class="form-label fw-bold">Ip quản lý</label>
-                                            <input type="text" class="form-control" th:field="*{ip}" th:value="*{ip}">
+                                            <input type="text" class="form-control" th:field="*{ip}" th:value="*{ip}"
+                                                   th:classappend="${#fields.hasErrors('ip')}?'is-invalid'">
+                                            <small class="invalid-feedback fw-bold text-end"
+                                                   th:if="${#fields.hasErrors('ip')}" th:errors="*{ip}"></small>
                                         </div>
                                         <div class="mb-3 col">
                                             <label class="form-label fw-bold">Site Id</label>
-                                            <input type="text" list="siteList" class="form-control" th:field="*{site}" th:value="*{site.id}">
+                                            <input type="text" list="siteList" class="form-control" th:field="*{site}" th:value="*{site?.id}"
+                                                   th:classappend="${#fields.hasErrors('site')}?'is-invalid'">
                                             <datalist id="siteList">
                                                 <option th:each="site1:${siteList}" th:value="${site1.id}" th:text="${site1.siteId}">
                                             </datalist>
+                                            <small class="invalid-feedback fw-bold text-end"
+                                                   th:if="${#fields.hasErrors('site')}" th:errors="*{site}"></small>
                                         </div>
                                     </div>
                                     <div class=" row">

@@ -41,8 +41,7 @@
                                             <input type="text" class="form-control"
                                                    th:field="*{name}"
                                                    th:required="required"
-                                                   th:classappend="${#fields.hasErrors('name')}?'is-invalid'"
-                                            >
+                                                   th:classappend="${#fields.hasErrors('name')}?'is-invalid'">
                                             <small class="invalid-feedback fw-bold text-end"
                                                    th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></small>
                                         </div>

@@ -5,6 +5,8 @@ import com.mobifone.transmission.dto.inf.RouterViewDTO;
 import com.mobifone.transmission.model.*;
 import com.mobifone.transmission.service.*;
 import com.mobifone.transmission.validator.RouterCreationValidator;
+import com.mobifone.transmission.validator.RouterEditValidator;
+import jakarta.validation.Valid;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -34,6 +36,8 @@ public class RouterController {
     private IRouterService routerService;
     @Autowired
     private RouterCreationValidator routerCreationValidator;
+    @Autowired
+    private RouterEditValidator routerEditValidator;
 
 
     @ModelAttribute("provinces")
@@ -115,13 +119,20 @@ public class RouterController {
     @GetMapping("/edit/{editId}")
     public String showEditForm(Model model, @PathVariable(name = "editId") Long editId) {
         Router router = routerService.findById(editId);
-        model.addAttribute("router",router);
+        RouterDTO routerDTO = new RouterDTO();
+        RouterDTO oldRouterDTO = new RouterDTO();
+        BeanUtils.copyProperties(router,routerDTO);
+        BeanUtils.copyProperties(router,oldRouterDTO);
+        model.addAttribute("routerDTO",routerDTO);
+        model.addAttribute("oldRouterDTO",oldRouterDTO);
+
         return "router/router-edit";
     }
 
     @PostMapping("/edit")
-    public String edit(@ModelAttribute RouterDTO routerDTO,BindingResult bindingResult) {
+    public String edit(@Valid @ModelAttribute RouterDTO routerDTO, BindingResult bindingResult) {
         Router targetRouter = new Router();
+        routerEditValidator.validate(routerDTO,bindingResult);
         if (bindingResult.hasErrors()){
             return "router/router-edit";
         }

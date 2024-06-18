@@ -48,17 +48,24 @@
                                 </div>
                                 <div class="mb-3 col">
                                     <label class="form-label fw-bold">Site A</label>
-                                    <input type="text" list="siteList" class="form-control" th:field="*{nearSite}" th:value="*{nearSite.id}">
+                                    <input type="text" list="siteList" class="form-control" th:field="*{nearSite}" th:value="*{nearSite?.id}"
+                                           th:classappend="${#fields.hasErrors('nearSite')}?'is-invalid'">
                                     <datalist id="siteList">
                                         <option th:each="site1:${siteList}" th:value="${site1.id}" th:text="${site1.siteId}">
                                     </datalist>
+                                    <small class="invalid-feedback fw-bold text-end"
+                                           th:if="${#fields.hasErrors('nearSite')}" th:errors="*{nearSite}"></small>
+
                                 </div>
                                 <div class="mb-3 col">
                                     <label class="form-label fw-bold">Site B</label>
-                                    <input type="text" list="siteList2" class="form-control" th:field="*{farSite}" th:value="*{farSite.id}">
+                                    <input type="text" list="siteList2" class="form-control" th:field="*{farSite}" th:value="*{farSite?.id}"
+                                           th:classappend="${#fields.hasErrors('farSite')}?'is-invalid'">
                                     <datalist id="siteList2">
                                         <option th:each="site1:${siteList}" th:value="${site1.id}" th:text="${site1.siteId}">
                                     </datalist>
+                                    <small class="invalid-feedback fw-bold text-end"
+                                           th:if="${#fields.hasErrors('farSite')}" th:errors="*{farSite}"></small>
                                 </div>
                                 <div class="mb-3 col">
                                     <label class="form-label fw-bold">Số core</label>
