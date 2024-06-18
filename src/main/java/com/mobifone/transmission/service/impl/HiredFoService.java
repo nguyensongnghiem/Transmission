@@ -60,4 +60,9 @@ public class HiredFoService implements IHiredFoService {
     public void save(HiredFoLine hiredFoLine) {
         hiredFoLineRepository.save(hiredFoLine);
     }
+
+    @Override
+    public <T> T findById(int editId, Class<T> classType) {
+        return hiredFoLineRepository.findById(editId, classType);
+    }
 }

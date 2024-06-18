@@ -1,5 +1,6 @@
 package com.mobifone.transmission.service;
 
+import com.mobifone.transmission.dto.HiredFoLineDTO;
 import com.mobifone.transmission.dto.inf.FoContractViewDTO;
 import com.mobifone.transmission.dto.inf.HiredFoLineViewDTO;
 import com.mobifone.transmission.model.HiredFoLine;
@@ -16,4 +17,6 @@ public interface IHiredFoService {
     List<HiredFoLineViewDTO> getHiredFoLineViewDTOByContractId(int id);
 
     void save(HiredFoLine hiredFoLine);
+
+    public <T> T findById(int editId, Class<T> classType);
 }

@@ -1,5 +1,7 @@
 package com.mobifone.transmission.controller;
 
+import com.mobifone.transmission.dto.HiredFoLineDTO;
+import com.mobifone.transmission.dto.SiteDTO;
 import com.mobifone.transmission.dto.inf.FoContractViewDTO;
 import com.mobifone.transmission.model.FoContract;
 import com.mobifone.transmission.model.HiredFoLine;
@@ -9,9 +11,12 @@ import com.mobifone.transmission.service.IFoContractService;
 import com.mobifone.transmission.service.IHiredFoService;
 import com.mobifone.transmission.service.ISiteService;
 import com.mobifone.transmission.service.ITransmissionOwnerService;
+import jakarta.validation.Valid;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -28,6 +33,7 @@ public class HiredFoLineController {
     private ITransmissionOwnerService transmissionOwnerService;
     @Autowired
     private IFoContractService foContractService;
+
     @ModelAttribute("siteList")
     public List<Site> getSiteList() {
         return siteService.findAll();
@@ -61,22 +67,29 @@ public class HiredFoLineController {
     }
 
     @PostMapping("/delete")
-    public String deleteRouter(@RequestParam(name = "deleteId") int deleteId) {
+    public String deleteFoLine(@RequestParam(name = "deleteId") int deleteId) {
         foContractService.deleteById(deleteId);
-        return "redirect:/leaseline/list";
+        return "redirect:/hired-fo-list/hired-fo-list";
     }
 
     @GetMapping("/edit/{editId}")
     public String showEditForm(Model model, @PathVariable(name = "editId") int editId) {
-        FoContractViewDTO foContract = foContractService.findViewDTOById(editId);
-        model.addAttribute("foContract", foContract);
-        return "contract/contract-edit";
+        HiredFoLine hiredFoLine = hiredFoService.findById(editId,HiredFoLine.class);
+        HiredFoLineDTO hiredFoLineDTO = new HiredFoLineDTO();
+        BeanUtils.copyProperties(hiredFoLine,hiredFoLineDTO);
+        model.addAttribute("hiredFoLineDTO", hiredFoLineDTO);
+        return "hiredFo/hired-fo-edit";
     }
 
     @PostMapping("/edit")
-    public String edit(@ModelAttribute FoContract contract) {
-        foContractService.save(contract);
-        return "redirect:/contract/list";
+    public String edit(@Valid @ModelAttribute HiredFoLineDTO hiredFoLineDTO, BindingResult bindingResult) {
+        HiredFoLine hiredFoLine = new HiredFoLine();
+        if (bindingResult.hasErrors()){
+            return "hiredFo/hired-fo-edit";
+        }
+        BeanUtils.copyProperties(hiredFoLineDTO,hiredFoLine);
+        hiredFoService.save(hiredFoLine);
+        return "redirect:/hired-fo/list";
     }
     @GetMapping("/detail")
     public String showDetail(Model model, @RequestParam(required = false, defaultValue = "",name = "id") int id) {

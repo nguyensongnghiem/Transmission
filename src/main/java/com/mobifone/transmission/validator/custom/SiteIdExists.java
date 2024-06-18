@@ -9,7 +9,7 @@ import java.lang.annotation.*;
 @Documented
 @Constraint(validatedBy= SiteIdExistsValidator.class)
 public @interface SiteIdExists {
-    String message() default "Site ID đã tồn tại trong hệ thống";
+    String message() default "Cần nhập vào Site ID trạm đã có trong hệ thống, nếu chưa có cần tạo mới Site";
     Class[] groups() default {};
     Class[] payload() default {};
 }

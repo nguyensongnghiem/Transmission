@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <meta name="description" content=""/>
+    <meta name="author" content=""/>
+    <title>Thay đổi thông tin tuyến FO thuê</title>
+    <div th:replace="~{layout/layout::library}"></div>
+</head>
+<body class="sb-nav-fixed">
+
+<!-- Topbar -->
+<
+<div th:replace="~{layout/layout::topbar}"></div>
+<!-- End of Topbar -->
+
+<!-- Sidebar -->
+<div id="layoutSidenav">
+    <div th:replace="~{layout/layout::sidebar}"></div>
+
+    <div id="layoutSidenav_content">
+        <main>
+            <div class="container-fluid px-4">
+                <h1 class="mt-4">Sửa thông tin tuyến FO thuê</h1>
+                <ol class="breadcrumb mb-4">
+                    <li class="breadcrumb-item active"><a th:href="@{/}">Tổng quan</a></li>
+                    <li class="breadcrumb-item active"><a th:href="@{/hired-fo/list-api}">Danh sách tuyến Fo thuê</a>
+                    </li>
+                    <li class="breadcrumb-item active">Sửa đổi</li>
+                </ol>
+
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <i class="fas fa-edit me-1"></i>
+                        Sửa đổi thông tin tuyến Fo thuê
+                    </div>
+                    <div class="card-body">
+                        <form th:action="@{/hired-fo/edit}" method="post" th:object="${hiredFoLineDTO}">
+                            <div class="row">
+                                <div>
+                                    <input type="text" class="form-control" th:field="*{id}" th:value="*{id}" hidden>
+                                    <div th:object="${hiredFoLineDTO.foContract}">
+                                        <input type="text" class="form-control" th:field="*{id}" hidden>
+                                        <input type="text" class="form-control" th:field="*{contractNumber}" readonly>
+                                    </div>
+                                </div>
+                                <div class="mb-3 col">
+                                    <label class="form-label fw-bold">Site A</label>
+                                    <input type="text" list="siteListA" class="form-control"
+                                           th:fields="*{nearSite}" th:value="*{nearSite.siteId}" >
+                                    <datalist id="siteListA">
+                                        <option th:each="site1:${siteList}" th:value="${site1}"
+                                                th:text="${site1.siteId}">
+                                    </datalist>
+                                </div>
+                                <div class="mb-3 col">
+                                    <label class="form-label fw-bold">Site B</label>
+                                    <input type="text" list="siteListB" class="form-control"
+                                           th:fields="*{farSite}" th:value="*{farSite.siteId}" name="farSiteId">
+                                    <datalist id="siteListB">
+                                        <option th:each="site1:${siteList}" th:value="${site1}"
+                                                th:text="${site1.siteId}">
+                                    </datalist>
+                                </div>
+                                <div class="mb-3 col">
+                                    <label class="form-label fw-bold">Số core</label>
+                                    <input type="number" class="form-control" th:field="*{coreQuantity}"
+                                           th:value="*{coreQuantity}">
+                                </div>
+                                <div class="mb-3 col">
+                                    <label class="form-label fw-bold">Chiều dài tính cước (km)</label>
+                                    <input type="number" step="any" class="form-control" th:field="*{finalDistance}"
+                                           th:value="*{finalDistance}">
+
+                                </div>
+                                <div class="mb-3 col">
+                                    <label class="form-label fw-bold">Chi phí (VNĐ)</label>
+                                    <input type="number" step="any" class="form-control" th:field="*{cost}"
+                                           th:value="*{cost}">
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="form-group col">
+                                    <label for="exampleFormControlTextarea1">Ghi chú</label>
+                                    <textarea th:field="*{note}" th:value="*{note}" class="form-control"
+                                              id="exampleFormControlTextarea1" rows="3"></textarea>
+                                </div>
+                            </div>
+                            <button class="btn btn-warning mt-3">Cập nhật</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <div th:replace="~{layout/layout::footer}"></div>
+    </div>
+</div>
+
+<script th:inline="javascript">
+</script>
+
+<div th:replace="~{layout/layout::js-libs}"></div>
+</body>
+</html>

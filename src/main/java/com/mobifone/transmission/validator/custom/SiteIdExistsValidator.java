@@ -15,6 +15,6 @@ public class SiteIdExistsValidator implements ConstraintValidator<SiteIdExists, 
     }
     @Override
     public boolean isValid(String siteId, ConstraintValidatorContext constraintValidatorContext) {
-        return siteService.findSitesBySiteId(siteId) == null;
+        return siteService.findSitesBySiteId(siteId) != null;
     }
 }
