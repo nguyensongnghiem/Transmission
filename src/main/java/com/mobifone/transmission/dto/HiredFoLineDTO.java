@@ -23,9 +23,9 @@ public class HiredFoLineDTO {
     private FoContract foContract;
     @Positive(message = "Yêu cầu lớn hơn 0")
     private Integer coreQuantity;
-
+    @NotNull
     private Site nearSite;
-
+    @NotNull
     private Site farSite;
     @PositiveOrZero(message = "Yêu cầu lớn hơn hoặc bằng 0")
     private Integer cost;

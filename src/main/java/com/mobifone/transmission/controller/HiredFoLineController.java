@@ -63,13 +63,13 @@ public class HiredFoLineController {
     @PostMapping("/create")
     public String create(@ModelAttribute HiredFoLine hiredFoLine) {
         hiredFoService.save(hiredFoLine);
-        return "redirect:/hired-fo-list/hired-fo-list";
+        return "redirect:/hired-fo/list";
     }
 
     @PostMapping("/delete")
     public String deleteFoLine(@RequestParam(name = "deleteId") int deleteId) {
         foContractService.deleteById(deleteId);
-        return "redirect:/hired-fo-list/hired-fo-list";
+        return "redirect:/hired-fo/list";
     }
 
     @GetMapping("/edit/{editId}")

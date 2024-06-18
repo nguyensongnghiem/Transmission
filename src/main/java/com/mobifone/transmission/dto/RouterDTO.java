@@ -11,10 +11,12 @@ import lombok.Setter;
 @Getter
 @Setter
 public class RouterDTO {
+    private Long id;
     @NotNull(message = "Thông tin bắt buộc")
     private String name;
     private RouterType routerType;
     private TransmissionDeviceType transmissionDeviceType;
+
     @NotNull(message = "Thông tin bắt buộc")
     private Site site;
     @NotNull(message = "Thông tin bắt buộc")

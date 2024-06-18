@@ -12,7 +12,7 @@
 <body class="sb-nav-fixed">
 
 <!-- Topbar -->
-<
+
 <div th:replace="~{layout/layout::topbar}"></div>
 <!-- End of Topbar -->
 
@@ -48,20 +48,16 @@
                                 </div>
                                 <div class="mb-3 col">
                                     <label class="form-label fw-bold">Site A</label>
-                                    <input type="text" list="siteListA" class="form-control"
-                                           th:fields="*{nearSite}" th:value="*{nearSite.siteId}" >
-                                    <datalist id="siteListA">
-                                        <option th:each="site1:${siteList}" th:value="${site1}"
-                                                th:text="${site1.siteId}">
+                                    <input type="text" list="siteList" class="form-control" th:field="*{nearSite}" th:value="*{nearSite.id}">
+                                    <datalist id="siteList">
+                                        <option th:each="site1:${siteList}" th:value="${site1.id}" th:text="${site1.siteId}">
                                     </datalist>
                                 </div>
                                 <div class="mb-3 col">
                                     <label class="form-label fw-bold">Site B</label>
-                                    <input type="text" list="siteListB" class="form-control"
-                                           th:fields="*{farSite}" th:value="*{farSite.siteId}" name="farSiteId">
-                                    <datalist id="siteListB">
-                                        <option th:each="site1:${siteList}" th:value="${site1}"
-                                                th:text="${site1.siteId}">
+                                    <input type="text" list="siteList2" class="form-control" th:field="*{farSite}" th:value="*{farSite.id}">
+                                    <datalist id="siteList2">
+                                        <option th:each="site1:${siteList}" th:value="${site1.id}" th:text="${site1.siteId}">
                                     </datalist>
                                 </div>
                                 <div class="mb-3 col">
@@ -84,7 +80,7 @@
 
                             <div class="row">
                                 <div class="form-group col">
-                                    <label for="exampleFormControlTextarea1">Ghi chú</label>
+                                    <label for="exampleFormControlTextarea1" class="form-label fw-bold">Ghi chú</label>
                                     <textarea th:field="*{note}" th:value="*{note}" class="form-control"
                                               id="exampleFormControlTextarea1" rows="3"></textarea>
                                 </div>
