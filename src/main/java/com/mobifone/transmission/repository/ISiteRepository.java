@@ -15,7 +15,7 @@ public interface ISiteRepository extends JpaRepository<Site,Long> {
 
     <T> Page<T> findSitesBySiteIdContainingIgnoreCaseAndProvince_NameContainingIgnoreCase(String siteId, String provinceName, Pageable pageable,Class<T> classType);
 public Site findSitesBySiteId(String siteId);
-    Page<Site> findSiteBySiteIdContainingIgnoreCase(String siteId,Pageable pageable);
+    <T> Page<T> findSiteBySiteIdContainingIgnoreCase(String siteId,Pageable pageable, Class<T> classType );
 //    Page<Site> findSitesBySiteIdContainingIgnoreCaseAndProvince_NameContainingIgnoreCase(String siteId, String provinceName, Pageable pageable);
 
     Site findSitesBySiteId2(String siteId2);

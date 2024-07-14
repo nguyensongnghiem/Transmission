@@ -8,7 +8,12 @@ import com.mobifone.transmission.model.FoContract;
 import com.mobifone.transmission.model.Site;
 import com.mobifone.transmission.service.ISiteService;
 import com.mobifone.transmission.service.impl.SiteService;
+
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -29,9 +34,13 @@ public class SiteRestController {
 //    }
 
     @GetMapping("/api/sites")
-    public ResponseEntity<List<SiteViewDTO>> getSites() {
-        List<SiteViewDTO> siteList = siteService.findBy(SiteViewDTO.class);
-        return new ResponseEntity<>(siteList, HttpStatus.OK);
+    public ResponseEntity<?> getSites(
+        @RequestParam(required = false, defaultValue = "", name = "searchSiteId") String searchSiteId,
+        @RequestParam(required = false, defaultValue = "0", name = "pageNumber") int pageNumber
+    ) {
+        Pageable pageable = PageRequest.of(pageNumber, 15);
+        Page<SiteViewDTO> siteListPage = siteService.searchBySiteId(searchSiteId,pageable, SiteViewDTO.class);
+        return new ResponseEntity<>(siteListPage, HttpStatus.OK);
     }
     @PostMapping("/api/sites")
     public void createSite(@RequestBody Site site) {

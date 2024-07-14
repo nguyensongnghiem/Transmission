@@ -23,7 +23,7 @@ public interface ISiteService {
     public Site findSitesBySiteId(String siteId);
     Site findSitesBySiteId2(String siteId2);
 
-    public Page<Site> searchBySiteId(String searchSiteId, Pageable pageable);
+    public <T> Page<T> searchBySiteId(String searchSiteId, Pageable pageable, Class<T> classType);
 
     Page<SiteViewDTO> searchBySiteIdAndProvince(String siteId, String provinceName, Pageable pageable, Class<SiteViewDTO> siteViewDTOClass);
 
