@@ -33,15 +33,23 @@ public class SiteRestController {
 //        return siteService.findBy(SiteViewDTO.class);
 //    }
 
-    @GetMapping("/api/sites")
-    public ResponseEntity<?> getSites(
-        @RequestParam(required = false, defaultValue = "", name = "searchSiteId") String searchSiteId,
-        @RequestParam(required = false, defaultValue = "0", name = "pageNumber") int pageNumber
+    @GetMapping("/api/sites/search")
+    public ResponseEntity<?> getSitesByPage(
+        @RequestParam(required = false, defaultValue = "", name = "siteId") String siteId,
+        @RequestParam(required = false, defaultValue = "0", name = "page") int page
     ) {
-        Pageable pageable = PageRequest.of(pageNumber, 15);
-        Page<SiteViewDTO> siteListPage = siteService.searchBySiteId(searchSiteId,pageable, SiteViewDTO.class);
+        Pageable pageable = PageRequest.of(page, 15);
+        Page<SiteViewDTO> siteListPage = siteService.searchBySiteId(siteId,pageable, SiteViewDTO.class);
         return new ResponseEntity<>(siteListPage, HttpStatus.OK);
     }
+    
+    @GetMapping("/api/sites")
+    public ResponseEntity<?> getAllSites(       
+    ) {
+        List<SiteViewDTO> siteList = siteService.findBy(SiteViewDTO.class);
+        return new ResponseEntity<>(siteList, HttpStatus.OK);
+    }
+
     @PostMapping("/api/sites")
     public void createSite(@RequestBody Site site) {
 //        if (siteService.findSitesBySiteId(site.getSiteId())!=null) {
