@@ -7,6 +7,8 @@ import lombok.Setter;
 
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Setter
 @Getter
 @NoArgsConstructor
@@ -17,6 +19,7 @@ public class TransmissionDeviceType {
     private int id;
     private String name;
     @OneToMany(mappedBy = "transmissionDeviceType",cascade = CascadeType.ALL)
+    @JsonIgnore
     private Set<Router> routers;
 
 }

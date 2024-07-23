@@ -6,6 +6,8 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.SoftDelete;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.List;
@@ -55,9 +57,11 @@ public class Site {
     private Province province;
 
     @OneToMany(mappedBy = "site", cascade = CascadeType.ALL)
+    @JsonIgnore
     private List<LeaseLine> leaseLineList;
 
     @OneToMany(mappedBy = "site", cascade = CascadeType.ALL)
+    @JsonIgnore
     private List<Router> routerList;
     @CreationTimestamp
     @Column(updatable = false)

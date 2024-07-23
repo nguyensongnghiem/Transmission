@@ -6,6 +6,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.SoftDelete;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.util.List;
 
 @Setter
@@ -18,6 +20,7 @@ public class Province {
     private String id;
     private String name;
     @OneToMany(mappedBy = "province", cascade = CascadeType.ALL)
+    @JsonIgnore
     private List<Site> siteList;
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "telecomCenterId", nullable = false)

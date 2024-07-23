@@ -7,6 +7,8 @@ import lombok.Setter;
 
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Setter
 @Getter
 @Entity
@@ -17,6 +19,7 @@ public class TelecomCenter {
     private int id;
     private String name;
     @OneToMany(mappedBy = "telecomCenter",cascade = CascadeType.ALL)
+    @JsonIgnore
     private Set<Province> provinces;
 
 }

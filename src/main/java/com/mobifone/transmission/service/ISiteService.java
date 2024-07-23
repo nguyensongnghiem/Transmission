@@ -27,6 +27,6 @@ public interface ISiteService {
 
     Page<SiteViewDTO> searchBySiteIdAndProvince(String siteId, String provinceName, Pageable pageable, Class<SiteViewDTO> siteViewDTOClass);
 
-    List<SiteViewDTO> findBy(Class<SiteViewDTO> siteViewDTOClass);
+    <T> List<T> findBy(Class<T> classType);
 
 }

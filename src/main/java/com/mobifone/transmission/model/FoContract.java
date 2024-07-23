@@ -14,6 +14,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.util.List;
+
 @Setter
 @Getter
 @NoArgsConstructor
@@ -24,7 +25,7 @@ public class FoContract {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @Column(nullable = false,unique = true)
+    @Column(nullable = false, unique = true)
     private String contractNumber;
 
     private String contractName;
@@ -34,11 +35,11 @@ public class FoContract {
     private LocalDate endDate;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "transmissionOwnerId",nullable = false)
+    @JoinColumn(name = "transmissionOwnerId", nullable = false)
     private TransmissionOwner transmissionOwner;
     @OneToMany(mappedBy = "foContract", cascade = CascadeType.ALL)
-            @JsonIgnore
-     List<HiredFoLine> hiredFoLineList ;
+    @JsonIgnore
+    List<HiredFoLine> hiredFoLineList;
     private String note;
     @CreationTimestamp
     @Column(updatable = false)

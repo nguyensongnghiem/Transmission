@@ -18,7 +18,7 @@ public class TransmissionOwner {
     private int id;
     private String name;
     @JsonIgnore
-    @OneToMany(mappedBy = "transmissionOwner", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "transmissionOwner", cascade = CascadeType.ALL) 
     private List<Site> siteList;
     @JsonIgnore
     @OneToMany(mappedBy = "transmissionOwner", cascade = CascadeType.ALL)

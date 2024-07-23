@@ -5,6 +5,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.SoftDelete;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.util.Set;
 
 @Setter
@@ -22,6 +24,7 @@ public class RouterType {
     private Vendor vendor;
 
     @OneToMany(mappedBy = "routerType",cascade = CascadeType.ALL)
+    @JsonIgnore
     private Set<Router> routers;
 
 }

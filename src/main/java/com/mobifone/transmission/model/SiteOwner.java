@@ -7,6 +7,8 @@ import lombok.Setter;
 
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Setter
 @Getter
 @Entity
@@ -17,5 +19,6 @@ public class SiteOwner {
     private int id;
     private String name;
     @OneToMany(mappedBy = "siteOwner", cascade = CascadeType.ALL)
+    @JsonIgnore
     private Set<Site> siteSet;
 }

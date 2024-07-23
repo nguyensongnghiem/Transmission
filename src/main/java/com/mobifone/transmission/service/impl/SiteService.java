@@ -66,8 +66,8 @@ public class SiteService implements ISiteService {
     }
 
     @Override
-    public List<SiteViewDTO> findBy(Class<SiteViewDTO> siteViewDTOClass) {
-        return siteRepository.findBy(siteViewDTOClass);
+    public <T> List<T> findBy(Class<T> classType) {
+        return siteRepository.findBy(classType);
     }
 
 

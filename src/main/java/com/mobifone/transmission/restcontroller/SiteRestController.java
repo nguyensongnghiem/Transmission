@@ -26,13 +26,6 @@ import java.util.List;
 public class SiteRestController {
     @Autowired
     private ISiteService siteService;
-
-//    @GetMapping
-//    @ResponseBody
-//    public Object getSiteList() {
-//        return siteService.findBy(SiteViewDTO.class);
-//    }
-
     @GetMapping("/api/sites/search")
     public ResponseEntity<?> getSitesByPage(
         @RequestParam(required = false, defaultValue = "", name = "siteId") String siteId,
@@ -46,29 +39,24 @@ public class SiteRestController {
     @GetMapping("/api/sites")
     public ResponseEntity<?> getAllSites(       
     ) {
-        List<SiteViewDTO> siteList = siteService.findBy(SiteViewDTO.class);
+        List<Site> siteList = siteService.findBy(Site.class);
         return new ResponseEntity<>(siteList, HttpStatus.OK);
     }
 
     @PostMapping("/api/sites")
     public void createSite(@RequestBody Site site) {
-//        if (siteService.findSitesBySiteId(site.getSiteId())!=null) {
-//            throw new SiteIdExistedException("SiteID existed in database");
-//        }
+       if (siteService.findSitesBySiteId(site.getSiteId())!=null) {
+           throw new SiteIdExistedException("SiteID existed in database");
+       }
         siteService.save(site);
     }
     @GetMapping("/api/sites/{id}")
     public ResponseEntity<?> getSite(@PathVariable Long id) {
-        Site site = siteService.findById(id, Site.class);
-        if (site==null) throw new SiteNotFoundException("Site not found.");
-        return ResponseEntity.ok(site);
-    }
-    @GetMapping("/api/siteViewDtos/{id}")
-    public ResponseEntity<?> getSiteViewDTO(@PathVariable Long id) {
         SiteViewDTO site = siteService.findById(id, SiteViewDTO.class);
         if (site==null) throw new SiteNotFoundException("Site not found.");
         return ResponseEntity.ok(site);
     }
+   
     @DeleteMapping("/api/sites/{id}")
     public ResponseEntity<?> deleteSiteById(@PathVariable Long id) {
         Site site = siteService.findById(id, Site.class);

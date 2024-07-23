@@ -6,6 +6,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.SoftDelete;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.util.List;
 import java.util.Set;
 
@@ -20,6 +22,7 @@ public class SiteTransmissionType {
     private int id;
     private String name;
     @OneToMany(mappedBy = "siteTransmissionType", cascade = CascadeType.ALL)
+    @JsonIgnore
     private List<Site> siteList;
 
 }
