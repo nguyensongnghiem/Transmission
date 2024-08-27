@@ -89,7 +89,7 @@ public class SiteController {
 //        Pageable pageable = Pageable.unpaged();
 //        Page<Site> page = siteService.findAll(pageable);
 //        Page<Site> page = siteService.findSiteBySiteIdContainingIgnoreCase(searchSiteId,pageable);
-        Page<SiteViewDTO> page = siteService.searchBySiteIdAndProvince(searchSiteId, searchProvince, pageable,SiteViewDTO.class);
+        Page<SiteViewDTO> page = siteService.findBySiteIdContainingIgnoreCase(searchSiteId,  pageable,SiteViewDTO.class);
 //
         model.addAttribute("page", page);
         model.addAttribute("searchSiteId", searchSiteId);

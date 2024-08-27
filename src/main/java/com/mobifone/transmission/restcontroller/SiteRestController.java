@@ -1,13 +1,10 @@
 package com.mobifone.transmission.restcontroller;
 
-import com.mobifone.transmission.dto.SiteDTO;
 import com.mobifone.transmission.dto.inf.SiteViewDTO;
 import com.mobifone.transmission.exception.SiteIdExistedException;
 import com.mobifone.transmission.exception.SiteNotFoundException;
-import com.mobifone.transmission.model.FoContract;
 import com.mobifone.transmission.model.Site;
 import com.mobifone.transmission.service.ISiteService;
-import com.mobifone.transmission.service.impl.SiteService;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,30 +15,32 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @RestController
 @RequestMapping
 @CrossOrigin(origins = "*")
 public class SiteRestController {
     @Autowired
     private ISiteService siteService;
-    @GetMapping("/api/sites/search")
+
+
+    @GetMapping("/api/sites")
     public ResponseEntity<?> getSitesByPage(
         @RequestParam(required = false, defaultValue = "", name = "siteId") String siteId,
         @RequestParam(required = false, defaultValue = "0", name = "page") int page
     ) {
+        if (siteId == null) siteId="";
         Pageable pageable = PageRequest.of(page, 15);
-        Page<SiteViewDTO> siteListPage = siteService.searchBySiteId(siteId,pageable, SiteViewDTO.class);
+        Page<SiteViewDTO> siteListPage = siteService.findBySiteIdContainingIgnoreCase(siteId,pageable, SiteViewDTO.class);
+
         return new ResponseEntity<>(siteListPage, HttpStatus.OK);
     }
     
-    @GetMapping("/api/sites")
-    public ResponseEntity<?> getAllSites(       
-    ) {
-        List<Site> siteList = siteService.findBy(Site.class);
-        return new ResponseEntity<>(siteList, HttpStatus.OK);
-    }
+    // @GetMapping("/api/sites")
+    // public ResponseEntity<?> getAllSites(       
+    // ) {
+    //     List<Site> siteList = siteService.findBy(Site.class);
+    //     return new ResponseEntity<>(siteList, HttpStatus.OK);
+    // }
 
     @PostMapping("/api/sites")
     public void createSite(@RequestBody Site site) {

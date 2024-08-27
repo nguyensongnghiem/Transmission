@@ -1,6 +1,5 @@
 package com.mobifone.transmission.service;
 
-import com.mobifone.transmission.dto.inf.SiteViewDTO;
 import com.mobifone.transmission.model.Site;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -23,9 +22,8 @@ public interface ISiteService {
     public Site findSitesBySiteId(String siteId);
     Site findSitesBySiteId2(String siteId2);
 
-    public <T> Page<T> searchBySiteId(String searchSiteId, Pageable pageable, Class<T> classType);
+    public <T> Page<T> findBySiteIdContainingIgnoreCase(String searchSiteId, Pageable pageable, Class<T> classType);
 
-    Page<SiteViewDTO> searchBySiteIdAndProvince(String siteId, String provinceName, Pageable pageable, Class<SiteViewDTO> siteViewDTOClass);
 
     <T> List<T> findBy(Class<T> classType);
 

@@ -51,13 +51,8 @@ public class SiteService implements ISiteService {
     }
 
     @Override
-    public <T> Page<T> searchBySiteId(String searchSiteId, Pageable pageable,Class<T> classType) {
+    public <T> Page<T> findBySiteIdContainingIgnoreCase(String searchSiteId, Pageable pageable, Class<T> classType) {
         return siteRepository.findSiteBySiteIdContainingIgnoreCase(searchSiteId, pageable, classType);
-    }
-
-    @Override
-    public Page<SiteViewDTO> searchBySiteIdAndProvince(String siteId, String provinceName, Pageable pageable, Class<SiteViewDTO> siteViewDTOClass) {
-        return siteRepository.findSitesBySiteIdContainingIgnoreCaseAndProvince_NameContainingIgnoreCase(siteId, provinceName,pageable,siteViewDTOClass);
     }
 
     @Override
