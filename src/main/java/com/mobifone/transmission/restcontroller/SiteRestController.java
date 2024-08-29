@@ -1,5 +1,6 @@
 package com.mobifone.transmission.restcontroller;
 
+import com.mobifone.transmission.dto.SiteDTO;
 import com.mobifone.transmission.dto.inf.SiteViewDTO;
 import com.mobifone.transmission.exception.SiteIdExistedException;
 import com.mobifone.transmission.exception.SiteNotFoundException;
@@ -7,6 +8,8 @@ import com.mobifone.transmission.model.Site;
 import com.mobifone.transmission.service.ISiteService;
 
 
+import jakarta.validation.Valid;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -43,11 +46,11 @@ public class SiteRestController {
     // }
 
     @PostMapping("/api/sites")
-    public void createSite(@RequestBody Site site) {
-       if (siteService.findSitesBySiteId(site.getSiteId())!=null) {
-           throw new SiteIdExistedException("SiteID existed in database");
-       }
-        siteService.save(site);
+    public ResponseEntity<?> createSite(@Valid @RequestBody SiteDTO siteDTO) {
+        Site targetSite = new Site();
+        BeanUtils.copyProperties(siteDTO,targetSite);
+        siteService.save(targetSite);
+        return ResponseEntity.ok(targetSite);
     }
     @GetMapping("/api/sites/{id}")
     public ResponseEntity<?> getSite(@PathVariable Long id) {
