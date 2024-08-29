@@ -1,11 +1,15 @@
 package com.mobifone.transmission.restcontroller;
 
+import com.mobifone.transmission.dto.RestSiteDTO;
 import com.mobifone.transmission.dto.SiteDTO;
 import com.mobifone.transmission.dto.inf.SiteViewDTO;
 import com.mobifone.transmission.exception.SiteIdExistedException;
 import com.mobifone.transmission.exception.SiteNotFoundException;
 import com.mobifone.transmission.model.Site;
-import com.mobifone.transmission.service.ISiteService;
+import com.mobifone.transmission.model.SiteOwner;
+import com.mobifone.transmission.model.SiteTransmissionType;
+import com.mobifone.transmission.model.TransmissionOwner;
+import com.mobifone.transmission.service.*;
 
 
 import jakarta.validation.Valid;
@@ -18,14 +22,22 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Optional;
+
 @RestController
 @RequestMapping
 @CrossOrigin(origins = "*")
 public class SiteRestController {
     @Autowired
     private ISiteService siteService;
-
-
+    @Autowired
+    private ISiteOwnerService siteOwnerService;
+    @Autowired
+    private ISiteTransmissionTypeService siteTransmissionTypeService;
+    @Autowired
+    private IProvinceService provinceService;
+    @Autowired
+    private ITransmissionOwnerService transmissionOwnerService;
     @GetMapping("/api/sites")
     public ResponseEntity<?> getSitesByPage(
         @RequestParam(required = false, defaultValue = "", name = "siteId") String siteId,
@@ -52,6 +64,21 @@ public class SiteRestController {
         siteService.save(targetSite);
         return ResponseEntity.ok(targetSite);
     }
+
+    @PostMapping("/api/sites/rest")
+    public ResponseEntity<?> createRestSite(@Valid @RequestBody RestSiteDTO siteDTO) {
+        Site targetSite = new Site();
+        BeanUtils.copyProperties(siteDTO,targetSite);
+        Optional<SiteOwner> siteOwner = siteOwnerService.findById(siteDTO.getSiteOwnerId());
+        Optional<SiteTransmissionType> siteTransmissionType = siteTransmissionTypeService.findById(siteDTO.getSiteTransmissionTypeId());
+        Optional<TransmissionOwner> transmissionOwner = transmissionOwnerService.findById(siteDTO.getTransmissionOwnerId());
+        targetSite.setSiteOwner(siteOwner.get());
+        targetSite.setSiteTransmissionType(siteTransmissionType.get());
+        targetSite.setSiteOwner(siteOwner.get());
+        siteService.save(targetSite);
+        return ResponseEntity.ok(targetSite);
+    }
+
     @GetMapping("/api/sites/{id}")
     public ResponseEntity<?> getSite(@PathVariable Long id) {
         SiteViewDTO site = siteService.findById(id, SiteViewDTO.class);
