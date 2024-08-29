@@ -15,6 +15,7 @@ public class SiteTransmissionTypeService implements ISiteTransmissionTypeService
 
     @Autowired
     private ISiteTransmissionTypeRepository siteTransmissionTypeRepository;
+
     @Override
     public List<SiteTransmissionType> findAll() {
         return siteTransmissionTypeRepository.findAll();
@@ -27,5 +28,6 @@ public class SiteTransmissionTypeService implements ISiteTransmissionTypeService
 
     @Override
     public boolean save(SiteTransmissionType siteTransmissionType) {
-        return siteTransmissionTypeRepository.save(siteTransmissionType)!=null;
+        return siteTransmissionTypeRepository.save(siteTransmissionType) != null;
     }
+}
