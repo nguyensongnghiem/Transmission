@@ -37,5 +37,5 @@ public class RestSiteDTO {
 
     private String note;
 
-    private int provinceId;
+    private String provinceId;
 }

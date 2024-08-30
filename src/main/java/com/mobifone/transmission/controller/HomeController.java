@@ -66,8 +66,8 @@ public class HomeController {
         model.addAttribute("totalSites",siteService.findAll().size());
         model.addAttribute("topDueContract",foContractService.findContractEndIn5Month());
 
-        model.addAttribute("totalFoSites",siteTransmissionTypeService.findById(1).getSiteList().size()
-                + siteTransmissionTypeService.findById(2).getSiteList().size() );
+        model.addAttribute("totalFoSites",siteTransmissionTypeService.findById(1).get().getSiteList().size()
+                + siteTransmissionTypeService.findById(2).get().getSiteList().size() );
         List<LeaseLine> leaseLines = leaseLineService.findAll();
         float cost = 0f ;
         for (LeaseLine ll : leaseLines) {

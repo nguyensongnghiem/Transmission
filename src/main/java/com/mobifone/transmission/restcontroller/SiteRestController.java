@@ -5,10 +5,7 @@ import com.mobifone.transmission.dto.SiteDTO;
 import com.mobifone.transmission.dto.inf.SiteViewDTO;
 import com.mobifone.transmission.exception.SiteIdExistedException;
 import com.mobifone.transmission.exception.SiteNotFoundException;
-import com.mobifone.transmission.model.Site;
-import com.mobifone.transmission.model.SiteOwner;
-import com.mobifone.transmission.model.SiteTransmissionType;
-import com.mobifone.transmission.model.TransmissionOwner;
+import com.mobifone.transmission.model.*;
 import com.mobifone.transmission.service.*;
 
 
@@ -22,6 +19,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.swing.text.html.Option;
 import java.util.Optional;
 
 @RestController
@@ -72,10 +70,14 @@ public class SiteRestController {
         Optional<SiteOwner> siteOwner = siteOwnerService.findById(siteDTO.getSiteOwnerId());
         Optional<SiteTransmissionType> siteTransmissionType = siteTransmissionTypeService.findById(siteDTO.getSiteTransmissionTypeId());
         Optional<TransmissionOwner> transmissionOwner = transmissionOwnerService.findById(siteDTO.getTransmissionOwnerId());
+        Optional<Province> province = provinceService.findById(siteDTO.getProvinceId());
         targetSite.setSiteOwner(siteOwner.get());
         targetSite.setSiteTransmissionType(siteTransmissionType.get());
         targetSite.setSiteOwner(siteOwner.get());
+        targetSite.setTransmissionOwner(transmissionOwner.get());
+        targetSite.setProvince(province.get());
         siteService.save(targetSite);
+        System.out.println(targetSite);
         return ResponseEntity.ok(targetSite);
     }
 
