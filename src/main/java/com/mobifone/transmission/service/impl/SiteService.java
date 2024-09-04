@@ -50,8 +50,8 @@ public class SiteService implements ISiteService {
     }
 
     @Override
-    public <T> Page<T> searchAllSite(String searchSiteId,  String transOwner, String transType, Pageable pageable, Class<T> classType) {
-        return siteRepository.findSiteBySiteIdContainingIgnoreCaseAndTransmissionOwner_NameContainingIgnoreCaseAndSiteTransmissionType_NameContainingIgnoreCase(searchSiteId, transOwner,transType, pageable, classType);
+    public <T> Page<T> searchAllSite(String searchSiteId,  String transOwner, String transType, String province, Pageable pageable, Class<T> classType) {
+        return siteRepository.findSiteBySiteIdContainingIgnoreCaseAndTransmissionOwner_NameContainingIgnoreCaseAndSiteTransmissionType_NameContainingIgnoreCaseAndProvince_NameContainingIgnoreCase(searchSiteId, transOwner,transType, province, pageable, classType);
     }
 
     @Override

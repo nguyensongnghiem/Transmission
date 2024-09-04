@@ -40,13 +40,15 @@ public class SiteRestController {
         @RequestParam(required = false, defaultValue = "", name = "siteId") String siteId,
         @RequestParam(required = false, defaultValue = "0", name = "page") int page,
           @RequestParam(required = false, defaultValue = "", name = "transOwner") String transOwner,
-        @RequestParam(required = false, defaultValue = "", name = "transType") String transType
+        @RequestParam(required = false, defaultValue = "", name = "transType") String transType,
+        @RequestParam(required = false, defaultValue = "", name = "province") String province
     ) {
         if (siteId == null) siteId="";
         if (transOwner == null) transOwner="";
         if (transType == null) transType="";
+        if (province == null) province="";
         Pageable pageable = PageRequest.of(page, 15);
-        Page<SiteViewDTO> siteListPage = siteService.searchAllSite(siteId,transOwner,transType, pageable, SiteViewDTO.class);
+        Page<SiteViewDTO> siteListPage = siteService.searchAllSite(siteId,transOwner,transType, province, pageable, SiteViewDTO.class);
 
         return new ResponseEntity<>(siteListPage, HttpStatus.OK);
     }
@@ -96,7 +98,7 @@ public class SiteRestController {
     @DeleteMapping("/api/sites/{id}")
     public ResponseEntity<?> deleteSiteById(@PathVariable Long id) {
         Site site = siteService.findById(id, Site.class);
-        if (site==null) {throw new SiteNotFoundException("Site not found.");}
+        if (site==null) {throw new SiteNotFoundException("Site ID không tồn tại !");}
         else {
             siteService.deleteById(id);
         };
