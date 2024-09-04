@@ -4,15 +4,14 @@ import com.mobifone.transmission.model.*;
 import com.mobifone.transmission.validator.custom.SiteIdExists;
 import jakarta.validation.constraints.Digits;
 import jakarta.validation.constraints.NotNull;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.math.BigDecimal;
-
+@Builder
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
 public class SiteDTO {
     private Long id;
     @NotNull(message = "Thông tin bắt buộc")

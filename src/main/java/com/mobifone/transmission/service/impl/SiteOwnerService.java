@@ -1,5 +1,6 @@
 package com.mobifone.transmission.service.impl;
 
+import com.mobifone.transmission.dto.SiteOwnerDTO;
 import com.mobifone.transmission.model.SiteOwner;
 import com.mobifone.transmission.repository.ISiteOwnerRepository;
 import com.mobifone.transmission.service.ISiteOwnerService;
@@ -26,5 +27,10 @@ public class SiteOwnerService implements ISiteOwnerService {
     @Override
     public boolean save(SiteOwner siteOwner) {
         return siteOwnerRepository.save(siteOwner)!=null;
+    }
+
+    @Override
+    public List<SiteOwnerDTO> findBy(Class<SiteOwnerDTO> siteOwnerDTOClass) {
+        return siteOwnerRepository.findBy(siteOwnerDTOClass);
     }
 }

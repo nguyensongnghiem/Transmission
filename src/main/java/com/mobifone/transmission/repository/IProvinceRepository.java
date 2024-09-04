@@ -7,6 +7,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface IProvinceRepository extends JpaRepository<Province,String> {
-
+    <T> List<T> findBy(Class<T> classType);
 
 }

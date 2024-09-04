@@ -1,5 +1,6 @@
 package com.mobifone.transmission.service.impl;
 
+import com.mobifone.transmission.dto.ProvinceDTO;
 import com.mobifone.transmission.model.Province;
 import com.mobifone.transmission.repository.IProvinceRepository;
 import com.mobifone.transmission.service.IProvinceService;
@@ -26,5 +27,10 @@ public class ProvinceService implements IProvinceService {
     @Override
     public boolean save(Province province) {
         return provinceRepository.save(province)!=null;
+    }
+
+    @Override
+    public <T> List<T> findBy(Class<T> clazz) {
+        return provinceRepository.findBy(clazz);
     }
 }

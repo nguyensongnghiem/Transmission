@@ -22,6 +22,11 @@ public class SiteTransmissionTypeService implements ISiteTransmissionTypeService
     }
 
     @Override
+    public <T> List<T> findBy(Class<T> clazz) {
+        return siteTransmissionTypeRepository.findBy(clazz);
+    }
+
+    @Override
     public Optional<SiteTransmissionType> findById(int id) {
         return siteTransmissionTypeRepository.findById(id);
     }

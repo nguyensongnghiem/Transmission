@@ -20,11 +20,13 @@ public interface ISiteService {
     public boolean update(Site site);
 
     public Site findSitesBySiteId(String siteId);
-    Site findSitesBySiteId2(String siteId2);
-
-    public <T> Page<T> findBySiteIdContainingIgnoreCase(String searchSiteId, Pageable pageable, Class<T> classType);
 
 
-    <T> List<T> findBy(Class<T> classType);
+    public Site findSitesBySiteId2(String siteId2);
+
+    public <T> Page<T> searchAllSite(String searchSiteId,String transOwner, String transType, Pageable pageable, Class<T> classType);
+
+
+    public <T> List<T> findBy(Class<T> classType);
 
 }

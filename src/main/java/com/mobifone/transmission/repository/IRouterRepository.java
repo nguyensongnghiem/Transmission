@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.List;
 
 public interface IRouterRepository extends JpaRepository<Router,Long> {
+    
     Router findRouterByName(String routerName);
     Router findRouterByIp(String ip);
     <T> List<T> findBy(Class<T> classType);

@@ -7,4 +7,6 @@ import java.util.List;
 
 
 public interface ITelecomCenterRepository extends JpaRepository<TelecomCenter,Integer> {
+    <T> List<T> findBy(Class<T> classType);
+
 }

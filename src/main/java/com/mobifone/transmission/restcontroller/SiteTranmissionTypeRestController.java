@@ -2,6 +2,7 @@ package com.mobifone.transmission.restcontroller;
 
 import java.util.List;
 
+import com.mobifone.transmission.dto.SiteTransmissionTypeDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,7 +24,7 @@ public class SiteTranmissionTypeRestController {
     ISiteTransmissionTypeService transmissionTypeService;
     @GetMapping()
     public ResponseEntity<?> findAll() {
-        List<SiteTransmissionType> list  = transmissionTypeService.findAll();
+        List<SiteTransmissionTypeDTO> list  = transmissionTypeService.findBy(SiteTransmissionTypeDTO.class);
         return new ResponseEntity<>(list,HttpStatus.OK);
     }
     

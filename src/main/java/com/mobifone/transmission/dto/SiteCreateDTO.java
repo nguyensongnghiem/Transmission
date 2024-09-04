@@ -1,20 +1,13 @@
 package com.mobifone.transmission.dto;
 
-import com.mobifone.transmission.model.Province;
-import com.mobifone.transmission.model.SiteOwner;
-import com.mobifone.transmission.model.SiteTransmissionType;
-import com.mobifone.transmission.model.TransmissionOwner;
 import jakarta.validation.constraints.Digits;
 import jakarta.validation.constraints.NotNull;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import java.math.BigDecimal;
+import lombok.*;
 
-@Getter
-@Setter
-@NoArgsConstructor
-public class RestSiteDTO {
+import java.math.BigDecimal;
+@Builder
+@Data
+public class SiteCreateDTO {
     private Long id;
     @NotNull(message = "Thông tin bắt buộc")
     private String siteId;
@@ -29,13 +22,13 @@ public class RestSiteDTO {
 
     private String address;
 
-    private int siteOwnerId;
+    private SiteOwnerDTO siteOwner;
 
-    private int siteTransmissionTypeId;
+    private SiteTransmissionTypeDTO siteTransmissionType;
 
-    private int transmissionOwnerId;
+    private TransmissionOwnerDTO transmissionOwner;
 
     private String note;
 
-    private String provinceId;
+    private ProvinceDTO province;
 }

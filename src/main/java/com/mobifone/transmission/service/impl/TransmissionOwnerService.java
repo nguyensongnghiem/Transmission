@@ -19,6 +19,11 @@ private ITransmissionOwnerRepository transmissionOwnerRepository;
     }
 
     @Override
+    public <T> List<T> findBy(Class<T> clazz) {
+        return transmissionOwnerRepository.findBy(clazz);
+    }
+
+    @Override
     public boolean save(TransmissionOwner transmissionOwner) {
         return transmissionOwnerRepository.save(transmissionOwner)!=null;
     }

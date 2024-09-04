@@ -8,7 +8,7 @@ import java.util.Optional;
 
 public interface ISiteTransmissionTypeService {
     public List<SiteTransmissionType> findAll();
-
+    public  <T> List<T> findBy(Class<T> clazz);
     public boolean save(SiteTransmissionType siteTransmissionType);
 
     Optional<SiteTransmissionType> findById(int id);

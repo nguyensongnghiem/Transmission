@@ -70,35 +70,35 @@ public class SiteController {
 //        model.addAttribute("siteList", siteList);
 //        return "/site/site-list";
 //    }
-    @GetMapping("/list-old")
-    public String listByPage(
-            Model model,
-            @RequestParam(required = false, defaultValue = "", name = "searchSiteId") String searchSiteId,
-            @RequestParam(required = false, defaultValue = "",name = "searchProvince") String searchProvince,
-            @RequestParam(required = false, defaultValue = "0", name = "pageNumber") int pageNumber) {
-//        List<Site> siteList = siteService.findAll();
-
-//        List<SiteViewDTO> siteViewDTOList= new ArrayList<>();
-//        for (Site site:siteList) {
-//            siteViewDTOList.add(SiteMapper.toSiteViewDTO(site));
-//        }
-
-        Pageable pageable = PageRequest.of(pageNumber, 15);
-        if (searchSiteId == null) searchSiteId = "";
-        if (searchProvince == null) searchProvince = "";
-//        Pageable pageable = Pageable.unpaged();
-//        Page<Site> page = siteService.findAll(pageable);
-//        Page<Site> page = siteService.findSiteBySiteIdContainingIgnoreCase(searchSiteId,pageable);
-        Page<SiteViewDTO> page = siteService.findBySiteIdContainingIgnoreCase(searchSiteId,  pageable,SiteViewDTO.class);
+//    @GetMapping("/list-old")
+//    public String listByPage(
+//            Model model,
+//            @RequestParam(required = false, defaultValue = "", name = "searchSiteId") String searchSiteId,
+//            @RequestParam(required = false, defaultValue = "",name = "searchProvince") String searchProvince,
+//            @RequestParam(required = false, defaultValue = "0", name = "pageNumber") int pageNumber) {
+////        List<Site> siteList = siteService.findAll();
 //
-        model.addAttribute("page", page);
-        model.addAttribute("searchSiteId", searchSiteId);
-        model.addAttribute("searchProvince", searchProvince);
-//        model.addAttribute("siteList", siteList);
-//        model.addAttribute("totalPages", totalPages);
-//        model.addAttribute("totalElements", totalElements);
-        return "site-list-old";
-    }
+////        List<SiteViewDTO> siteViewDTOList= new ArrayList<>();
+////        for (Site site:siteList) {
+////            siteViewDTOList.add(SiteMapper.toSiteViewDTO(site));
+////        }
+//
+//        Pageable pageable = PageRequest.of(pageNumber, 15);
+//        if (searchSiteId == null) searchSiteId = "";
+//        if (searchProvince == null) searchProvince = "";
+////        Pageable pageable = Pageable.unpaged();
+////        Page<Site> page = siteService.findAll(pageable);
+////        Page<Site> page = siteService.findSiteBySiteIdContainingIgnoreCase(searchSiteId,pageable);
+//        Page<SiteViewDTO> page = siteService.findBySiteIdContainingIgnoreCase(searchSiteId,  pageable,SiteViewDTO.class);
+////
+//        model.addAttribute("page", page);
+//        model.addAttribute("searchSiteId", searchSiteId);
+//        model.addAttribute("searchProvince", searchProvince);
+////        model.addAttribute("siteList", siteList);
+////        model.addAttribute("totalPages", totalPages);
+////        model.addAttribute("totalElements", totalElements);
+//        return "site-list-old";
+//    }
 
     @GetMapping("/list")
     public String listByPageApi(Model model) {

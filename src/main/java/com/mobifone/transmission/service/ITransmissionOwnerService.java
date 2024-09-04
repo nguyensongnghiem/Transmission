@@ -8,6 +8,7 @@ import java.util.Optional;
 
 public interface ITransmissionOwnerService {
     public List<TransmissionOwner> findAll();
+    public  <T> List<T> findBy(Class<T> clazz);
     public boolean save(TransmissionOwner transmissionOwner);
 
     Optional<TransmissionOwner> findById(int transmissionOwnerId);

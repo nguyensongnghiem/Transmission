@@ -13,7 +13,7 @@ public interface ISiteRepository extends JpaRepository<Site,Long> {
     <T> List<T> findBy(Class<T> classType);
     <T> T findById(Long id, Class<T> classType);
     Site findSitesBySiteId(String siteId);
-    <T> Page<T> findSiteBySiteIdContainingIgnoreCase(String siteId,Pageable pageable, Class<T> classType );
+    <T> Page<T> findSiteBySiteIdContainingIgnoreCaseAndTransmissionOwner_NameContainingIgnoreCaseAndSiteTransmissionType_NameContainingIgnoreCase(String siteId,String transOwner,String transType,Pageable pageable, Class<T> classType );
 //    Page<Site> findSitesBySiteIdContainingIgnoreCaseAndProvince_NameContainingIgnoreCase(String siteId, String provinceName, Pageable pageable);
 
     Site findSitesBySiteId2(String siteId2);

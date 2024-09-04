@@ -1,5 +1,6 @@
 package com.mobifone.transmission.service;
 
+import com.mobifone.transmission.dto.ProvinceDTO;
 import com.mobifone.transmission.model.Province;
 
 import java.util.List;
@@ -11,4 +12,6 @@ public interface IProvinceService {
     Optional<Province> findById(String id);
 
     public boolean save(Province province);
+
+    <T> List<T> findBy(Class<T> provinceDTOClass);
 }
