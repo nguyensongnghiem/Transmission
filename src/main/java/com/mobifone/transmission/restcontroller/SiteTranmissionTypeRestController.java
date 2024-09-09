@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 
 @RestController
-@RequestMapping("/api/site-transmission-type")
+@RequestMapping("/api/site-transmission-types")
 @CrossOrigin(origins = "*")
 public class SiteTranmissionTypeRestController {
     @Autowired

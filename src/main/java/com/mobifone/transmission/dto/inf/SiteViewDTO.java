@@ -15,22 +15,27 @@ public interface SiteViewDTO {
     String getAddress();
     SiteOwnerWithNameDTO getSiteOwner();
     interface SiteOwnerWithNameDTO {
+        int getId();
         String getName();
     }
     SiteTransmissionTypeWithNameDTO getSiteTransmissionType();
     interface SiteTransmissionTypeWithNameDTO {
+        int getId();
         String getName();
     }
     TransmissionOwnerWithNameDTO getTransmissionOwner();
     interface TransmissionOwnerWithNameDTO {
+        int getId();
         String getName();
     }
     interface RouterTypeWithNameDTO {
+        int getId();
         String getName();
     }
     String getNote();
     ProvinceWithNameDTO getProvince();
     interface ProvinceWithNameDTO {
+        String getId();
         String getName();
     }
 }

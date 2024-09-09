@@ -11,16 +11,17 @@ public class SiteCreateDTOToSite implements Function<SiteCreateDTO, Site> {
     @Override
     public Site apply(SiteCreateDTO siteDTO) {
         return Site.builder()
+                .id(siteDTO.getId())
                 .siteId(siteDTO.getSiteId())
                 .siteId2(siteDTO.getSiteId2())
                 .siteName(siteDTO.getSiteName())
                 .address(siteDTO.getAddress())
                 .latitude(siteDTO.getLatitude())
                 .longitude(siteDTO.getLongitude())
-                .siteOwner(SiteOwner.builder()
+                .siteOwner(siteDTO.getSiteOwner()!=null?SiteOwner.builder()
                         .id(siteDTO.getSiteOwner().getId())
                         .name(siteDTO.getSiteOwner().getName())
-                        .build())
+                        .build():null)
                 .siteTransmissionType(SiteTransmissionType.builder()
                         .id(siteDTO.getSiteTransmissionType().getId())
                         .name(siteDTO.getSiteTransmissionType().getName())
@@ -33,6 +34,7 @@ public class SiteCreateDTOToSite implements Function<SiteCreateDTO, Site> {
                         .id(siteDTO.getProvince().getId())
                         .name(siteDTO.getProvince().getName())
                         .build())
+                .note(siteDTO.getNote())
                 .build();
     }
 }

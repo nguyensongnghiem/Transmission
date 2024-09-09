@@ -19,6 +19,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping
 @CrossOrigin(origins = "*")
@@ -52,6 +54,12 @@ public class SiteRestController {
 
         return new ResponseEntity<>(siteListPage, HttpStatus.OK);
     }
+
+    @GetMapping("/api/sites/all")
+    public ResponseEntity<?> getAllSite() {
+        List<SiteViewDTO> siteList = siteService.findBy( SiteViewDTO.class);
+        return new ResponseEntity<>(siteList, HttpStatus.OK);
+    }
     
     // @GetMapping("/api/sites")
     // public ResponseEntity<?> getAllSites(       
@@ -72,6 +80,12 @@ public class SiteRestController {
     @PostMapping("/api/sites/rest")
     public ResponseEntity<?> createRestSite(@Valid @RequestBody SiteCreateDTO siteDTO) {
         Site targetSite = siteCreateDTOToSite.apply(siteDTO);
+        if (targetSite.getId()!=null) {
+            Site existSite = siteService.findById(targetSite.getId(), Site.class);
+            BeanUtils.copyProperties(targetSite,existSite);
+            siteService.save(existSite);
+        } else
+        {
 //          Site targetSite = new Site();
 //        BeanUtils.copyProperties(siteDTO,targetSite);
 //        Optional<SiteOwner> siteOwner = siteOwnerService.findById(siteDTO.getSiteOwner().getId());
@@ -83,6 +97,14 @@ public class SiteRestController {
 //        targetSite.setSiteOwner(siteOwner.get());
 //        targetSite.setTransmissionOwner(transmissionOwner.get());
 //        targetSite.setProvince(province.get());
+        siteService.save(targetSite); }
+        System.out.println(targetSite);
+        return ResponseEntity.ok(targetSite);
+    }
+
+    @PutMapping("/api/sites/rest")
+    public ResponseEntity<?> updateRestSite(@Valid @RequestBody SiteCreateDTO siteDTO) {
+        Site targetSite = siteCreateDTOToSite.apply(siteDTO);
         siteService.save(targetSite);
         System.out.println(targetSite);
         return ResponseEntity.ok(targetSite);
