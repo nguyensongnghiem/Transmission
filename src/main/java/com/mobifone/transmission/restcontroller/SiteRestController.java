@@ -55,10 +55,10 @@ public class SiteRestController {
         return new ResponseEntity<>(siteListPage, HttpStatus.OK);
     }
 
-    @GetMapping("/api/sites/all")
+    @GetMapping("/api/sites/total")
     public ResponseEntity<?> getAllSite() {
         List<SiteViewDTO> siteList = siteService.findBy( SiteViewDTO.class);
-        return new ResponseEntity<>(siteList, HttpStatus.OK);
+        return new ResponseEntity<>(siteList.size(), HttpStatus.OK);
     }
     
     // @GetMapping("/api/sites")
