@@ -6,15 +6,12 @@ import com.mobifone.transmission.service.IRouterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/routers")
+@CrossOrigin(origins = "*")
 public class RouterRestController {
     @Autowired
     private IRouterService routerService;
@@ -25,10 +22,17 @@ public class RouterRestController {
 //        return routerService.findBy(RouterViewDTO.class);
 //    }
 
-    @GetMapping
-    public ResponseEntity<List<RouterViewDTO>> getRouters() {
+    @GetMapping("/api/routers")
+    public ResponseEntity<?> getRouters() {
         List<RouterViewDTO> routerViewDTOList = routerService.findBy(RouterViewDTO.class);
         return new ResponseEntity<>(routerViewDTOList, HttpStatus.OK);
+    }
+
+
+    @GetMapping("/api/routers/total")
+    public ResponseEntity<?> getTotalRouters() {
+        List<RouterViewDTO> routerViewDTOList = routerService.findBy(RouterViewDTO.class);
+        return new ResponseEntity<>(routerViewDTOList.size(), HttpStatus.OK);
     }
 
     @GetMapping("/api/simple-list")

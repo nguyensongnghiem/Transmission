@@ -25,7 +25,8 @@ public interface ISiteService {
     public Site findSitesBySiteId2(String siteId2);
 
     public <T> Page<T> searchAllSite(String searchSiteId,String transOwner, String transType, String province, Pageable pageable, Class<T> classType);
-
+<T> List<T> searchAllByProvince(String province, Class<T> classType);
+    <T> List<T> searchAllByTransmissionType(String transmissionType, Class<T> classType);
 
     public <T> List<T> findBy(Class<T> classType);
 

@@ -17,15 +17,36 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 
 @RestController
-@RequestMapping("/api/site-transmission-types")
+
 @CrossOrigin(origins = "*")
 public class SiteTranmissionTypeRestController {
     @Autowired
     ISiteTransmissionTypeService transmissionTypeService;
-    @GetMapping()
+    @GetMapping("/api/site-transmission-types")
     public ResponseEntity<?> findAll() {
         List<SiteTransmissionTypeDTO> list  = transmissionTypeService.findBy(SiteTransmissionTypeDTO.class);
         return new ResponseEntity<>(list,HttpStatus.OK);
+    }
+
+    @GetMapping("/api/site-transmission-types/totalFo")
+    public ResponseEntity<?> getTotalFo() {
+        int total = transmissionTypeService.findById(1).get().getSiteList().size()
+                + transmissionTypeService.findById(2).get().getSiteList().size()
+                + transmissionTypeService.findById(3).get().getSiteList().size();
+        return new ResponseEntity<>(total,HttpStatus.OK);
+    }
+
+    @GetMapping("/api/site-transmission-types/totalMW")
+    public ResponseEntity<?> getTotalMW() {
+        int total = transmissionTypeService.findById(5).get().getSiteList().size()
+                + transmissionTypeService.findById(6).get().getSiteList().size();
+        return new ResponseEntity<>(total,HttpStatus.OK);
+    }
+
+    @GetMapping("/api/site-transmission-types/totalLL")
+    public ResponseEntity<?> getTotalLL() {
+        int total = transmissionTypeService.findById(4).get().getSiteList().size();
+        return new ResponseEntity<>(total,HttpStatus.OK);
     }
     
 

@@ -55,6 +55,16 @@ public class SiteService implements ISiteService {
     }
 
     @Override
+    public <T> List<T> searchAllByProvince(String province, Class<T> classType) {
+        return siteRepository.findByProvince_NameContainingIgnoreCase(province,classType);
+    }
+
+    @Override
+    public <T> List<T> searchAllByTransmissionType(String transmissionType, Class<T> classType) {
+        return siteRepository.findBySiteTransmissionType_NameContainingIgnoreCase(transmissionType,classType);
+    }
+
+    @Override
     public Site findSitesBySiteId2(String siteId2) {
         return siteRepository.findSitesBySiteId2(siteId2);
     }

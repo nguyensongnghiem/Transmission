@@ -19,10 +19,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
-@RequestMapping
 @CrossOrigin(origins = "*")
 public class SiteRestController {
     @Autowired
@@ -37,7 +38,7 @@ public class SiteRestController {
     private ITransmissionOwnerService transmissionOwnerService;
     @Autowired
     private SiteCreateDTOToSite siteCreateDTOToSite;
-    @GetMapping("/api/sites")
+    @GetMapping("/api/sites/search")
     public ResponseEntity<?> getSitesByPage(
         @RequestParam(required = false, defaultValue = "", name = "siteId") String siteId,
         @RequestParam(required = false, defaultValue = "0", name = "page") int page,
@@ -56,17 +57,63 @@ public class SiteRestController {
     }
 
     @GetMapping("/api/sites/total")
-    public ResponseEntity<?> getAllSite() {
+    public ResponseEntity<?> getTotalSite() {
         List<SiteViewDTO> siteList = siteService.findBy( SiteViewDTO.class);
         return new ResponseEntity<>(siteList.size(), HttpStatus.OK);
     }
+
     
-    // @GetMapping("/api/sites")
-    // public ResponseEntity<?> getAllSites(       
-    // ) {
-    //     List<Site> siteList = siteService.findBy(Site.class);
-    //     return new ResponseEntity<>(siteList, HttpStatus.OK);
-    // }
+     @GetMapping("/api/sites")
+     public ResponseEntity<?> getAllSites(
+     ) {
+         List<SiteViewDTO> siteList = siteService.findBy(SiteViewDTO.class);
+         return new ResponseEntity<>(siteList, HttpStatus.OK);
+     }
+
+    @GetMapping("/api/sites/totalByProvince")
+    public ResponseEntity<?> getSiteTallyByProvince(
+    ) {
+        List<Site> siteList = siteService.findBy(Site.class);
+        Map<String, Integer> provinceCountMap = new HashMap<>();
+        for (Site site : siteList) {
+            String province = site.getProvince().getName();
+            provinceCountMap.put(province, provinceCountMap.getOrDefault(province, 0) + 1);
+        }
+        return new ResponseEntity<>(provinceCountMap, HttpStatus.OK);
+    }
+
+    @GetMapping("/api/sites/totalByTransmissionType")
+    public ResponseEntity<?> getSiteTallyByTransmissionType(
+    ) {
+        List<Site> siteList = siteService.findBy(Site.class);
+        Map<String, Integer> transTypeCountMap = new HashMap<>();
+        for (Site site : siteList) {
+            if (site.getSiteTransmissionType() != null) {
+                String transType = site.getSiteTransmissionType().getName();
+                transTypeCountMap.put(transType, transTypeCountMap.getOrDefault(transType, 0) + 1);
+            }
+        }
+        return new ResponseEntity<>(transTypeCountMap, HttpStatus.OK);
+    }
+
+
+    @GetMapping("/api/sites/transmissionTypeTallyByProvince")
+    public ResponseEntity<?> searchSiteTallyByTransmissionType(
+            @RequestParam(required = false, defaultValue = "", name = "province") String province
+    ) {
+        if (province == null) province="";
+        List<SiteViewDTO> siteList = siteService.searchAllByProvince(province,SiteViewDTO.class);
+
+        Map<String, Integer> transTypeCountMap = new HashMap<>();
+        for (SiteViewDTO site : siteList) {
+            if (site.getSiteTransmissionType() != null) {
+                String transType = site.getSiteTransmissionType().getName();
+                transTypeCountMap.put(transType, transTypeCountMap.getOrDefault(transType, 0) + 1);
+            }
+        }
+        return new ResponseEntity<>(transTypeCountMap, HttpStatus.OK);
+    }
+
 
 //    @PostMapping("/api/sites")
 //    public ResponseEntity<?> createSite(@Valid @RequestBody SiteDTO siteDTO) {
@@ -77,7 +124,7 @@ public class SiteRestController {
 //        return ResponseEntity.ok(targetSite);
 //    }
 
-    @PostMapping("/api/sites/rest")
+    @PostMapping("/api/sites")
     public ResponseEntity<?> createRestSite(@Valid @RequestBody SiteCreateDTO siteDTO) {
         Site targetSite = siteCreateDTOToSite.apply(siteDTO);
         if (targetSite.getId()!=null) {
@@ -102,7 +149,7 @@ public class SiteRestController {
         return ResponseEntity.ok(targetSite);
     }
 
-    @PutMapping("/api/sites/rest")
+    @PutMapping("/api/sites")
     public ResponseEntity<?> updateRestSite(@Valid @RequestBody SiteCreateDTO siteDTO) {
         Site targetSite = siteCreateDTOToSite.apply(siteDTO);
         siteService.save(targetSite);
