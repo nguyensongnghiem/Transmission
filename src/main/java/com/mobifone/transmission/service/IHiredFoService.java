@@ -19,4 +19,7 @@ public interface IHiredFoService {
     void save(HiredFoLine hiredFoLine);
 
     public <T> T findById(int editId, Class<T> classType);
+
+    void deleteById(int id);
+    List<HiredFoLine> findAllDeletedFo();
 }

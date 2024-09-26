@@ -3,16 +3,14 @@ package com.mobifone.transmission.restcontroller;
 import com.mobifone.transmission.dto.inf.FoContractViewDTO;
 import com.mobifone.transmission.dto.inf.HiredFoLineViewDTO;
 import com.mobifone.transmission.model.FoContract;
+import com.mobifone.transmission.model.HiredFoLine;
 import com.mobifone.transmission.service.IFoContractService;
 import com.mobifone.transmission.service.IHiredFoService;
 import com.mobifone.transmission.service.impl.FoContractService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -33,5 +31,17 @@ public class FoContractRestController {
         List<HiredFoLineViewDTO> hiredFoLineViewDTOList = hiredFoService.getHiredFoLineViewDTOByContractId(id);
         return new ResponseEntity<>(hiredFoLineViewDTOList,HttpStatus.OK);
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteFoContractById(@PathVariable int id) {
+//        HiredFoLineViewDTO hiredFoLineViewDTO = hiredFoService.findById(id, HiredFoLineViewDTO.class);
+//        if (hiredFoLineViewDTO==null) {throw new SiteNotFoundException("Site ID không tồn tại !");}
+//        else {
+        contractService.deleteById(id);
+//        };
+        return ResponseEntity.ok("Đã xóa thành công Hợp đồng FO thuê");
+    }
+
+
 
 }

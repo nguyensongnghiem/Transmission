@@ -33,7 +33,7 @@ public class FoContract {
     private LocalDate signedDate;
     @Column(nullable = false)
     private LocalDate endDate;
-
+    private boolean active = true;
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "transmissionOwnerId", nullable = false)
     private TransmissionOwner transmissionOwner;

@@ -65,4 +65,14 @@ public class HiredFoService implements IHiredFoService {
     public <T> T findById(int editId, Class<T> classType) {
         return hiredFoLineRepository.findById(editId, classType);
     }
+
+    @Override
+    public void deleteById(int id) {
+        hiredFoLineRepository.deleteById(id);
+    }
+
+    @Override
+    public List<HiredFoLine> findAllDeletedFo() {
+        return hiredFoLineRepository.findAllDeletedHiredFo();
+    }
 }
