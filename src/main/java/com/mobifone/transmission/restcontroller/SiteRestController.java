@@ -131,20 +131,7 @@ public class SiteRestController {
             Site existSite = siteService.findById(targetSite.getId(), Site.class);
             BeanUtils.copyProperties(targetSite,existSite);
             siteService.save(existSite);
-        } else
-        {
-//          Site targetSite = new Site();
-//        BeanUtils.copyProperties(siteDTO,targetSite);
-//        Optional<SiteOwner> siteOwner = siteOwnerService.findById(siteDTO.getSiteOwner().getId());
-//        Optional<SiteTransmissionType> siteTransmissionType = siteTransmissionTypeService.findById(siteDTO.getSiteTransmissionType().getId());
-//        Optional<TransmissionOwner> transmissionOwner = transmissionOwnerService.findById(siteDTO.getTransmissionOwner().getId());
-//        Optional<Province> province = provinceService.findById(siteDTO.getProvince().getId());
-//        targetSite.setSiteOwner(siteOwner.get());
-//        targetSite.setSiteTransmissionType(siteTransmissionType.get());
-//        targetSite.setSiteOwner(siteOwner.get());
-//        targetSite.setTransmissionOwner(transmissionOwner.get());
-//        targetSite.setProvince(province.get());
-        siteService.save(targetSite); }
+        } else {siteService.save(targetSite);}
         System.out.println(targetSite);
         return ResponseEntity.ok(targetSite);
     }
@@ -167,7 +154,7 @@ public class SiteRestController {
     @DeleteMapping("/api/sites/{id}")
     public ResponseEntity<?> deleteSiteById(@PathVariable Long id) {
         Site site = siteService.findById(id, Site.class);
-        if (site==null) {throw new SiteNotFoundException("Site ID không tồn tại !");}
+        if (site==null) {throw new SiteNotFoundException("Site ID không tồn tại");}
         else {
             siteService.deleteById(id);
         };

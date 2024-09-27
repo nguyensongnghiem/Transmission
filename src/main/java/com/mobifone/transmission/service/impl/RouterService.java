@@ -39,6 +39,11 @@ public class RouterService implements IRouterService {
     }
 
     @Override
+    public <T> T findById(Long editId, Class<T> classType) {
+        return routerRepository.findById(editId,classType);
+    }
+
+    @Override
     public Router findById(Long editId) {
         return routerRepository.findById(editId).get();
     }

@@ -12,6 +12,7 @@ public interface IRouterRepository extends JpaRepository<Router,Long> {
     Router findRouterByName(String routerName);
     Router findRouterByIp(String ip);
     <T> List<T> findBy(Class<T> classType);
+    <T> T findById(Long editId,Class<T> classType);
     @Query(nativeQuery = true,value =
             "SELECT r.id, r.name, rt.name as routerType, tdt.name as transmissionDeviceType, s.site_id as siteId from \n" +
             "router r join transmission_device_type tdt on r.transmission_device_type_id = tdt.id\n" +

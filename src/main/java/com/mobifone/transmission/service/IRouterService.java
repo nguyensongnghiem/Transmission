@@ -13,7 +13,7 @@ public interface IRouterService {
     public List<Router> findAll();
     public boolean save(Router router);
     public void deleteById(Long id);
-
+    public <T> T findById(Long editId,Class<T> classType);
     public Router findById(Long id);
     public boolean update(Router router);
 

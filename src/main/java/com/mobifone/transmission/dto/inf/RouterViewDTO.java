@@ -4,10 +4,12 @@ public interface RouterViewDTO {
     String getName();
     RouterTypeWithNameDTO getRouterType();
     interface RouterTypeWithNameDTO {
+        int getId();
         String getName();
     }
     TransmissionDeviceTypeWithNameDTO getTransmissionDeviceType();
     interface TransmissionDeviceTypeWithNameDTO {
+        int getId();
         String getName();
     }
     SiteWithNameAndIdDTO getSite();
@@ -16,6 +18,7 @@ public interface RouterViewDTO {
         String getSiteId();
         ProvinceWithName getProvince();
         interface ProvinceWithName {
+            String getId();
             String getName();
         }
     }

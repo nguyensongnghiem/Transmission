@@ -20,4 +20,9 @@ public class RouterTypeService implements IRouterTypeService {
     public boolean save(RouterType routerType) {
         return routerTypeRepository.save(routerType)!=null;
     }
+
+    @Override
+    public <T> List<T> findBy(Class<T> classType) {
+        return routerTypeRepository.findBy(classType);
+    }
 }
