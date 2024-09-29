@@ -13,7 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/api/contracts")
 public class FoContractRestController {
@@ -26,6 +26,13 @@ public class FoContractRestController {
         List<FoContractViewDTO> foContracts = contractService.findAllViewDTO();
         return new ResponseEntity<>(foContracts,HttpStatus.OK);
     }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Object> getContractDetail(@PathVariable int id) {
+        FoContractViewDTO foContract = contractService.findById(id,FoContractViewDTO.class);
+        return new ResponseEntity<>(foContract,HttpStatus.OK);
+    }
+
     @GetMapping("/{id}/hired-fo")
     public ResponseEntity<Object> getHiredFoByContractId(@PathVariable int id) {
         List<HiredFoLineViewDTO> hiredFoLineViewDTOList = hiredFoService.getHiredFoLineViewDTOByContractId(id);

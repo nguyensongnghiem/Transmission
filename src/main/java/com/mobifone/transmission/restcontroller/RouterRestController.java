@@ -4,6 +4,8 @@ import com.mobifone.transmission.dto.RouterDTO;
 import com.mobifone.transmission.dto.SiteCreateDTO;
 import com.mobifone.transmission.dto.inf.RouterViewDTO;
 import com.mobifone.transmission.exception.RouterNotFoundException;
+import com.mobifone.transmission.exception.SiteNotFoundException;
+import com.mobifone.transmission.model.Router;
 import com.mobifone.transmission.model.Site;
 import com.mobifone.transmission.service.IRouterService;
 import com.mobifone.transmission.service.ISiteService;
@@ -12,6 +14,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.RouteMatcher;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -55,9 +58,19 @@ public class RouterRestController {
         return ResponseEntity.ok("ok");
 
     }
-    @GetMapping("/api/simple-list")
+    @GetMapping("/api/routers/simple-list")
     @ResponseBody
     public Object getSimpleRouterList() {
         return routerService.findAllSimpleRouter();
+    }
+
+    @DeleteMapping("/api/routers/{id}")
+    public ResponseEntity<?> deleteRouterById(@PathVariable Long id) {
+        Router router = routerService.findById(id, Router.class);
+        if (router==null) {throw new RouterNotFoundException("Thiết bị không tồn tại");}
+        else {
+            routerService.deleteById(id);
+        };
+        return ResponseEntity.ok("Đã xóa thành công thiết bị");
     }
 }

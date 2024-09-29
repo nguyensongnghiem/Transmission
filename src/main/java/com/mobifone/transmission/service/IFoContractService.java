@@ -11,7 +11,7 @@ public interface IFoContractService {
     public List<FoContract> findContractEndIn5Month();
     public FoContract findByContractNumber(String name);
 
-    FoContract findById(Integer id);
+    <T> T findById(Integer id, Class<T> clazz);
     List<FoContractViewDTO> findAllViewDTO();
 
     void save(FoContract foContract);

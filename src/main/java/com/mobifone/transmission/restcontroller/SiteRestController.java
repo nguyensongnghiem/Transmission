@@ -2,6 +2,7 @@ package com.mobifone.transmission.restcontroller;
 
 import com.mobifone.transmission.dto.SiteCreateDTO;
 import com.mobifone.transmission.dto.SiteDTO;
+import com.mobifone.transmission.dto.inf.SimpleSiteDTO;
 import com.mobifone.transmission.dto.inf.SiteViewDTO;
 import com.mobifone.transmission.exception.SiteNotFoundException;
 import com.mobifone.transmission.mapper.SiteCreateDTOToSite;
@@ -69,6 +70,13 @@ public class SiteRestController {
          List<SiteViewDTO> siteList = siteService.findBy(SiteViewDTO.class);
          return new ResponseEntity<>(siteList, HttpStatus.OK);
      }
+
+    @GetMapping("/api/sites/simple-list")
+    public ResponseEntity<?> getAllSimpleSites(
+    ) {
+        List<SimpleSiteDTO> siteList = siteService.findBy(SimpleSiteDTO.class);
+        return new ResponseEntity<>(siteList, HttpStatus.OK);
+    }
 
     @GetMapping("/api/sites/totalByProvince")
     public ResponseEntity<?> getSiteTallyByProvince(

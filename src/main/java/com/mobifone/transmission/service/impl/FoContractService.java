@@ -39,8 +39,8 @@ public class FoContractService implements IFoContractService {
     }
 
     @Override
-    public FoContract findById(Integer id) {
-        return foContractRepository.findById(id, FoContract.class);
+    public <T> T findById(Integer id,Class<T> clazz) {
+        return foContractRepository.findById(id, clazz);
     }
 
     @Override

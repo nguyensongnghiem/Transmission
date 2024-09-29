@@ -101,7 +101,7 @@ public class FoContractController {
     @GetMapping("/edit/{editId}")
     public String showEditForm(Model model, @PathVariable(name = "editId") int editId) {
 
-        FoContract foContract = foContractService.findById(editId);
+        FoContract foContract = foContractService.findById(editId, FoContract.class);
         FoContractDTO foContractDTO = new FoContractDTO();
         BeanUtils.copyProperties(foContract,foContractDTO);
         model.addAttribute("foContractDTO", foContractDTO);
