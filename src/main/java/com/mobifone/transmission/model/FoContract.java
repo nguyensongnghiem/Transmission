@@ -27,13 +27,13 @@ public class FoContract {
     private int id;
     @Column(nullable = false, unique = true)
     private String contractNumber;
-
     private String contractName;
     @Column(nullable = false)
     private LocalDate signedDate;
     @Column(nullable = false)
     private LocalDate endDate;
     private boolean active = true;
+    private String contractUrl;
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "transmissionOwnerId", nullable = false)
     private TransmissionOwner transmissionOwner;
