@@ -1,12 +1,17 @@
 package com.mobifone.transmission.restcontroller;
 
+import com.mobifone.transmission.dto.FoContractDTO;
+import com.mobifone.transmission.dto.SiteCreateDTO;
 import com.mobifone.transmission.dto.inf.FoContractViewDTO;
 import com.mobifone.transmission.dto.inf.HiredFoLineViewDTO;
 import com.mobifone.transmission.model.FoContract;
 import com.mobifone.transmission.model.HiredFoLine;
+import com.mobifone.transmission.model.Site;
 import com.mobifone.transmission.service.IFoContractService;
 import com.mobifone.transmission.service.IHiredFoService;
 import com.mobifone.transmission.service.impl.FoContractService;
+import jakarta.validation.Valid;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -38,7 +43,13 @@ public class FoContractRestController {
         List<HiredFoLineViewDTO> hiredFoLineViewDTOList = hiredFoService.getHiredFoLineViewDTOByContractId(id);
         return new ResponseEntity<>(hiredFoLineViewDTOList,HttpStatus.OK);
     }
-
+    @PutMapping("/{id}")
+    public ResponseEntity<?> createRestContract(@Valid @RequestBody FoContractDTO foContractDTO, @PathVariable Long id) {
+        FoContract targetFoContract = new FoContract();
+        BeanUtils.copyProperties(foContractDTO,targetFoContract);
+        contractService.save(targetFoContract);
+        return ResponseEntity.ok("Đã tạo thành công hợp đồng");
+    }
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteFoContractById(@PathVariable int id) {
 //        HiredFoLineViewDTO hiredFoLineViewDTO = hiredFoService.findById(id, HiredFoLineViewDTO.class);

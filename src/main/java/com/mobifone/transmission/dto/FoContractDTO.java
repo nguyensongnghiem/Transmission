@@ -20,6 +20,7 @@ public class FoContractDTO {
     private LocalDate signedDate;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate endDate;
+    private String contractUrl;
     private TransmissionOwner transmissionOwner;
     private String note;
 
