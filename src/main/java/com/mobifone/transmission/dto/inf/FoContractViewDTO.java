@@ -9,6 +9,7 @@ public interface FoContractViewDTO {
     String getContractName();
     LocalDate getSignedDate();
     LocalDate getEndDate();
+    String getContractUrl();
     String getNote();
     TransmissionOwnerWithName getTransmissionOwner();
     interface TransmissionOwnerWithName {
