@@ -1,9 +1,10 @@
 package com.mobifone.transmission.restcontroller;
 
 import com.mobifone.transmission.dto.SiteCreateDTO;
-import com.mobifone.transmission.dto.SiteDTO;
 import com.mobifone.transmission.dto.inf.SimpleSiteDTO;
 import com.mobifone.transmission.dto.inf.SiteViewDTO;
+import com.mobifone.transmission.exception.ErrorResponse;
+import com.mobifone.transmission.exception.SiteIdExistedException;
 import com.mobifone.transmission.exception.SiteNotFoundException;
 import com.mobifone.transmission.mapper.SiteCreateDTOToSite;
 import com.mobifone.transmission.model.*;
@@ -26,6 +27,7 @@ import java.util.Map;
 
 @RestController
 @CrossOrigin(origins = "*")
+@RequestMapping("/api/sites")
 public class SiteRestController {
     @Autowired
     private ISiteService siteService;
@@ -39,7 +41,7 @@ public class SiteRestController {
     private ITransmissionOwnerService transmissionOwnerService;
     @Autowired
     private SiteCreateDTOToSite siteCreateDTOToSite;
-    @GetMapping("/api/sites/search")
+    @GetMapping("/search")
     public ResponseEntity<?> getSitesByPage(
         @RequestParam(required = false, defaultValue = "", name = "siteId") String siteId,
         @RequestParam(required = false, defaultValue = "0", name = "page") int page,
@@ -57,28 +59,28 @@ public class SiteRestController {
         return new ResponseEntity<>(siteListPage, HttpStatus.OK);
     }
 
-    @GetMapping("/api/sites/total")
+    @GetMapping("/total")
     public ResponseEntity<?> getTotalSite() {
         List<SiteViewDTO> siteList = siteService.findBy( SiteViewDTO.class);
         return new ResponseEntity<>(siteList.size(), HttpStatus.OK);
     }
 
     
-     @GetMapping("/api/sites")
+     @GetMapping("")
      public ResponseEntity<?> getAllSites(
      ) {
          List<SiteViewDTO> siteList = siteService.findBy(SiteViewDTO.class);
          return new ResponseEntity<>(siteList, HttpStatus.OK);
      }
 
-    @GetMapping("/api/sites/simple-list")
+    @GetMapping("/simple-list")
     public ResponseEntity<?> getAllSimpleSites(
     ) {
         List<SimpleSiteDTO> siteList = siteService.findBy(SimpleSiteDTO.class);
         return new ResponseEntity<>(siteList, HttpStatus.OK);
     }
 
-    @GetMapping("/api/sites/totalByProvince")
+    @GetMapping("/totalByProvince")
     public ResponseEntity<?> getSiteTallyByProvince(
     ) {
         List<Site> siteList = siteService.findBy(Site.class);
@@ -90,7 +92,7 @@ public class SiteRestController {
         return new ResponseEntity<>(provinceCountMap, HttpStatus.OK);
     }
 
-    @GetMapping("/api/sites/totalByTransmissionType")
+    @GetMapping("/totalByTransmissionType")
     public ResponseEntity<?> getSiteTallyByTransmissionType(
     ) {
         List<Site> siteList = siteService.findBy(Site.class);
@@ -105,7 +107,7 @@ public class SiteRestController {
     }
 
 
-    @GetMapping("/api/sites/transmissionTypeTallyByProvince")
+    @GetMapping("/transmissionTypeTallyByProvince")
     public ResponseEntity<?> searchSiteTallyByTransmissionType(
             @RequestParam(required = false, defaultValue = "", name = "province") String province
     ) {
@@ -123,50 +125,42 @@ public class SiteRestController {
     }
 
 
-//    @PostMapping("/api/sites")
-//    public ResponseEntity<?> createSite(@Valid @RequestBody SiteDTO siteDTO) {
-//        System.out.println(siteDTO.toString());
-//        Site targetSite = new Site();
-//        BeanUtils.copyProperties(siteDTO,targetSite);
-//        siteService.save(targetSite);
-//        return ResponseEntity.ok(targetSite);
-//    }
-
-    @PostMapping("/api/sites")
+    @PostMapping
     public ResponseEntity<?> createRestSite(@Valid @RequestBody SiteCreateDTO siteDTO) {
         Site targetSite = siteCreateDTOToSite.apply(siteDTO);
-        if (targetSite.getId()!=null) {
-            Site existSite = siteService.findById(targetSite.getId(), Site.class);
-            BeanUtils.copyProperties(targetSite,existSite);
-            siteService.save(existSite);
-        } else {siteService.save(targetSite);}
-        System.out.println(targetSite);
-        return ResponseEntity.ok(targetSite);
-    }
-
-    @PutMapping("/api/sites")
-    public ResponseEntity<?> updateRestSite(@Valid @RequestBody SiteCreateDTO siteDTO) {
-        Site targetSite = siteCreateDTOToSite.apply(siteDTO);
+        if (siteService.findSitesBySiteId(siteDTO.getSiteId())!=null) {
+            throw new SiteIdExistedException("Trạm "+siteDTO.getSiteId()+ " đã tồn tại trong hệ thống.");
+        }
         siteService.save(targetSite);
-        System.out.println(targetSite);
-        return ResponseEntity.ok(targetSite);
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
-    @GetMapping("/api/sites/{id}")
-    public ResponseEntity<?> getSite(@PathVariable Long id) {
-        SiteViewDTO site = siteService.findById(id, SiteViewDTO.class);
-        if (site==null) throw new SiteNotFoundException("Site not found.");
-        return ResponseEntity.ok(site);
+    @PutMapping("/{id}")
+    public ResponseEntity<?> updateRestSite(@Valid @RequestBody SiteCreateDTO siteDTO, @PathVariable long id) {
+
+            Site targetSite = siteService.findById(id, Site.class);
+            if (targetSite == null) throw new SiteNotFoundException("Không tồn tại trạm với id " + id + " trong hệ thống.");
+            BeanUtils.copyProperties(siteDTO, targetSite);
+            siteService.save(targetSite);
+            return new ResponseEntity<>(HttpStatus.OK);
+
+        }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<?> getSiteById(@PathVariable Long id) {
+
+            SiteViewDTO site = siteService.findById(id, SiteViewDTO.class);
+            if (site==null) throw new SiteNotFoundException("Không tồn tại trạm với id " + id + " trong hệ thống.");
+            return ResponseEntity.ok(site);
     }
    
-    @DeleteMapping("/api/sites/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteSiteById(@PathVariable Long id) {
-        Site site = siteService.findById(id, Site.class);
-        if (site==null) {throw new SiteNotFoundException("Site ID không tồn tại");}
-        else {
+            Site site = siteService.findById(id, Site.class);
+            if (site==null) throw new SiteNotFoundException("Không tồn tại trạm trong  hệ thống.");
             siteService.deleteById(id);
-        };
-        return ResponseEntity.ok("Deleted Site Successful.");
+            return ResponseEntity.ok("Deleted Site Successful.");
+
     }
 
 }

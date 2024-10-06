@@ -10,9 +10,11 @@ public interface FoContractViewDTO {
     LocalDate getSignedDate();
     LocalDate getEndDate();
     String getContractUrl();
+    boolean getActive();
     String getNote();
     TransmissionOwnerWithName getTransmissionOwner();
     interface TransmissionOwnerWithName {
+        String getId();
         String getName();
     }
     List<HiredFoLineViewDTO> getHiredFoLineList();

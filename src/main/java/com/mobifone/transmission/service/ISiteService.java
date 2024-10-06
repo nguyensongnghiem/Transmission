@@ -11,7 +11,7 @@ public interface ISiteService {
 
     public List<Site> findAll();
 
-    public boolean save(Site site);
+    public Site save(Site site);
 
     public void deleteById(Long id);
 

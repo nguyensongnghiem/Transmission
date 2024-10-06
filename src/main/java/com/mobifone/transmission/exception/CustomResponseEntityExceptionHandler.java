@@ -6,6 +6,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -28,11 +29,13 @@ public class CustomResponseEntityExceptionHandler extends ResponseEntityExceptio
     {
         return buildErrorResponse(
                 exception,
-                "Xảy ra Lỗi không xác định tại server",
+                "Lỗi không xác định tại server",
                 HttpStatus.INTERNAL_SERVER_ERROR,
                 request
         );
     }
+
+
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(InvalidFileTypeException.class)
     public ResponseEntity<ErrorResponse> InvalidFileTypeExceptionHandler(InvalidFileTypeException ex, WebRequest request) {
@@ -46,19 +49,19 @@ public class CustomResponseEntityExceptionHandler extends ResponseEntityExceptio
     }
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(SiteIdExistedException.class)
-    public ResponseEntity<ErrorResponse> SiteIdExistedExceptionHandler(InvalidFileTypeException ex, WebRequest request) {
+    public ResponseEntity<ErrorResponse> SiteIdExistedExceptionHandler(SiteIdExistedException ex, WebRequest request) {
         return buildErrorResponse(
                 ex,
                 HttpStatus.BAD_REQUEST,
                 request
         );
     }
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
     @ExceptionHandler(SiteNotFoundException.class)
     public ResponseEntity<ErrorResponse> SiteNotFoundExceptionHandler(SiteNotFoundException ex, WebRequest request) {
         return buildErrorResponse(
                 ex,
-                HttpStatus.BAD_REQUEST,
+                HttpStatus.NOT_FOUND,
                 request
         );
     }

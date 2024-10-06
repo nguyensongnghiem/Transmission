@@ -1,15 +1,12 @@
 package com.mobifone.transmission.restcontroller;
 
 import com.mobifone.transmission.dto.FoContractDTO;
-import com.mobifone.transmission.dto.SiteCreateDTO;
 import com.mobifone.transmission.dto.inf.FoContractViewDTO;
 import com.mobifone.transmission.dto.inf.HiredFoLineViewDTO;
+import com.mobifone.transmission.exception.ErrorResponse;
 import com.mobifone.transmission.model.FoContract;
-import com.mobifone.transmission.model.HiredFoLine;
-import com.mobifone.transmission.model.Site;
 import com.mobifone.transmission.service.IFoContractService;
 import com.mobifone.transmission.service.IHiredFoService;
-import com.mobifone.transmission.service.impl.FoContractService;
 import jakarta.validation.Valid;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,25 +24,53 @@ public class FoContractRestController {
     @Autowired
     private IHiredFoService hiredFoService;
     @GetMapping
-    public ResponseEntity<Object> getContracts() {
-        List<FoContractViewDTO> foContracts = contractService.findAllViewDTO();
-        return new ResponseEntity<>(foContracts,HttpStatus.OK);
-    }
+    public ResponseEntity<Object> getAllContracts() {
+        try {
+            List<FoContractViewDTO> foContracts = contractService.findAllViewDTO();
+            if (foContracts.isEmpty()) {return new ResponseEntity<>(HttpStatus.NO_CONTENT);}
+            return new ResponseEntity<>(foContracts,HttpStatus.OK);
+        }
+        catch (Exception e) {
+            ErrorResponse errorResponse = new ErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR.value(), e.getMessage());
+            return new ResponseEntity<>(errorResponse,HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        }
 
     @GetMapping("/{id}")
     public ResponseEntity<Object> getContractDetail(@PathVariable int id) {
-        FoContractViewDTO foContract = contractService.findById(id,FoContractViewDTO.class);
-        return new ResponseEntity<>(foContract,HttpStatus.OK);
+        try {
+            FoContractViewDTO foContract = contractService.findById(id,FoContractViewDTO.class);
+            if (foContract == null) {
+                ErrorResponse errorResponse = new ErrorResponse(HttpStatus.NOT_FOUND.value(), String.format("Không có hợp đồng với id %d", id));
+                return new ResponseEntity<>(errorResponse,HttpStatus.NOT_FOUND);
+            }
+            return new ResponseEntity<>(foContract,HttpStatus.OK);
+        }
+        catch (Exception e) {
+            ErrorResponse errorResponse = new ErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR.value(), e.getMessage());
+            return new ResponseEntity<>(errorResponse,HttpStatus.INTERNAL_SERVER_ERROR);        }
+
     }
 
     @GetMapping("/{id}/hired-fo")
     public ResponseEntity<Object> getHiredFoByContractId(@PathVariable int id) {
-        List<HiredFoLineViewDTO> hiredFoLineViewDTOList = hiredFoService.getHiredFoLineViewDTOByContractId(id);
-        return new ResponseEntity<>(hiredFoLineViewDTOList,HttpStatus.OK);
+        try {
+            List<HiredFoLineViewDTO> hiredFoLineViewDTOList = hiredFoService.getHiredFoLineViewDTOByContractId(id);
+            if (hiredFoLineViewDTOList.isEmpty()) {return new ResponseEntity<>(HttpStatus.NO_CONTENT);}
+            return new ResponseEntity<>(hiredFoLineViewDTOList,HttpStatus.OK);
+        }
+        catch (Exception e) {
+            ErrorResponse errorResponse = new ErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR.value(), e.getMessage());
+            return new ResponseEntity<>(errorResponse,HttpStatus.INTERNAL_SERVER_ERROR);        }
     }
     @PutMapping("/{id}")
-    public ResponseEntity<?> createRestContract(@Valid @RequestBody FoContractDTO foContractDTO, @PathVariable Long id) {
-        FoContract targetFoContract = new FoContract();
+    public ResponseEntity<?> updateContract(@Valid @RequestBody FoContractDTO foContractDTO, @PathVariable int id) {
+
+        FoContract targetFoContract = contractService.findById(id,FoContract.class);
+        if (targetFoContract == null) {
+            ErrorResponse errorResponse = new ErrorResponse(HttpStatus.NOT_FOUND.value(), String.format("Không có hợp đồng với id %d", id));
+            return new ResponseEntity<>(errorResponse,HttpStatus.NOT_FOUND);
+        }
         BeanUtils.copyProperties(foContractDTO,targetFoContract);
         contractService.save(targetFoContract);
         return ResponseEntity.ok("Đã tạo thành công hợp đồng");

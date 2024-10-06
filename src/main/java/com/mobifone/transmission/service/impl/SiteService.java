@@ -25,8 +25,8 @@ public class SiteService implements ISiteService {
     }
 
     @Override
-    public boolean save(Site site) {
-        return siteRepository.save(site)!=null;
+    public Site save(Site site) {
+        return siteRepository.save(site);
     }
 
     @Override

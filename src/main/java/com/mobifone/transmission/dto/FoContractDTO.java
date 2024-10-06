@@ -27,6 +27,7 @@ public class FoContractDTO {
     private LocalDate endDate;
     @NotBlank(message = "Yêu cầu tải lên văn bản hợp đồng pdf")
     private String contractUrl;
+    private boolean active;
     private TransmissionOwner transmissionOwner;
     private String note;
 

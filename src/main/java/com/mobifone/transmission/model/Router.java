@@ -36,7 +36,7 @@ public class Router {
     @JoinColumn(name = "SiteId",nullable = false)
     private Site site;
 
-    @Column(nullable = false,unique = true)
+    @Column(nullable = false)
     private String ip;
 
     private String note;

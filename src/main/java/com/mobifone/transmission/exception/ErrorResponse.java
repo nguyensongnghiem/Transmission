@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.context.request.WebRequest;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
@@ -34,4 +36,31 @@ public class ErrorResponse {
         }
         errors.add(new ValidationError(field, message));
     }
+
+    public static ResponseEntity<ErrorResponse> buildErrorResponse(
+            Exception exception,
+            HttpStatus httpStatus,
+            WebRequest request
+    ) {
+        return buildErrorResponse(
+                exception,
+                exception.getMessage(),
+                httpStatus,
+                request);
+    }
+
+    public static ResponseEntity<ErrorResponse> buildErrorResponse(
+            Exception exception,
+            String message,
+            HttpStatus httpStatus,
+            WebRequest request
+    ) {
+        ErrorResponse errorResponse = new ErrorResponse(
+                httpStatus.value(),
+                exception.getMessage()
+        );
+
+        return ResponseEntity.status(httpStatus).body(errorResponse);
+    }
+
 }
