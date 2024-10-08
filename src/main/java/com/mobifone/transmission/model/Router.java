@@ -38,7 +38,7 @@ public class Router {
 
     @Column(nullable = false)
     private String ip;
-
+    private boolean active = true;
     private String note;
         @CreationTimestamp
     @Column(updatable = false)

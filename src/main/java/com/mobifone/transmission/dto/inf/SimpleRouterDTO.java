@@ -5,5 +5,6 @@ public interface SimpleRouterDTO {
     String getName();
     String getRouterType();
     String getTransmissionDeviceType();
+    boolean getActive();
     String getSiteId();
 }

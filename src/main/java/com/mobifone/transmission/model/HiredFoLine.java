@@ -35,5 +35,6 @@ public class HiredFoLine {
     private Integer cost;
     private float designedDistance;
     private float finalDistance;
+    private boolean active = true;
     private String note;
 }

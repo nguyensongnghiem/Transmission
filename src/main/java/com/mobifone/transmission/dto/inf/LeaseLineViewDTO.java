@@ -16,6 +16,7 @@ public interface LeaseLineViewDTO {
     interface TransmissionOwnerWithNameDTO {
         String getName();
     }
+    boolean getActive();
     SiteWithNameAndIdDTO getSite();
     interface SiteWithNameAndIdDTO {
         Float getId();

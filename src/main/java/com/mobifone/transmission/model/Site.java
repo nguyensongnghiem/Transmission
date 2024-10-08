@@ -64,6 +64,7 @@ public class Site {
     @OneToMany(mappedBy = "site", cascade = CascadeType.ALL)
     @JsonIgnore
     private List<Router> routerList;
+    private boolean active;
     @CreationTimestamp
     @Column(updatable = false)
     private Timestamp createdOn;

@@ -5,4 +5,5 @@ import java.math.BigDecimal;
 public interface SimpleSiteDTO {
     Long getId();
     String getSiteId();
+    boolean getActive();
 }

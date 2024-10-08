@@ -22,6 +22,7 @@ public interface RouterViewDTO {
             String getName();
         }
     }
+    boolean getActive();
     String getIp();
     String getNote();
 

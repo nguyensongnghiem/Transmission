@@ -16,7 +16,7 @@ public interface HiredFoLineViewDTO {
     }
     SiteWithSiteId getNearSite();
     SiteWithSiteId getFarSite();
-
+    boolean getActive();
     interface SiteWithSiteId {
         String getSiteId();
     }

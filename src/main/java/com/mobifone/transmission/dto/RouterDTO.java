@@ -22,5 +22,6 @@ public class RouterDTO {
     @NotNull(message = "Thông tin bắt buộc")
     @Pattern(regexp = "^((25[0-5]|(2[0-4]|1\\d|[1-9]|)\\d)\\.?\\b){4}$",message = "Format IP không đúng")
     private String ip;
+    private boolean active;
     private String note;
 }

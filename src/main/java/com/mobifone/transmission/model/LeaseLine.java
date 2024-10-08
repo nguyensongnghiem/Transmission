@@ -31,6 +31,7 @@ public class LeaseLine {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "siteId",nullable = false)
     private Site site;
+    private boolean active = true;
     @CreationTimestamp
     @Column(updatable = false)
     private Timestamp createdOn;

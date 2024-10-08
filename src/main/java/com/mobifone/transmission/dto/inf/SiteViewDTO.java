@@ -38,4 +38,5 @@ public interface SiteViewDTO {
         String getId();
         String getName();
     }
+    boolean getActive();
 }

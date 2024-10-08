@@ -33,5 +33,6 @@ public class HiredFoLineDTO {
     private float designedDistance;
     @PositiveOrZero(message = "Yêu cầu lớn hơn hoặc bằng 0")
     private float finalDistance;
+    private boolean active;
     private String note;
 }

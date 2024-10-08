@@ -66,7 +66,7 @@ public class SiteRestController {
     }
 
     
-     @GetMapping("")
+     @GetMapping
      public ResponseEntity<?> getAllSites(
      ) {
          List<SiteViewDTO> siteList = siteService.findBy(SiteViewDTO.class);
