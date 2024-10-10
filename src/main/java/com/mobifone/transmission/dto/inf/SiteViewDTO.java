@@ -28,10 +28,7 @@ public interface SiteViewDTO {
         int getId();
         String getName();
     }
-    interface RouterTypeWithNameDTO {
-        int getId();
-        String getName();
-    }
+
     String getNote();
     ProvinceWithNameDTO getProvince();
     interface ProvinceWithNameDTO {
