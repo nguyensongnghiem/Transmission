@@ -1,11 +1,10 @@
 package com.mobifone.transmission.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.*;
+
+import java.util.List;
+import java.util.Set;
 
 
 @Getter
@@ -14,7 +13,8 @@ import lombok.*;
 @AllArgsConstructor
 @Builder
 @Entity
-public class User {
+@Table(name = "user")
+public class UserEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;    
@@ -25,14 +25,16 @@ public class User {
     @Column(nullable = false,length = 100)
     private String password;
     private State state;
+    @OneToMany (mappedBy = "user", cascade = CascadeType.ALL)
+    List<UserRole> userRoles;
 
-    public User(String username, String email, String password, State state) {
+    public UserEntity(String username, String email, String password, State state) {
         this.username = username;
         this.email = email;
         this.password = password;
         this.state = state;
     }
-    public User(String username, String email, String password) {
+    public UserEntity(String username, String email, String password) {
         this.username = username;
         this.email = email;
         this.password = password;

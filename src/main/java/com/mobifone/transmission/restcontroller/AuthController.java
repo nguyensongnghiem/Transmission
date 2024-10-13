@@ -1,0 +1,50 @@
+package com.mobifone.transmission.restcontroller;
+
+import com.mobifone.transmission.dto.RegisterDTO;
+import com.mobifone.transmission.exception.ErrorResponse;
+import com.mobifone.transmission.model.UserEntity;
+import com.mobifone.transmission.model.UserRole;
+import com.mobifone.transmission.repository.IRoleRepository;
+import com.mobifone.transmission.repository.IUserRepository;
+import com.mobifone.transmission.repository.IUserRoleRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+@RequestMapping("/api/auth")
+public class AuthController {
+    @Autowired
+    private AuthenticationManager authenticationManager;
+    @Autowired
+    private IUserRepository userRepository;
+    @Autowired
+    private IUserRoleRepository userRoleRepository;
+    @Autowired
+    private IRoleRepository roleRepository;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+@PostMapping("/register")
+    public ResponseEntity<?> register(@RequestBody RegisterDTO registerDTO) {
+    if (userRepository.existsByUsername(registerDTO.getUsername())) {
+        ErrorResponse errorResponse = new ErrorResponse(HttpStatus.BAD_REQUEST.value(),"Username đã tồn tại");
+        return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
+    }
+    UserEntity user = new UserEntity();
+    user.setUsername(registerDTO.getUsername());
+    user.setPassword(passwordEncoder.encode(registerDTO.getPassword()));
+    UserEntity createdUser = userRepository.save(user);
+    UserRole userRole = new UserRole();
+    userRole.setUser(createdUser);
+    userRole.setRole(roleRepository.findRoleByName("ROLE_USER").get());
+    userRoleRepository.save(userRole);
+    return new ResponseEntity<>("Đã thêm mới user", HttpStatus.CREATED);
+}
+
+}

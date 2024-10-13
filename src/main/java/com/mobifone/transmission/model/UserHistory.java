@@ -5,7 +5,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
 
 import java.sql.Timestamp;
 @Getter
@@ -18,7 +17,7 @@ public class UserHistory {
     private Integer id;
     @ManyToOne
     @JoinColumn(name = "userId")
-    private User user;
+    private UserEntity user;
     @CreationTimestamp
     @Column(updatable = false)
     private Timestamp loginTime;

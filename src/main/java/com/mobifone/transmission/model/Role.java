@@ -7,6 +7,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
+
 @Getter
 @Setter
 @Entity
@@ -17,5 +19,7 @@ public class Role {
     private Integer id;
   @Column(nullable = false, unique = true)
     private String name;
+    @OneToMany (mappedBy = "role", cascade = CascadeType.ALL)
+    List<UserRole> userRoles;
 
 }

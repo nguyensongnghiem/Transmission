@@ -1,6 +1,6 @@
 package com.mobifone.transmission.logger;
 
-import com.mobifone.transmission.model.User;
+import com.mobifone.transmission.model.UserEntity;
 import com.mobifone.transmission.model.UserHistory;
 import com.mobifone.transmission.repository.IUserHistoryRepository;
 import com.mobifone.transmission.repository.IUserRepository;
@@ -14,9 +14,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
-
-import java.sql.Timestamp;
 
 @Aspect
 @Component
@@ -38,10 +37,10 @@ public class MyLogger {
 
     }
 
-    @AfterReturning(pointcut = "execution(* com.mobifone.transmission.config.CustomUserDetailService.loadUserByUsername(..))",
+    @AfterReturning(pointcut = "execution(* com.mobifone.transmission.security.CustomUserDetailService.loadUserByUsername(..))",
             returning = "userDetails")
     public void logUserLogin(JoinPoint joinPoint, UserDetails userDetails) {
-        User user = userRepository.findUserByUsername(userDetails.getUsername());
+        UserEntity user = userRepository.findUserByUsername(userDetails.getUsername()).orElseThrow(()-> new UsernameNotFoundException("Username không tồn tại"));
         UserHistory userHistory = new UserHistory();
         userHistory.setUser(user);
         userHistoryRepository.save(userHistory);

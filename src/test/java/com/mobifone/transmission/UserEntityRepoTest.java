@@ -1,6 +1,6 @@
 package com.mobifone.transmission;
 
-import com.mobifone.transmission.model.User;
+import com.mobifone.transmission.model.UserEntity;
 import com.mobifone.transmission.model.State;
 import com.mobifone.transmission.repository.IUserRepository;
 import com.mobifone.transmission.service.IUserService;
@@ -12,7 +12,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
-public class UserRepoTest {
+public class UserEntityRepoTest {
     @Autowired
     IUserRepository userRepository;
     @Autowired
@@ -22,14 +22,14 @@ public class UserRepoTest {
     @Test
     public void addUser() {
         String hashedPass = encoder.encode("nghiem");
-        User user = new User("nghiem","nghiem@gmail.com",hashedPass,State.ACTIVE);
+        UserEntity user = new UserEntity("nghiem","nghiem@gmail.com",hashedPass,State.ACTIVE);
         userRepository.save(user);
         assertNotNull(userRepository.findById(user.getId()));
     }
     @Test
     public void addUserPending() {
         String hashedPass = encoder.encode("quang");
-        User user = new User("quang","quang@gmail.com",hashedPass);
+        UserEntity user = new UserEntity("quang","quang@gmail.com",hashedPass);
         userRepository.save(user);
         assertNotNull(userRepository.findById(user.getId()));
     }
