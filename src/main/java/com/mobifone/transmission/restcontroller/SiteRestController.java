@@ -153,6 +153,13 @@ public class SiteRestController {
             if (site==null) throw new SiteNotFoundException("Không tồn tại trạm với id " + id + " trong hệ thống.");
             return ResponseEntity.ok(site);
     }
+    @GetMapping("/{id}/detail")
+    public ResponseEntity<?> getSiteDetailById(@PathVariable Long id) {
+
+        Site site = siteService.findById(id, Site.class);
+        if (site==null) throw new SiteNotFoundException("Không tồn tại trạm với id " + id + " trong hệ thống.");
+        return ResponseEntity.ok(site);
+    }
    
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteSiteById(@PathVariable Long id) {

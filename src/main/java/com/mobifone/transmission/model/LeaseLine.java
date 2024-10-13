@@ -1,5 +1,6 @@
 package com.mobifone.transmission.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -30,6 +31,7 @@ public class LeaseLine {
     private TransmissionOwner transmissionOwner;
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "siteId",nullable = false)
+    @JsonIgnore
     private Site site;
     private boolean active = true;
     @CreationTimestamp

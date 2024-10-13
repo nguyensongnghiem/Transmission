@@ -58,11 +58,11 @@ public class Site {
     private Province province;
 
     @OneToMany(mappedBy = "site", cascade = CascadeType.ALL)
-    @JsonIgnore
+
     private List<LeaseLine> leaseLineList;
 
     @OneToMany(mappedBy = "site", cascade = CascadeType.ALL)
-    @JsonIgnore
+
     private List<Router> routerList;
     private boolean active;
     @CreationTimestamp

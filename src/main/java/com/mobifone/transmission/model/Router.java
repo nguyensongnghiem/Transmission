@@ -1,5 +1,6 @@
 package com.mobifone.transmission.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -34,6 +35,7 @@ public class Router {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "SiteId",nullable = false)
+    @JsonIgnore
     private Site site;
 
     @Column(nullable = false)

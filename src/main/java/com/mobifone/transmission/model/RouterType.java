@@ -21,6 +21,7 @@ public class RouterType {
     private String name;
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "vendorId", nullable = false)
+    @JsonIgnore
     private Vendor vendor;
 
     @OneToMany(mappedBy = "routerType",cascade = CascadeType.ALL)
