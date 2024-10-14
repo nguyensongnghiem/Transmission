@@ -1,5 +1,6 @@
 package com.mobifone.transmission.restcontroller;
 
+import com.mobifone.transmission.dto.AuthResponseDTO;
 import com.mobifone.transmission.dto.LoginDTO;
 import com.mobifone.transmission.dto.RegisterDTO;
 import com.mobifone.transmission.exception.ErrorResponse;
@@ -9,6 +10,7 @@ import com.mobifone.transmission.model.UserRole;
 import com.mobifone.transmission.repository.IRoleRepository;
 import com.mobifone.transmission.repository.IUserRepository;
 import com.mobifone.transmission.repository.IUserRoleRepository;
+import com.mobifone.transmission.security.JwtGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -35,14 +37,17 @@ public class AuthController {
     private IRoleRepository roleRepository;
     @Autowired
     private PasswordEncoder passwordEncoder;
+    @Autowired
+    private JwtGenerator jwtGenerator;
 
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody LoginDTO loginDTO) {
+    public ResponseEntity<AuthResponseDTO> login(@RequestBody LoginDTO loginDTO) {
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(loginDTO.getUsername(),loginDTO.getPassword())
         );
         SecurityContextHolder.getContext().setAuthentication(authentication);
-        return  ResponseEntity.ok("User đã đăNG NHập THànH CôNG");
+        String token = jwtGenerator.generateToken(authentication);
+        return  ResponseEntity.ok(new AuthResponseDTO(token));
     }
 
 @PostMapping("/register")
