@@ -1,7 +1,9 @@
 package com.mobifone.transmission.restcontroller;
 
+import com.mobifone.transmission.dto.LoginDTO;
 import com.mobifone.transmission.dto.RegisterDTO;
 import com.mobifone.transmission.exception.ErrorResponse;
+import com.mobifone.transmission.model.State;
 import com.mobifone.transmission.model.UserEntity;
 import com.mobifone.transmission.model.UserRole;
 import com.mobifone.transmission.repository.IRoleRepository;
@@ -11,6 +13,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -30,6 +35,16 @@ public class AuthController {
     private IRoleRepository roleRepository;
     @Autowired
     private PasswordEncoder passwordEncoder;
+
+    @PostMapping("/login")
+    public ResponseEntity<?> login(@RequestBody LoginDTO loginDTO) {
+        Authentication authentication = authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(loginDTO.getUsername(),loginDTO.getPassword())
+        );
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+        return  ResponseEntity.ok("User đã đăNG NHập THànH CôNG");
+    }
+
 @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody RegisterDTO registerDTO) {
     if (userRepository.existsByUsername(registerDTO.getUsername())) {
@@ -39,6 +54,8 @@ public class AuthController {
     UserEntity user = new UserEntity();
     user.setUsername(registerDTO.getUsername());
     user.setPassword(passwordEncoder.encode(registerDTO.getPassword()));
+    user.setEmail(registerDTO.getEmail());
+    user.setState(State.ACTIVE);
     UserEntity createdUser = userRepository.save(user);
     UserRole userRole = new UserRole();
     userRole.setUser(createdUser);

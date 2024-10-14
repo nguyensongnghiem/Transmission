@@ -37,7 +37,7 @@ public class MyLogger {
 
     }
 
-    @AfterReturning(pointcut = "execution(* com.mobifone.transmission.security.CustomUserDetailService.loadUserByUsername(..))",
+    @AfterReturning(pointcut = "execution(* com.mobifone.transmission.security.CustomUserDetailsService.loadUserByUsername(..))",
             returning = "userDetails")
     public void logUserLogin(JoinPoint joinPoint, UserDetails userDetails) {
         UserEntity user = userRepository.findUserByUsername(userDetails.getUsername()).orElseThrow(()-> new UsernameNotFoundException("Username không tồn tại"));
