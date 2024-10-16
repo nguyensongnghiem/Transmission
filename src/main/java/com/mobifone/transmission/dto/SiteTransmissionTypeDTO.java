@@ -6,7 +6,6 @@ import lombok.*;
 @Builder
 @Data
 public class SiteTransmissionTypeDTO {
-    @NotNull
     private int id;
     private String name;
 }

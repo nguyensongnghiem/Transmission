@@ -14,6 +14,7 @@ import java.util.Optional;
 public class SiteOwnerService implements ISiteOwnerService {
     @Autowired
     private ISiteOwnerRepository siteOwnerRepository;
+
     @Override
     public List<SiteOwner> findAll() {
         return siteOwnerRepository.findAll();
@@ -26,11 +27,11 @@ public class SiteOwnerService implements ISiteOwnerService {
 
     @Override
     public boolean save(SiteOwner siteOwner) {
-        return siteOwnerRepository.save(siteOwner)!=null;
+        return siteOwnerRepository.save(siteOwner) != null;
     }
 
     @Override
-    public List<SiteOwnerDTO> findBy(Class<SiteOwnerDTO> siteOwnerDTOClass) {
-        return siteOwnerRepository.findBy(siteOwnerDTOClass);
+    public <T> List<T> findBy(Class<T> clazz) {
+        return siteOwnerRepository.findBy(clazz);
     }
 }

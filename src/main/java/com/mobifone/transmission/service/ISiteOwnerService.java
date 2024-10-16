@@ -8,8 +8,10 @@ import java.util.Optional;
 
 public interface ISiteOwnerService {
     public List<SiteOwner> findAll();
+
     public Optional<SiteOwner> findById(int id);
+
     public boolean save(SiteOwner siteOwner);
 
-    List<SiteOwnerDTO> findBy(Class<SiteOwnerDTO> siteOwnerDTOClass);
+    <T> List<T> findBy(Class<T> clazz);
 }

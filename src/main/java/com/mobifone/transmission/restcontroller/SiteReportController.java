@@ -1,6 +1,7 @@
 package com.mobifone.transmission.restcontroller;
 
 import com.mobifone.transmission.dto.ProvinceDTO;
+import com.mobifone.transmission.dto.inf.ProvinceViewDTO;
 import com.mobifone.transmission.dto.inf.SiteViewDTO;
 import com.mobifone.transmission.mapper.SiteCreateDTOToSite;
 import com.mobifone.transmission.model.Province;
@@ -35,13 +36,12 @@ public class SiteReportController {
 
     @GetMapping("/total")
     public ResponseEntity<?> getTotalSite() {
-        List<SiteViewDTO> siteList = siteService.findBy( SiteViewDTO.class);
+        List<SiteViewDTO> siteList = siteService.findBy(SiteViewDTO.class);
         return new ResponseEntity<>(siteList.size(), HttpStatus.OK);
     }
 
     @GetMapping("/count-by-province")
-    public ResponseEntity<?> countByProvince(
-    ) {
+    public ResponseEntity<?> countByProvince() {
         List<Site> siteList = siteService.findBy(Site.class);
         Map<String, Integer> provinceCountMap = new HashMap<>();
         for (Site site : siteList) {
@@ -53,9 +53,9 @@ public class SiteReportController {
 
     @GetMapping("/count-by-transmission-type")
     public ResponseEntity<?> countByTransmisionType(
-            @RequestParam(required = false, defaultValue = "", name = "transmission-type") String transType
-    ) {
-        if (transType == null || transType.equals("undefined")) transType ="";
+            @RequestParam(required = false, defaultValue = "", name = "transmission-type") String transType) {
+        if (transType == null || transType.equals("undefined"))
+            transType = "";
 
         List<SiteViewDTO> siteList = siteService.searchAllByTransmissionType(transType, SiteViewDTO.class);
         Map<String, Integer> transTypeCountMap = new HashMap<>();
@@ -70,7 +70,7 @@ public class SiteReportController {
 
     @GetMapping("/count-by-transmission-type-in-province")
     public ResponseEntity<?> countByTransmisionTypeInProvince() {
-        List<ProvinceDTO> provinceList = provinceService.findBy(ProvinceDTO.class);
+        List<ProvinceViewDTO> provinceList = provinceService.findBy(ProvinceViewDTO.class);
         Map<String, Object> provinceTransCount = new HashMap<>();
         provinceList.forEach(provinceDTO -> {
             List<SiteViewDTO> siteList = siteService.searchAllByProvince(provinceDTO.getName(), SiteViewDTO.class);
@@ -85,10 +85,7 @@ public class SiteReportController {
             provinceTransCount.put(provinceDTO.getName(), transTypeCountMap);
         });
 
-
         return new ResponseEntity<>(provinceTransCount, HttpStatus.OK);
     }
-
-
 
 }

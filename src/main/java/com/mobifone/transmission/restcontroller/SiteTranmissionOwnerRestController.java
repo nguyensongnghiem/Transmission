@@ -1,6 +1,7 @@
 package com.mobifone.transmission.restcontroller;
 
 import com.mobifone.transmission.dto.TransmissionOwnerDTO;
+import com.mobifone.transmission.dto.inf.TransmissionOwnerViewDTO;
 import com.mobifone.transmission.model.SiteTransmissionType;
 import com.mobifone.transmission.model.TransmissionOwner;
 import com.mobifone.transmission.service.ISiteTransmissionTypeService;
@@ -15,17 +16,17 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-
 @RestController
 @RequestMapping("/api/transmissionOwners")
 @CrossOrigin(origins = "*")
 public class SiteTranmissionOwnerRestController {
     @Autowired
     ITransmissionOwnerService transmissionOwnerService;
+
     @GetMapping()
     public ResponseEntity<?> findAll() {
-        List<TransmissionOwnerDTO> list  = transmissionOwnerService.findBy(TransmissionOwnerDTO.class);
-        return new ResponseEntity<>(list,HttpStatus.OK);
+        List<TransmissionOwnerViewDTO> list = transmissionOwnerService.findBy(TransmissionOwnerViewDTO.class);
+        return new ResponseEntity<>(list, HttpStatus.OK);
     }
 
 }

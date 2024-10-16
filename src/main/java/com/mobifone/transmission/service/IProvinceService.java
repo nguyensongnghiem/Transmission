@@ -13,5 +13,5 @@ public interface IProvinceService {
 
     public boolean save(Province province);
 
-    <T> List<T> findBy(Class<T> provinceDTOClass);
+    <T> List<T> findBy(Class<T> clazz);
 }
