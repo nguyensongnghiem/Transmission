@@ -12,7 +12,6 @@ import com.mobifone.transmission.model.*;
 import com.mobifone.transmission.service.*;
 
 import jakarta.validation.Valid;
-import net.bytebuddy.agent.builder.AgentBuilder.LocationStrategy.Simple;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;

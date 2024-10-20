@@ -1,23 +1,24 @@
 package com.mobifone.transmission.security;
 
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 
 import java.security.Key;
+import java.security.SignatureException;
 import java.util.Date;
 
 @Component
-public class JwtGenerator {
+public class JwtUtils {
     private static final Key key = Keys.secretKeyFor(SignatureAlgorithm.HS512);
+
     public String generateToken(Authentication authentication) {
         String username = authentication.getName();
         Date currentDate = new Date();
-        Date expireDate = new Date(currentDate.getTime()+ SecurityConstants.JWT_EXPIRATION);
+        Date expireDate = new Date(currentDate.getTime() + SecurityConstants.JWT_EXPIRATION);
         String token = Jwts.builder()
                 .setSubject(username)
                 .setIssuedAt(new Date())
@@ -26,21 +27,25 @@ public class JwtGenerator {
                 .compact();
         return token;
     }
-    public String getUsernameFromJwt(String token) {
-        Claims claims = Jwts.parser()
+
+    public Claims extractAllClaims(String token) {
+        return Jwts.parser()
                 .setSigningKey(key)
                 .parseClaimsJws(token)
                 .getBody();
-        return claims.getSubject();
+    }
+
+    public String getUsernameFromJwt(String token) {
+
+        return extractAllClaims(token).getSubject();
     }
 
     public Boolean validateToken(String token) {
-        try{
-            Jwts.parser().setSigningKey(key).parseClaimsJws(token);
-            return true;
-        }
-        catch(Exception e){
-            throw new BadCredentialsException("Token không hợp lệ");
-        }
+        Claims claims = extractAllClaims(token);
+        return true;
+    }
+
+    public static Key getKey() {
+        return key;
     }
 }

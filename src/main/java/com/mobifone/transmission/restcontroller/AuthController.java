@@ -10,7 +10,11 @@ import com.mobifone.transmission.model.UserRole;
 import com.mobifone.transmission.repository.IRoleRepository;
 import com.mobifone.transmission.repository.IUserRepository;
 import com.mobifone.transmission.repository.IUserRoleRepository;
-import com.mobifone.transmission.security.JwtGenerator;
+import com.mobifone.transmission.security.JwtUtils;
+
+import io.jsonwebtoken.ExpiredJwtException;
+
+import io.jsonwebtoken.JwtException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -36,35 +40,45 @@ public class AuthController {
     @Autowired
     private PasswordEncoder passwordEncoder;
     @Autowired
-    private JwtGenerator jwtGenerator;
+    private JwtUtils jwtUtils;
 
     @PostMapping("/login")
     public ResponseEntity<AuthResponseDTO> login(@RequestBody LoginDTO loginDTO) {
         Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(loginDTO.getUsername(),loginDTO.getPassword())
-        );
+                new UsernamePasswordAuthenticationToken(loginDTO.getUsername(), loginDTO.getPassword()));
         SecurityContextHolder.getContext().setAuthentication(authentication);
-        String token = jwtGenerator.generateToken(authentication);
-        return  ResponseEntity.ok(new AuthResponseDTO(token));
+        String token = jwtUtils.generateToken(authentication);
+        return ResponseEntity.ok(new AuthResponseDTO(token));
     }
 
-@PostMapping("/register")
+    @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody RegisterDTO registerDTO) {
-    if (userRepository.existsByUsername(registerDTO.getUsername())) {
-        ErrorResponse errorResponse = new ErrorResponse(HttpStatus.BAD_REQUEST.value(),"Username đã tồn tại");
-        return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
+        if (userRepository.existsByUsername(registerDTO.getUsername())) {
+            ErrorResponse errorResponse = new ErrorResponse(HttpStatus.BAD_REQUEST.value(), "Username đã tồn tại");
+            return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
+        }
+        UserEntity user = new UserEntity();
+        user.setUsername(registerDTO.getUsername());
+        user.setPassword(passwordEncoder.encode(registerDTO.getPassword()));
+        user.setEmail(registerDTO.getEmail());
+        user.setState(State.ACTIVE);
+        UserEntity createdUser = userRepository.save(user);
+        UserRole userRole = new UserRole();
+        userRole.setUser(createdUser);
+        userRole.setRole(roleRepository.findRoleByName("ROLE_USER").get());
+        userRoleRepository.save(userRole);
+        return new ResponseEntity<>("Đã thêm mới user", HttpStatus.CREATED);
     }
-    UserEntity user = new UserEntity();
-    user.setUsername(registerDTO.getUsername());
-    user.setPassword(passwordEncoder.encode(registerDTO.getPassword()));
-    user.setEmail(registerDTO.getEmail());
-    user.setState(State.ACTIVE);
-    UserEntity createdUser = userRepository.save(user);
-    UserRole userRole = new UserRole();
-    userRole.setUser(createdUser);
-    userRole.setRole(roleRepository.findRoleByName("ROLE_USER").get());
-    userRoleRepository.save(userRole);
-    return new ResponseEntity<>("Đã thêm mới user", HttpStatus.CREATED);
-}
+
+    @GetMapping("/validate-token")
+    public ResponseEntity<String> validateToken(@RequestHeader("Authorization") String authorizationHeader) {
+        String token = authorizationHeader.substring(7);
+        try {
+            jwtUtils.validateToken(token);
+            return new ResponseEntity<>("Token hợp lệ", HttpStatus.OK);
+        } catch (JwtException e) {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+    }
 
 }

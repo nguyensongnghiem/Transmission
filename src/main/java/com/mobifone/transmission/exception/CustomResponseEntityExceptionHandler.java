@@ -1,6 +1,9 @@
 package com.mobifone.transmission.exception;
 
 import com.mobifone.transmission.model.ValidateErrorResponse;
+import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.JwtException;
+import jakarta.servlet.http.HttpServletRequest;
 import org.hibernate.validator.constraints.Range;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -30,11 +33,32 @@ public class CustomResponseEntityExceptionHandler extends ResponseEntityExceptio
         return buildErrorResponse(
                 exception,
                 "Lỗi không xác định tại server",
-                HttpStatus.INTERNAL_SERVER_ERROR,
-                request
+                HttpStatus.INTERNAL_SERVER_ERROR
+
         );
     }
+// Handle filter exception from jwt
+@ExceptionHandler(ExpiredJwtException.class)
+@ResponseStatus(HttpStatus.UNAUTHORIZED)
+public ResponseEntity<ErrorResponse>  handleJwtExpirationException(HttpServletRequest request, Exception ex) {
+    return buildErrorResponse(
+            ex,
+            "Token đã  hết hạn",
+            HttpStatus.UNAUTHORIZED
 
+    );
+}
+
+    @ExceptionHandler(JwtException.class)
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    public ResponseEntity<ErrorResponse>  handleJwtValidationException(HttpServletRequest request, Exception ex) {
+        return buildErrorResponse(
+                ex,
+                "Token không hợp lệ",
+                HttpStatus.UNAUTHORIZED
+
+        );
+    }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(InvalidFileTypeException.class)
@@ -43,8 +67,8 @@ public class CustomResponseEntityExceptionHandler extends ResponseEntityExceptio
         return buildErrorResponse(
                 ex,
                 "Lỗi file không đúng định dạng",
-                HttpStatus.BAD_REQUEST,
-                request
+                HttpStatus.BAD_REQUEST
+
         );
     }
     @ResponseStatus(HttpStatus.BAD_REQUEST)
@@ -52,8 +76,8 @@ public class CustomResponseEntityExceptionHandler extends ResponseEntityExceptio
     public ResponseEntity<ErrorResponse> SiteIdExistedExceptionHandler(SiteIdExistedException ex, WebRequest request) {
         return buildErrorResponse(
                 ex,
-                HttpStatus.BAD_REQUEST,
-                request
+                HttpStatus.BAD_REQUEST
+
         );
     }
     @ResponseStatus(HttpStatus.NOT_FOUND)
@@ -61,8 +85,8 @@ public class CustomResponseEntityExceptionHandler extends ResponseEntityExceptio
     public ResponseEntity<ErrorResponse> SiteNotFoundExceptionHandler(SiteNotFoundException ex, WebRequest request) {
         return buildErrorResponse(
                 ex,
-                HttpStatus.NOT_FOUND,
-                request
+                HttpStatus.NOT_FOUND
+
         );
     }
     @Override
@@ -86,26 +110,25 @@ public class CustomResponseEntityExceptionHandler extends ResponseEntityExceptio
     // Build ErrorResponse from exception without message
     private ResponseEntity<ErrorResponse> buildErrorResponse(
             Exception exception,
-            HttpStatus httpStatus,
-            WebRequest request
+            HttpStatus httpStatus
+
     ) {
         return buildErrorResponse(
                 exception,
                 exception.getMessage(),
-                httpStatus,
-                request);
+                httpStatus
+                );
     }
 
     // Build ErrorResponse from exception with specific message
     private ResponseEntity<ErrorResponse> buildErrorResponse(
             Exception exception,
             String message,
-            HttpStatus httpStatus,
-            WebRequest request
+            HttpStatus httpStatus
     ) {
         ErrorResponse errorResponse = new ErrorResponse(
                 httpStatus.value(),
-                exception.getMessage()
+                message
         );
 
         return ResponseEntity.status(httpStatus).body(errorResponse);

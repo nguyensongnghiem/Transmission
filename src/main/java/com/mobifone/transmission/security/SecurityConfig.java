@@ -30,43 +30,45 @@ public class SecurityConfig {
     CustomUserDetailsService userDetailsService;
     @Autowired
     JwtAuthEntryPoint authEntryPoint;
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .csrf(AbstractHttpConfigurer::disable)
-                .exceptionHandling((exception)-> exception.authenticationEntryPoint(authEntryPoint))
-                .sessionManagement(manager->manager.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .exceptionHandling((exception) -> exception.authenticationEntryPoint(authEntryPoint))
+                .sessionManagement(manager -> manager.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests((authorize) -> authorize
-                        .requestMatchers(HttpMethod.GET).permitAll()
-                        .requestMatchers(HttpMethod.POST,"/api/auth/**").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/auth/**").permitAll()
                         .anyRequest().authenticated())
                 .authenticationProvider(authenticationProvider()).addFilterBefore(
-                        jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class
-                )
-        .httpBasic(withDefaults());
+                        jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
+                .httpBasic(withDefaults());
         return http.build();
     }
-//    @Bean
-//    public UserDetailsService users() {
-//        UserDetails admin = User.builder()
-//                .username("admin")
-//                .password("123")
-//                .roles("ADMIN")
-//                .build();
-//        UserDetails user = User.builder()
-//                .username("user")
-//                .password("123")
-//                .roles("USER")
-//                .build();
-//        return new InMemoryUserDetailsManager(user, admin);
-//    }
+
+    // @Bean
+    // public UserDetailsService users() {
+    // UserDetails admin = User.builder()
+    // .username("admin")
+    // .password("123")
+    // .roles("ADMIN")
+    // .build();
+    // UserDetails user = User.builder()
+    // .username("user")
+    // .password("123")
+    // .roles("USER")
+    // .build();
+    // return new InMemoryUserDetailsManager(user, admin);
+    // }
     @Bean
-    public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration)
+            throws Exception {
         return authenticationConfiguration.getAuthenticationManager();
 
     }
+
     @Bean
-    public AuthenticationProvider authenticationProvider(){
+    public AuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
         daoAuthenticationProvider.setUserDetailsService(userDetailsService);
         daoAuthenticationProvider.setPasswordEncoder(passwordEncoder());
@@ -77,10 +79,9 @@ public class SecurityConfig {
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
+
     @Bean
     public JwtAuthenticationFilter jwtAuthenticationFilter() throws Exception {
         return new JwtAuthenticationFilter();
     }
 }
-
-
