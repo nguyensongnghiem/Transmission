@@ -47,8 +47,10 @@ public class AuthController {
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(loginDTO.getUsername(), loginDTO.getPassword()));
         SecurityContextHolder.getContext().setAuthentication(authentication);
+
         String token = jwtUtils.generateToken(authentication);
-        return ResponseEntity.ok(new AuthResponseDTO(token));
+        String refreshToken = jwtUtils.generateRefreshToken(authentication);
+        return ResponseEntity.ok(new AuthResponseDTO(token, refreshToken));
     }
 
     @PostMapping("/register")
