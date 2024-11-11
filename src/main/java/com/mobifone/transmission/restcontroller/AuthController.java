@@ -15,7 +15,11 @@ import com.mobifone.transmission.security.JwtUtils;
 import io.jsonwebtoken.ExpiredJwtException;
 
 import io.jsonwebtoken.JwtException;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -43,14 +47,19 @@ public class AuthController {
     private JwtUtils jwtUtils;
 
     @PostMapping("/login")
-    public ResponseEntity<AuthResponseDTO> login(@RequestBody LoginDTO loginDTO) {
+    public ResponseEntity<AuthResponseDTO> login(@RequestBody LoginDTO loginDTO, HttpServletResponse response) {
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(loginDTO.getUsername(), loginDTO.getPassword()));
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
         String token = jwtUtils.generateToken(authentication);
         String refreshToken = jwtUtils.generateRefreshToken(authentication);
-        return ResponseEntity.ok(new AuthResponseDTO(token, refreshToken));
+        Cookie cookie = new Cookie("refreshToken", refreshToken);
+        cookie.setHttpOnly(true);
+        cookie.setPath("/");
+        cookie.setMaxAge(30*24*60*60);      
+        response.addCookie(cookie);
+        return ResponseEntity.ok(new AuthResponseDTO(token));
     }
 
     @PostMapping("/register")
