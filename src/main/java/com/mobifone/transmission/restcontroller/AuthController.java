@@ -29,7 +29,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
-@CrossOrigin(origins = "*")
+// @CrossOrigin(origins =  "http://localhost:5173/",allowCredentials = "true")
 @RestController
 @RequestMapping("/api/auth")
 public class AuthController {
@@ -57,7 +57,8 @@ public class AuthController {
         Cookie cookie = new Cookie("refreshToken", refreshToken);
         cookie.setHttpOnly(true);
         cookie.setPath("/");
-        cookie.setMaxAge(30*24*60*60);      
+        cookie.setMaxAge(30*24*60*60);  
+            
         response.addCookie(cookie);
         return ResponseEntity.ok(new AuthResponseDTO(token));
     }
