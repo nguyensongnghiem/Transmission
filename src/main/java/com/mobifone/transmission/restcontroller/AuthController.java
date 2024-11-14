@@ -55,7 +55,7 @@ public class AuthController {
         String token = jwtUtils.generateToken(authentication);
         String refreshToken = jwtUtils.generateRefreshToken(authentication);
         Cookie cookie = new Cookie("refreshToken", refreshToken);
-        cookie.setHttpOnly(true);
+        cookie.setHttpOnly(true);        
         cookie.setPath("/");
         cookie.setMaxAge(30*24*60*60);  
             

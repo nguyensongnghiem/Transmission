@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@CrossOrigin(origins = "*")
+// @CrossOrigin(origins = "*")
 @RequestMapping("/api/leaselines/reports")
 public class LeaseLineReportController {
     @Autowired

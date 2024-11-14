@@ -17,7 +17,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/provinces")
-@CrossOrigin(origins = "*")
+// @CrossOrigin(origins = "*")
 public class ProvinceRestController {
     @Autowired
     IProvinceService provinceService;

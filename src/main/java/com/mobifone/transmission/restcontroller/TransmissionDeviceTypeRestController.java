@@ -14,12 +14,12 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/transmission-device-types")
-@CrossOrigin(origins = "*")
+// @CrossOrigin(origins = "*")
 public class TransmissionDeviceTypeRestController {
     @Autowired
     ITransmissionDeviceTypeService transmissionDeviceTypeService;
 
-    @GetMapping("")
+    @GetMapping("") 
     public ResponseEntity<?> findAll() {
         List<TransmissionDeviceType> list = transmissionDeviceTypeService.findAll();
         return new ResponseEntity<>(list, HttpStatus.OK);

@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 @RestController
 
-@CrossOrigin(origins = "*")
+// @CrossOrigin(origins = "*")
 public class SiteTranmissionTypeRestController {
     @Autowired
     ISiteTransmissionTypeService transmissionTypeService;

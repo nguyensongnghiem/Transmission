@@ -18,7 +18,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/siteOwners")
-@CrossOrigin(origins = "*")
+// @CrossOrigin(origins = "*")
 public class SiteOwnerRestController {
     @Autowired
     ISiteOwnerService siteOwnerService;

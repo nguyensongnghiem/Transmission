@@ -17,7 +17,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/router-types")
-@CrossOrigin(origins = "*")
+// @CrossOrigin(origins = "*")
 public class RouterTypeRestController {
     @Autowired
     IRouterTypeService routerTypeService;

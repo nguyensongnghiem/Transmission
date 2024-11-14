@@ -18,7 +18,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/transmissionOwners")
-@CrossOrigin(origins = "*")
+// @CrossOrigin(origins = "*")
 public class SiteTranmissionOwnerRestController {
     @Autowired
     ITransmissionOwnerService transmissionOwnerService;

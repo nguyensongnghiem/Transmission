@@ -15,7 +15,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/site-transmission-types/reports")
-@CrossOrigin(origins = "*")
+// @CrossOrigin(origins = "*")
 public class SiteTranmissionTypeReportController {
     @Autowired
     ISiteTransmissionTypeService transmissionTypeService;

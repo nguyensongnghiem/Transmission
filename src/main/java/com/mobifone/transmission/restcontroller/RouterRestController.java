@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 @RequestMapping("/api/routers")
 @RestController
-@CrossOrigin(origins = "*")
+// @CrossOrigin(origins = "*")
 public class RouterRestController {
     @Autowired
     private IRouterService routerService;
