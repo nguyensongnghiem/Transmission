@@ -21,6 +21,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -54,11 +55,16 @@ public class AuthController {
 
         String token = jwtUtils.generateToken(authentication);
         String refreshToken = jwtUtils.generateRefreshToken(authentication);
+        // ResponseCookie cookie = ResponseCookie.from("refreshToken", refreshToken)
+        // .httpOnly(true)
+        // .path("/")
+        // .sameSite("Lax")
+        // .maxAge(30*24*60*60)
+        // .build();
         Cookie cookie = new Cookie("refreshToken", refreshToken);
         cookie.setHttpOnly(true);        
         cookie.setPath("/");
-        cookie.setMaxAge(30*24*60*60);  
-            
+        cookie.setMaxAge(30*24*60*60);          
         response.addCookie(cookie);
         return ResponseEntity.ok(new AuthResponseDTO(token));
     }
