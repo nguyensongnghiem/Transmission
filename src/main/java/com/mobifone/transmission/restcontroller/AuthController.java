@@ -70,6 +70,20 @@ public class AuthController {
         return ResponseEntity.ok(new AuthResponseDTO(token));
     }
 
+    @PostMapping("/logout")
+    public ResponseEntity<Void> logout(HttpServletRequest request, HttpServletResponse response) {
+        // Tạo cookie mới với cùng tên nhưng có thời gian sống = 0
+        Cookie cookie = new Cookie("refreshToken", null);
+        cookie.setPath("/"); // Đảm bảo cookie có cùng path với cookie hiện tại
+        cookie.setHttpOnly(true); // Đặt cookie là HTTP-only
+        // cookie.setSecure(true); // Chỉ gửi cookie qua HTTPS (nếu cần)
+        cookie.setMaxAge(0); // Xóa cookie
+
+        // Thêm cookie vào phản hồi
+        response.addCookie(cookie);
+
+        return ResponseEntity.ok().build();
+    }
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody RegisterDTO registerDTO) {
         if (userRepository.existsByUsername(registerDTO.getUsername())) {
@@ -91,7 +105,8 @@ public class AuthController {
 
     @GetMapping("/refresh-token")
     public ResponseEntity<?> refreshToken(@CookieValue(value = "refreshToken") String refreshToken, HttpServletRequest request, HttpServletResponse response) {
-        jwtUtils.validateToken(refreshToken); // validate token, nếu có lỗi thì handler sẽ xử lý ngoại lệ trả về FE
+                jwtUtils.validateToken(refreshToken); // validate token, nếu có lỗi thì handler sẽ xử lý ngoại lệ trả về FE            
+        
         Authentication authentication = jwtUtils.getAuthenticationFromJwt(refreshToken);
         String newAccessToken = jwtUtils.generateToken(authentication);
         String newRefreshToken = jwtUtils.generateRefreshToken(authentication);                

@@ -33,8 +33,6 @@ public class SiteRestController {
     @Autowired
     private ISiteService siteService;
     @Autowired
-    private ISiteOwnerService siteOwnerService;
-    @Autowired
     private ISiteTransmissionTypeService siteTransmissionTypeService;
     @Autowired
     private IProvinceService provinceService;

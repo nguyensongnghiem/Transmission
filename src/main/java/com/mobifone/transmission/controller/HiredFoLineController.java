@@ -1,9 +1,9 @@
 package com.mobifone.transmission.controller;
 
 import com.mobifone.transmission.dto.HiredFoLineDTO;
-import com.mobifone.transmission.dto.SiteDTO;
+
 import com.mobifone.transmission.dto.inf.FoContractViewDTO;
-import com.mobifone.transmission.model.FoContract;
+
 import com.mobifone.transmission.model.HiredFoLine;
 import com.mobifone.transmission.model.Site;
 import com.mobifone.transmission.model.TransmissionOwner;
