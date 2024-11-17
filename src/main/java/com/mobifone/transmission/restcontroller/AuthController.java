@@ -10,12 +10,15 @@ import com.mobifone.transmission.model.UserRole;
 import com.mobifone.transmission.repository.IRoleRepository;
 import com.mobifone.transmission.repository.IUserRepository;
 import com.mobifone.transmission.repository.IUserRoleRepository;
+import com.mobifone.transmission.security.CustomUserDetailsService;
 import com.mobifone.transmission.security.JwtUtils;
 
+import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 
 import io.jsonwebtoken.JwtException;
 import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +30,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
@@ -46,6 +50,8 @@ public class AuthController {
     private PasswordEncoder passwordEncoder;
     @Autowired
     private JwtUtils jwtUtils;
+    @Autowired
+    private CustomUserDetailsService userDetailsService;
 
     @PostMapping("/login")
     public ResponseEntity<AuthResponseDTO> login(@RequestBody LoginDTO loginDTO, HttpServletResponse response) {
@@ -54,17 +60,12 @@ public class AuthController {
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
         String token = jwtUtils.generateToken(authentication);
-        String refreshToken = jwtUtils.generateRefreshToken(authentication);
-        // ResponseCookie cookie = ResponseCookie.from("refreshToken", refreshToken)
-        // .httpOnly(true)
-        // .path("/")
-        // .sameSite("Lax")
-        // .maxAge(30*24*60*60)
-        // .build();
+        String refreshToken = jwtUtils.generateRefreshToken(authentication);       
         Cookie cookie = new Cookie("refreshToken", refreshToken);
         cookie.setHttpOnly(true);        
         cookie.setPath("/");
-        cookie.setMaxAge(30*24*60*60);          
+        cookie.setMaxAge(30*24*60*60);   
+        // cookie.setSecure(true);                  
         response.addCookie(cookie);
         return ResponseEntity.ok(new AuthResponseDTO(token));
     }
@@ -86,6 +87,22 @@ public class AuthController {
         userRole.setRole(roleRepository.findRoleByName("ROLE_USER").get());
         userRoleRepository.save(userRole);
         return new ResponseEntity<>("Đã thêm mới user", HttpStatus.CREATED);
+    }
+
+    @GetMapping("/refresh-token")
+    public ResponseEntity<?> refreshToken(@CookieValue(value = "refreshToken") String refreshToken, HttpServletRequest request, HttpServletResponse response) {
+        jwtUtils.validateToken(refreshToken); // validate token, nếu có lỗi thì handler sẽ xử lý ngoại lệ trả về FE
+        Authentication authentication = jwtUtils.getAuthenticationFromJwt(refreshToken);
+        String newAccessToken = jwtUtils.generateToken(authentication);
+        String newRefreshToken = jwtUtils.generateRefreshToken(authentication);                
+     
+        Cookie cookie = new Cookie("refreshToken", newRefreshToken);
+        cookie.setHttpOnly(true);        
+        cookie.setPath("/");
+        cookie.setMaxAge(30*24*60*60);   
+        // cookie.setSecure(true);                  
+        response.addCookie(cookie);
+        return ResponseEntity.ok(new AuthResponseDTO(newAccessToken));
     }
 
     @GetMapping("/validate-token")

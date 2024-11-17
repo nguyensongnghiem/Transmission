@@ -3,9 +3,13 @@ package com.mobifone.transmission.security;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import jakarta.servlet.http.HttpServletResponse;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 import java.security.Key;
@@ -16,6 +20,8 @@ import java.util.List;
 
 @Component
 public class JwtUtils {
+    @Autowired
+    private CustomUserDetailsService userDetailsService;
     private static final Key key = Keys.secretKeyFor(SignatureAlgorithm.HS512);
 
     public String generateToken(Authentication authentication) {
@@ -56,13 +62,18 @@ public class JwtUtils {
     }
 
     public String getUsernameFromJwt(String token) {
-
         return extractAllClaims(token).getSubject();
     }
+    public Authentication getAuthenticationFromJwt(String token) {
+        String username = getUsernameFromJwt(token);
+        UserDetails userDetails = userDetailsService.loadUserByUsername(username);
+        return new UsernamePasswordAuthenticationToken(username, null,  userDetails.getAuthorities());
 
-    public Boolean validateToken(String token) {
-        Claims claims = extractAllClaims(token);
-        return true;
+    }
+
+    public Boolean validateToken(String token) {    
+            Claims claims = extractAllClaims(token);
+            return true;                
     }
 
     public static Key getKey() {
