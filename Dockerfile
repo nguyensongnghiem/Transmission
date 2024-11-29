@@ -1,4 +1,4 @@
 FROM openjdk:17
-LABEL authors="nghie"
-
-ARG FILE_JAR=build/
+ARG JAR_FILE=build/libs/*.jar
+COPY ${JAR_FILE} app.jar
+ENTRYPOINT ["java","-jar","/app.jar"]
