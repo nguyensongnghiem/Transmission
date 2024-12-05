@@ -61,3 +61,12 @@ tasks.named('test') {
 bootJar {
     duplicatesStrategy = DuplicatesStrategy.EXCLUDE // Hoặc DuplicatesStrategy.INCLUDE
 }
+if (project.hasProperty('dev')) {
+    // Cấu hình cho profile dev
+    ext['spring.profiles.active'] = 'dev'
+}
+
+if (project.hasProperty('docker')) {
+    // Cấu hình cho profile prod
+    ext['spring.profiles.active'] = 'docker'
+}
