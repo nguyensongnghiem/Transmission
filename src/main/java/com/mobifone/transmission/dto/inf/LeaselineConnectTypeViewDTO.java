@@ -4,7 +4,9 @@ import java.math.BigDecimal;
 
 import jakarta.persistence.criteria.CriteriaBuilder.In;
 
-public interface TransmissionOwnerViewDTO {
-    Integer getId();
+public interface LeaselineConnectTypeViewDTO {
+    String getId();
+
     String getName();
+
 }

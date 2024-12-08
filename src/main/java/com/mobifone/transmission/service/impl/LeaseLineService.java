@@ -13,6 +13,7 @@ import java.util.List;
 public class LeaseLineService implements ILeaseLineService {
     @Autowired
     private ILeaseLineRepository leaseLineRepository;
+
     @Override
     public List<LeaseLine> findAll() {
         return leaseLineRepository.findAll();
@@ -20,7 +21,7 @@ public class LeaseLineService implements ILeaseLineService {
 
     @Override
     public boolean save(LeaseLine leaseLine) {
-        return leaseLineRepository.save(leaseLine)!=null;
+        return leaseLineRepository.save(leaseLine) != null;
     }
 
     @Override
@@ -31,6 +32,11 @@ public class LeaseLineService implements ILeaseLineService {
     @Override
     public LeaseLine findById(int id) {
         return leaseLineRepository.findById(id).get();
+    }
+
+    @Override
+    public <T> T findById(int id, Class<T> classType) {
+        return leaseLineRepository.findById(id, classType);
     }
 
     @Override

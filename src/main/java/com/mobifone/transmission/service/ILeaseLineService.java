@@ -11,6 +11,7 @@ public interface ILeaseLineService {
     public void deleteById(int id);
 
     public LeaseLine findById(int id);
+    public <T> T findById(int id,Class<T> classType);
     public boolean update(LeaseLine leaseLine);
 
     List<LeaseLineViewDTO> findBy(Class<LeaseLineViewDTO> leaseLineViewDTOClass);

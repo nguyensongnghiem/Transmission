@@ -4,29 +4,45 @@ import com.mobifone.transmission.model.LeaseLineConnectType;
 
 public interface LeaseLineViewDTO {
     int getId();
+
     Float getSpeed();
+
     Float getCost();
+
     String getNote();
+
     int getQuantity();
+
     LeaseLineConnectTypeWithNameDTO getLeaseLineConnectType();
+
     interface LeaseLineConnectTypeWithNameDTO {
+        int getId();
+
         String getName();
     }
+
     TransmissionOwnerWithNameDTO getTransmissionOwner();
+
     interface TransmissionOwnerWithNameDTO {
+        int getId();
+
         String getName();
     }
+
     boolean getActive();
+
     SiteWithNameAndIdDTO getSite();
+
     interface SiteWithNameAndIdDTO {
         Float getId();
+
         String getSiteId();
+
         ProvinceWithName getProvince();
+
         interface ProvinceWithName {
             String getName();
         }
     }
-
-
 
 }
