@@ -12,23 +12,22 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @SpringBootApplication
 public class TransmissionApplication {
 
-    public static void main(String[] args) {
-        SpringApplication.run(TransmissionApplication.class, args);
-    }
-    @Bean
-    public WebMvcConfigurer corsConfigurer() {
+	public static void main(String[] args) {
+		SpringApplication.run(TransmissionApplication.class, args);
+	}
+
+	@Bean
+	public WebMvcConfigurer corsConfigurer() {
 		return new WebMvcConfigurer() {
 			@Override
 			public void addCorsMappings(CorsRegistry registry) {
 				registry.addMapping("/**")
-				.allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
-				.allowedOrigins("http://localhost:5173") 
-				.allowedHeaders("*")
-				.allowCredentials(true);			
+						.allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
+						.allowedOrigins("http://localhost:5173", "http://localhost:3000")
+						.allowedHeaders("*")
+						.allowCredentials(true);
 			}
 		};
 	}
 
-
 }
-
