@@ -34,7 +34,7 @@ public class RouterRestController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> getRouter(@PathVariable Long id) {
+    public ResponseEntity<?> getRouter(@PathVariable(name = "id") Long id) {
         RouterViewDTO router = routerService.findById(id,RouterViewDTO.class);
         if (router==null) throw new RouterNotFoundException("Router không tồn tại trong hệ thống");
         return ResponseEntity.ok(router);
@@ -53,7 +53,7 @@ public class RouterRestController {
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
     @PutMapping("/{id}")
-    public ResponseEntity<?> updateRouter(@Valid @RequestBody RouterDTO routerDTO, @PathVariable long id) {
+    public ResponseEntity<?> updateRouter(@Valid @RequestBody RouterDTO routerDTO, @PathVariable(name = "id") long id) {
 
         Router targetRouter = routerService.findById(id, Router.class);
         if (targetRouter == null) throw new RouterNotFoundException("Không tồn tại Router với id " + id + " trong hệ thống.");
@@ -70,7 +70,7 @@ public class RouterRestController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteRouterById(@PathVariable Long id) {
+    public ResponseEntity<?> deleteRouterById(@PathVariable(name = "id") Long id) {
         Router router = routerService.findById(id, Router.class);
         if (router==null) {throw new RouterNotFoundException("Thiết bị không tồn tại");}
         else {

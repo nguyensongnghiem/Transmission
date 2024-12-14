@@ -51,7 +51,7 @@ public class LeaseLineRestController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> getLeaseline(@PathVariable Integer id) {
+    public ResponseEntity<?> getLeaseline(@PathVariable(name = "id") Integer id) {
         LeaseLineViewDTO leaseline = leaseLineService.findById(id, LeaseLineViewDTO.class);
         if (leaseline == null)
             throw new LeaselineNotFoundException("Kênh thuê không tồn tại trong hệ thống");
@@ -67,7 +67,7 @@ public class LeaseLineRestController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> updateLeaseline(@Valid @RequestBody LeaselineDTO leaselineDTO, @PathVariable int id) {
+    public ResponseEntity<?> updateLeaseline(@Valid @RequestBody LeaselineDTO leaselineDTO, @PathVariable(name = "id") int id) {
 
         LeaseLine targetLeaseline = leaseLineService.findById(id);
         if (targetLeaseline == null)
@@ -79,7 +79,7 @@ public class LeaseLineRestController {
     }
 
       @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteLeaselineById(@PathVariable int id) {
+    public ResponseEntity<?> deleteLeaselineById(@PathVariable(name = "id") int id) {
         LeaseLine leaseline = leaseLineService.findById(id);
         if (leaseline==null) {throw new LeaselineNotFoundException("Kênh thuê không tồn tại");}
         else {

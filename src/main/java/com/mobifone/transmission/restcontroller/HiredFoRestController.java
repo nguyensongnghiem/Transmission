@@ -30,7 +30,7 @@ public class HiredFoRestController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteHiredFoById(@PathVariable int id) {
+    public ResponseEntity<?> deleteHiredFoById(@PathVariable(name = "id") int id) {
 //        HiredFoLineViewDTO hiredFoLineViewDTO = hiredFoService.findById(id, HiredFoLineViewDTO.class);
 //        if (hiredFoLineViewDTO==null) {throw new SiteNotFoundException("Site ID không tồn tại !");}
 //        else {

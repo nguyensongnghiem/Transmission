@@ -133,7 +133,7 @@ public class SiteRestController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> updateRestSite(@Valid @RequestBody SiteCreateDTO siteDTO, @PathVariable long id) {
+    public ResponseEntity<?> updateRestSite(@Valid @RequestBody SiteCreateDTO siteDTO, @PathVariable(name = "id") long id) {
 
         Site targetSite = siteService.findById(id, Site.class);
         if (targetSite == null)
@@ -145,7 +145,7 @@ public class SiteRestController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> getSiteById(@PathVariable Long id) {
+    public ResponseEntity<?> getSiteById(@PathVariable(name = "id") Long id) {
 
         SiteViewDTO site = siteService.findById(id, SiteViewDTO.class);
         if (site == null)
@@ -154,7 +154,7 @@ public class SiteRestController {
     }
 
     @GetMapping("/{id}/detail")
-    public ResponseEntity<?> getSiteDetailById(@PathVariable("id") Long id) {
+    public ResponseEntity<?> getSiteDetailById(@PathVariable(name = "id") Long id) {
 
         Site site = siteService.findById(id, Site.class);
         if (site == null)
@@ -163,7 +163,7 @@ public class SiteRestController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteSiteById(@PathVariable Long id) {
+    public ResponseEntity<?> deleteSiteById(@PathVariable(name = "id") Long id) {
         Site site = siteService.findById(id, Site.class);
         if (site == null)
             throw new SiteNotFoundException("Không tồn tại trạm trong  hệ thống.");
