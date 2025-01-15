@@ -13,11 +13,13 @@ public interface HiredFoLineViewDTO {
     interface FoContractWithContractNumber {
         int getId();
         String getContractNumber();
+        String getContractName();
     }
     SiteWithSiteId getNearSite();
     SiteWithSiteId getFarSite();
     boolean getActive();
     interface SiteWithSiteId {
+        int getId();
         String getSiteId();
     }
 
