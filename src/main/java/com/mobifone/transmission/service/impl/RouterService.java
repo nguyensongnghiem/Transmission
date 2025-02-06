@@ -14,12 +14,17 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+
 @Service
 public class RouterService implements IRouterService {
     @Autowired
     private IRouterRepository routerRepository;
+  
+
+    
+
     public Page<Router> findAll(int pageNumber) {
-        Pageable pageable = PageRequest.of(pageNumber-1,20);
+        Pageable pageable = PageRequest.of(pageNumber - 1, 20);
         return routerRepository.findAll(pageable);
     }
 
@@ -30,7 +35,7 @@ public class RouterService implements IRouterService {
 
     @Override
     public boolean save(Router router) {
-        return routerRepository.save(router)!=null;
+        return routerRepository.save(router) != null;
     }
 
     @Override
@@ -40,7 +45,7 @@ public class RouterService implements IRouterService {
 
     @Override
     public <T> T findById(Long editId, Class<T> classType) {
-        return routerRepository.findById(editId,classType);
+        return routerRepository.findById(editId, classType);
     }
 
     @Override
@@ -50,7 +55,7 @@ public class RouterService implements IRouterService {
 
     @Override
     public boolean update(Router router) {
-        return routerRepository.save(router)!=null;
+        return routerRepository.save(router) != null;
     }
 
     @Override

@@ -10,6 +10,8 @@ import com.mobifone.transmission.model.Router;
 import com.mobifone.transmission.model.Site;
 import com.mobifone.transmission.service.IRouterService;
 import com.mobifone.transmission.service.ISiteService;
+import com.mobifone.transmission.service.impl.SshService;
+
 import jakarta.validation.Valid;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +21,9 @@ import org.springframework.util.RouteMatcher;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
 @RequestMapping("/api/routers")
 @RestController
 // @CrossOrigin(origins = "*")
@@ -27,6 +32,22 @@ public class RouterRestController {
     private IRouterService routerService;
     @Autowired
     private ISiteService siteService;
+
+    @Autowired
+    private SshService sshService;
+
+    @GetMapping("/testSSH/{name}")
+    public ResponseEntity<?> getRouterName(@PathVariable(name = "name") String name) {
+        Router router = routerService.findRouterByName(name);
+        if (router == null)
+            throw new RouterNotFoundException("Router không tồn tại trong hệ thống");
+        return ResponseEntity.ok(sshService.executeSSHCommand(router, "show version"));
+    }
+
+    public String getMethodName(@RequestParam String param) {
+        return new String();
+    }
+
     @GetMapping
     public ResponseEntity<?> getRouters() {
         List<RouterViewDTO> routerViewDTOList = routerService.findBy(RouterViewDTO.class);
@@ -35,16 +56,18 @@ public class RouterRestController {
 
     @GetMapping("/{id}")
     public ResponseEntity<?> getRouter(@PathVariable(name = "id") Long id) {
-        RouterViewDTO router = routerService.findById(id,RouterViewDTO.class);
-        if (router==null) throw new RouterNotFoundException("Router không tồn tại trong hệ thống");
+        RouterViewDTO router = routerService.findById(id, RouterViewDTO.class);
+        if (router == null)
+            throw new RouterNotFoundException("Router không tồn tại trong hệ thống");
         return ResponseEntity.ok(router);
     }
 
-//    @GetMapping("/api/routers/total")
-//    public ResponseEntity<?> getTotalRouters() {
-//        List<RouterViewDTO> routerViewDTOList = routerService.findBy(RouterViewDTO.class);
-//        return new ResponseEntity<>(routerViewDTOList.size(), HttpStatus.OK);
-//    }
+    // @GetMapping("/api/routers/total")
+    // public ResponseEntity<?> getTotalRouters() {
+    // List<RouterViewDTO> routerViewDTOList =
+    // routerService.findBy(RouterViewDTO.class);
+    // return new ResponseEntity<>(routerViewDTOList.size(), HttpStatus.OK);
+    // }
     @PostMapping
     public ResponseEntity<?> createRouter(@Valid @RequestBody RouterDTO routerDTO) {
         Router targetRouter = new Router();
@@ -52,11 +75,13 @@ public class RouterRestController {
         routerService.save(targetRouter);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
+
     @PutMapping("/{id}")
     public ResponseEntity<?> updateRouter(@Valid @RequestBody RouterDTO routerDTO, @PathVariable(name = "id") long id) {
 
         Router targetRouter = routerService.findById(id, Router.class);
-        if (targetRouter == null) throw new RouterNotFoundException("Không tồn tại Router với id " + id + " trong hệ thống.");
+        if (targetRouter == null)
+            throw new RouterNotFoundException("Không tồn tại Router với id " + id + " trong hệ thống.");
         BeanUtils.copyProperties(routerDTO, targetRouter);
         routerService.save(targetRouter);
         return new ResponseEntity<>(HttpStatus.OK);
@@ -72,10 +97,12 @@ public class RouterRestController {
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteRouterById(@PathVariable(name = "id") Long id) {
         Router router = routerService.findById(id, Router.class);
-        if (router==null) {throw new RouterNotFoundException("Thiết bị không tồn tại");}
-        else {
+        if (router == null) {
+            throw new RouterNotFoundException("Thiết bị không tồn tại");
+        } else {
             routerService.deleteById(id);
-        };
+        }
+        ;
         return ResponseEntity.ok("Đã xóa thành công thiết bị");
     }
 }

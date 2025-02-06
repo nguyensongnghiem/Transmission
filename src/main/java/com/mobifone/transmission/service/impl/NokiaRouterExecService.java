@@ -9,7 +9,6 @@ public class NokiaRouterExecService implements IRouterExecService {
         // TODO Auto-generated method stub
         return null;
     }
-
     @Override
     public String getOsInfoCmd() {
         // TODO Auto-generated method stub
