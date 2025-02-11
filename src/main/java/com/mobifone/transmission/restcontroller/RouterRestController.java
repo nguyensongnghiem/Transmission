@@ -8,8 +8,11 @@ import com.mobifone.transmission.exception.SiteIdExistedException;
 import com.mobifone.transmission.exception.SiteNotFoundException;
 import com.mobifone.transmission.model.Router;
 import com.mobifone.transmission.model.Site;
+import com.mobifone.transmission.service.IRouterCmdService;
 import com.mobifone.transmission.service.IRouterService;
 import com.mobifone.transmission.service.ISiteService;
+import com.mobifone.transmission.service.RouterCmdSerFactory;
+import com.mobifone.transmission.service.impl.NokiaRouterCmdService;
 import com.mobifone.transmission.service.impl.SshService;
 
 import jakarta.validation.Valid;
@@ -32,6 +35,10 @@ public class RouterRestController {
     private IRouterService routerService;
     @Autowired
     private ISiteService siteService;
+    @Autowired
+    private IRouterCmdService routerCmdService;
+    @Autowired
+    private RouterCmdSerFactory routerCmdSerFactory;
 
     @Autowired
     private SshService sshService;
@@ -39,14 +46,25 @@ public class RouterRestController {
     @GetMapping("/testSSH/{name}")
     public ResponseEntity<?> getRouterName(@PathVariable(name = "name") String name) {
         Router router = routerService.findRouterByName(name);
+
         if (router == null)
             throw new RouterNotFoundException("Router không tồn tại trong hệ thống");
+        else
+            routerCmdService = routerCmdSerFactory.getRouterCmdService(router);
         return ResponseEntity.ok(sshService.executeSSHCommand(router, "show version"));
     }
 
-    public String getMethodName(@RequestParam String param) {
-        return new String();
+    @GetMapping("/backup/{name}")
+    public ResponseEntity<?> getConfig(@PathVariable(name = "name") String name) {
+        Router router = routerService.findRouterByName(name);
+        if (router == null)
+            throw new RouterNotFoundException("Router không tồn tại trong hệ thống");
+        else
+            routerCmdService = routerCmdSerFactory.getRouterCmdService(router);
+        return ResponseEntity.ok(routerCmdService.getConfigFile(router));
     }
+
+ 
 
     @GetMapping
     public ResponseEntity<?> getRouters() {

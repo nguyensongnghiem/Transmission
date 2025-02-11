@@ -131,12 +131,16 @@ public class CustomResponseEntityExceptionHandler extends ResponseEntityExceptio
         @ExceptionHandler(SiteNotFoundException.class)
         public ResponseEntity<ErrorResponse> SiteNotFoundExceptionHandler(SiteNotFoundException ex,
                         WebRequest request) {
-                return buildErrorResponse(
-                                ex,
-                                HttpStatus.NOT_FOUND
-
-                );
+                return buildErrorResponse(ex,HttpStatus.NOT_FOUND);
         }
+
+        @ResponseStatus(HttpStatus.NOT_FOUND)
+        @ExceptionHandler(RouterNotFoundException.class)
+        public ResponseEntity<ErrorResponse> RouterNotFoundExceptionHandler(RouterNotFoundException ex,
+                        WebRequest request) {
+                return buildErrorResponse(ex,HttpStatus.NOT_FOUND);
+        }
+
 
         @Override
         @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)

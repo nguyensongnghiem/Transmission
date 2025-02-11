@@ -1,0 +1,99 @@
+package com.mobifone.transmission.service.impl;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
+import com.jcraft.jsch.Channel;
+import com.jcraft.jsch.ChannelExec;
+import com.jcraft.jsch.JSch;
+import com.jcraft.jsch.Session;
+import com.mobifone.transmission.model.Router;
+import com.mobifone.transmission.service.IRouterCmdService;
+
+public class JuniperRouterCmdService implements IRouterCmdService {
+    @Override
+    public String getOsInfo() {
+        // TODO Auto-generated method stub
+        return "show version";
+    }
+
+    @Override
+    public String getConfigFile(Router router) {
+        String user = "nghiem"; // Tài khoản người dùng
+        String password = "nghiem@123"; // Mật khẩu
+        String remoteFile = "/config/juniper.conf.gz"; // Đường dẫn tệp trên router
+        String localFile = "D:/" + router.getName() + "_"
+                + LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss")) + ".cfg.gz"; // Đường dẫn tệp
+                                                                                                      // lưu trên máy
+                                                                                                      // địa phương
+        File backupFile = new File(localFile);
+
+        try {
+            JSch jsch = new JSch();
+            Session session = jsch.getSession(user, router.getIp(), 22);
+            session.setPassword(password);
+            session.setConfig("StrictHostKeyChecking", "no");
+            session.connect();
+
+            // Mở channel để truyền tệp từ router
+            Channel channel = session.openChannel("exec");
+            ((ChannelExec) channel).setCommand("scp -f " + remoteFile); // Gửi lệnh scp
+
+            // Tạo InputStream để nhận dữ liệu
+            InputStream in = channel.getInputStream();
+            OutputStream out = channel.getOutputStream();
+            channel.connect();
+
+            // Gửi lệnh để nhận tệp
+            byte[] buffer = new byte[1024];
+            buffer[0] = 0;
+            out.write(buffer, 0, 1);
+            out.flush();
+            int bytesRead;
+            StringBuilder fileInfoBuilder = new StringBuilder();
+            // Đọc thông tin tệp
+            while ((bytesRead = in.read(buffer)) != -1) {
+                fileInfoBuilder.append(new String(buffer, 0, bytesRead));
+                if (fileInfoBuilder.toString().contains(" ")) { // Kiểm tra đến khi có khoảng trắng
+                    break;
+                }
+            }
+            String fileInfo = fileInfoBuilder.toString();
+            if (fileInfo.startsWith("C")) {
+                // Giải mã thông tin tệp
+                String[] parts = fileInfo.split(" ");
+                long fileSize = Long.parseLong(parts[1]);
+                String filename = parts[2];
+
+                buffer[0] = 0;
+                out.write(buffer, 0, 1);
+                out.flush();
+                // Ghi tệp vào local
+                try (FileOutputStream fos = new FileOutputStream(localFile)) {
+                    while (fileSize > 0
+                            && (bytesRead = in.read(buffer, 0, (int) Math.min(buffer.length, fileSize))) != -1) {
+                        fos.write(buffer, 0, bytesRead);
+                        fileSize -= bytesRead;
+                        if (fileSize == 0L) {
+                            break;
+                        }
+                    }
+                }
+            }
+
+            // Kết thúc phiên
+            channel.disconnect();
+            session.disconnect();
+            System.out.println("File copied successfully!");
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "Đã sao lưu cấu hình router " + router.getName();
+    }
+
+}
