@@ -8,11 +8,15 @@ import com.mobifone.transmission.service.impl.NokiaRouterCmdService;
 @Service
 public class RouterCmdSerFactory {
     public IRouterCmdService getRouterCmdService(Router router) {
-        if (router.getRouterType().getVendor().getName().equals("Juniper")) {
-            return new JuniperRouterCmdService();
-        } else if (router.getRouterType().getVendor().getName().equals("Nokia")) {
-            return new NokiaRouterCmdService();
-        }
+        String vendorName = router.getRouterType().getVendor().getName();
+        switch (vendorName) {
+            case "Juniper":
+                return new JuniperRouterCmdService();                
+            case "Nokia":
+                return new NokiaRouterCmdService();                
+            default:
+                break;
+        }       
         return null;
     };
 

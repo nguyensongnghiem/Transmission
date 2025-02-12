@@ -23,9 +23,15 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.util.RouteMatcher;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 @RequestMapping("/api/routers")
 @RestController
@@ -56,15 +62,33 @@ public class RouterRestController {
 
     @GetMapping("/backup/{name}")
     public ResponseEntity<?> getConfig(@PathVariable(name = "name") String name) {
+        String backupPath = "/backup/";
         Router router = routerService.findRouterByName(name);
         if (router == null)
             throw new RouterNotFoundException("Router không tồn tại trong hệ thống");
         else
             routerCmdService = routerCmdSerFactory.getRouterCmdService(router);
+        // Lấy ngày hiện tại
+        LocalDate currentDate = LocalDate.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        String directoryName = currentDate.format(formatter);
+
+        // Đường dẫn tới thư mục backup
+        Path backupDirectory = Paths.get("backup", directoryName); // "backup" là thư mục gốc
+
+        try {
+            // Kiểm tra và tạo thư mục nếu cần
+            if (!Files.exists(backupDirectory)) {
+                Files.createDirectories(backupDirectory);
+                System.out.println("Thư mục đã được tạo: " + backupDirectory.toString());
+            } else {
+                System.out.println("Thư mục đã tồn tại: " + backupDirectory.toString());
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return ResponseEntity.ok(routerCmdService.getConfigFile(router));
     }
-
- 
 
     @GetMapping
     public ResponseEntity<?> getRouters() {

@@ -6,18 +6,23 @@ services:
       MYSQL_ROOT_PASSWORD: root
     ports:
       - "3308:3306"
-    volumes:    
+    volumes:
       - ./db_init:/docker-entrypoint-initdb.d
-
-  spring-app:
+  backend:
     build:
-      context: .
-      dockerfile: Dockerfile
-    depends_on:
-      - mysql
-  
-    restart: always
+      context: ./
     ports:
       - "8088:8080"
     environment:
       - SPRING_PROFILES_ACTIVE=docker
+  frontend:
+    build:
+      context: ../trans-react
+    ports:
+      - "3000:80"
+    environment:
+      - VITE_BE_API_URL=http://localhost:8088/api
+
+networks:
+  my-network:
+    driver: bridge
