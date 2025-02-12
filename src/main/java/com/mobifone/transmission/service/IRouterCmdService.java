@@ -4,5 +4,5 @@ import com.mobifone.transmission.model.Router;
 
 public interface IRouterCmdService {
     public String getOsInfo();
-    public String getConfigFile(Router router);
+    public String getConfigFile(Router router, String backupPath);
 }

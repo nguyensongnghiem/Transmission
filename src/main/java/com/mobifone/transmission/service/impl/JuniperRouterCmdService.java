@@ -22,15 +22,16 @@ public class JuniperRouterCmdService implements IRouterCmdService {
     }
 
     @Override
-    public String getConfigFile(Router router) {
+    public String getConfigFile(Router router, String backupPath) {
         String user = "nghiem"; // Tài khoản người dùng
         String password = "nghiem@123"; // Mật khẩu
         String remoteFile = "/config/juniper.conf.gz"; // Đường dẫn tệp trên router
-        String localFile = "D:/" + router.getName() + "_"
-                + LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss")) + ".cfg.gz"; // Đường dẫn tệp
-                                                                                                      // lưu trên máy
-                                                                                                      // địa phương
-        File backupFile = new File(localFile);
+        String fileName = router.getName() + "_"
+                + LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss")) + ".cfg.gz"; // Đường dẫn
+                                                                                                         // tệp
+                                                                                                         // lưu trên máy
+                                                                                                         // địa phương
+        File backupFile = new File(fileName);
 
         try {
             JSch jsch = new JSch();
@@ -73,7 +74,7 @@ public class JuniperRouterCmdService implements IRouterCmdService {
                 out.write(buffer, 0, 1);
                 out.flush();
                 // Ghi tệp vào local
-                try (FileOutputStream fos = new FileOutputStream(localFile)) {
+                try (FileOutputStream fos = new FileOutputStream(backupPath + "/" + fileName)) {
                     while (fileSize > 0
                             && (bytesRead = in.read(buffer, 0, (int) Math.min(buffer.length, fileSize))) != -1) {
                         fos.write(buffer, 0, bytesRead);

@@ -3,6 +3,10 @@ package com.mobifone.transmission.service.impl;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -22,12 +26,15 @@ public class NokiaRouterCmdService implements IRouterCmdService {
     private SshService sshService;
 
     @Override
-    public String getConfigFile(Router router) {
+    public String getConfigFile(Router router, String backupPath) {
         String user = "nghiem"; // Tài khoản người dùng
         String password = "nghiem@123"; // Mật khẩu
         String remoteFile = "cf3:/config.cfg"; // Đường dẫn tệp trên router
-        String localFile = "D:/"+ router.getName() + "_" + LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss")) +".cfg"; // Đường dẫn tệp lưu trên máy địa phương
-
+        String fileName = router.getName() + "_"
+                + LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss")) + ".cfg"; // Đường dẫn tệp
+                                                                                                      // lưu trên máy
+                                                                                                      // địa phương
+        
         try {
             JSch jsch = new JSch();
             Session session = jsch.getSession(user, router.getIp(), 22);
@@ -69,7 +76,7 @@ public class NokiaRouterCmdService implements IRouterCmdService {
                 out.write(buffer, 0, 1);
                 out.flush();
                 // Ghi tệp vào local
-                try (FileOutputStream fos = new FileOutputStream(localFile)) {
+                try (FileOutputStream fos = new FileOutputStream(backupPath + "/" + fileName)) {
                     while (fileSize > 0
                             && (bytesRead = in.read(buffer, 0, (int) Math.min(buffer.length, fileSize))) != -1) {
                         fos.write(buffer, 0, bytesRead);
@@ -78,12 +85,14 @@ public class NokiaRouterCmdService implements IRouterCmdService {
                             break;
                         }
                     }
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
             }
 
             // Kết thúc phiên
             channel.disconnect();
-            session.disconnect();         
+            session.disconnect();
 
         } catch (Exception e) {
             e.printStackTrace();

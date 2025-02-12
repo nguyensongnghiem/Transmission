@@ -62,13 +62,8 @@ public class RouterRestController {
 
     @GetMapping("/backup/{name}")
     public ResponseEntity<?> getConfig(@PathVariable(name = "name") String name) {
-        String backupPath = "/backup/";
+       
         Router router = routerService.findRouterByName(name);
-        if (router == null)
-            throw new RouterNotFoundException("Router không tồn tại trong hệ thống");
-        else
-            routerCmdService = routerCmdSerFactory.getRouterCmdService(router);
-        // Lấy ngày hiện tại
         LocalDate currentDate = LocalDate.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         String directoryName = currentDate.format(formatter);
@@ -87,7 +82,14 @@ public class RouterRestController {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return ResponseEntity.ok(routerCmdService.getConfigFile(router));
+        String backupPath = "/" + backupDirectory.toString();
+        if (router == null)
+            throw new RouterNotFoundException("Router không tồn tại trong hệ thống");
+        else
+            routerCmdService = routerCmdSerFactory.getRouterCmdService(router);
+        // Lấy ngày hiện tại
+        
+        return ResponseEntity.ok(routerCmdService.getConfigFile(router, backupPath));
     }
 
     @GetMapping
