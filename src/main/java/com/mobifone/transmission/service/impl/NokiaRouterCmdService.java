@@ -23,7 +23,7 @@ import com.mobifone.transmission.service.IRouterCmdService;
 @Service
 public class NokiaRouterCmdService implements IRouterCmdService {
     @Autowired
-    private SshService sshService;
+    private SftpService sshService;
 
     @Override
     public String getConfigFile(Router router, String backupPath) {
@@ -34,7 +34,7 @@ public class NokiaRouterCmdService implements IRouterCmdService {
                 + LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss")) + ".cfg"; // Đường dẫn tệp
                                                                                                       // lưu trên máy
                                                                                                       // địa phương
-        
+
         try {
             JSch jsch = new JSch();
             Session session = jsch.getSession(user, router.getIp(), 22);

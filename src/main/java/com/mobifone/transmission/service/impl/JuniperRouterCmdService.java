@@ -27,10 +27,7 @@ public class JuniperRouterCmdService implements IRouterCmdService {
         String password = "nghiem@123"; // Mật khẩu
         String remoteFile = "/config/juniper.conf.gz"; // Đường dẫn tệp trên router
         String fileName = router.getName() + "_"
-                + LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss")) + ".cfg.gz"; // Đường dẫn
-                                                                                                         // tệp
-                                                                                                         // lưu trên máy
-                                                                                                         // địa phương
+                + LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss")) + ".cfg.gz"; // Đường dẫn lưu trên máy  địa phương
         File backupFile = new File(fileName);
 
         try {

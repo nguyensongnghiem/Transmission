@@ -13,6 +13,7 @@ import com.mobifone.transmission.service.IRouterService;
 import com.mobifone.transmission.service.ISiteService;
 import com.mobifone.transmission.service.RouterCmdSerFactory;
 import com.mobifone.transmission.service.impl.NokiaRouterCmdService;
+import com.mobifone.transmission.service.impl.SftpService;
 import com.mobifone.transmission.service.impl.SshService;
 
 import jakarta.validation.Valid;
@@ -62,7 +63,7 @@ public class RouterRestController {
 
     @GetMapping("/backup/{name}")
     public ResponseEntity<?> getConfig(@PathVariable(name = "name") String name) {
-       
+
         Router router = routerService.findRouterByName(name);
         LocalDate currentDate = LocalDate.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
@@ -82,14 +83,15 @@ public class RouterRestController {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        String backupPath = "/" + backupDirectory.toString();
+        String fullBackupFolder = "D:/" +backupDirectory.toString();
+        // String fullBackupFolder = "/" + backupDirectory.toString();
         if (router == null)
             throw new RouterNotFoundException("Router không tồn tại trong hệ thống");
         else
             routerCmdService = routerCmdSerFactory.getRouterCmdService(router);
         // Lấy ngày hiện tại
-        
-        return ResponseEntity.ok(routerCmdService.getConfigFile(router, backupPath));
+
+        return ResponseEntity.ok(routerCmdService.getConfigFile(router, fullBackupFolder));
     }
 
     @GetMapping
