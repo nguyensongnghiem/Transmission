@@ -18,12 +18,16 @@ import com.jcraft.jsch.ChannelExec;
 import com.jcraft.jsch.JSch;
 import com.jcraft.jsch.Session;
 import com.mobifone.transmission.model.Router;
+import com.mobifone.transmission.model.RouterBackup;
+import com.mobifone.transmission.repository.IRouterBackupRepository;
+import com.mobifone.transmission.service.IRouterBackupService;
 import com.mobifone.transmission.service.IRouterCmdService;
 
 @Service
 public class NokiaRouterCmdService implements IRouterCmdService {
+
     @Autowired
-    private SftpService sshService;
+    private IRouterBackupService routerBackupService ;
 
     @Override
     public String getConfigFile(Router router, String backupPath) {
@@ -85,6 +89,10 @@ public class NokiaRouterCmdService implements IRouterCmdService {
                             break;
                         }
                     }
+                    RouterBackup  routerBackup = new RouterBackup();
+                    routerBackup.setPath(backupPath + "/" + fileName);
+                    routerBackup.setRouter(router);
+                    routerBackupService.save(routerBackup);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

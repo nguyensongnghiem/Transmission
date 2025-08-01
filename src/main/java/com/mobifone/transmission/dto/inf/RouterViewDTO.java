@@ -6,6 +6,12 @@ public interface RouterViewDTO {
     interface RouterTypeWithNameDTO {
         int getId();
         String getName();
+        VendorWithNameDTO getVendor();
+        interface VendorWithNameDTO {
+            int getId();
+            String getName();      
+            
+        }
     }
     TransmissionDeviceTypeWithNameDTO getTransmissionDeviceType();
     interface TransmissionDeviceTypeWithNameDTO {

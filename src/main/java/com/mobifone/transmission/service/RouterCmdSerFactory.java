@@ -1,5 +1,6 @@
 package com.mobifone.transmission.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.mobifone.transmission.model.Router;
@@ -9,15 +10,21 @@ import com.mobifone.transmission.service.impl.NokiaRouterCmdService;
 
 @Service
 public class RouterCmdSerFactory {
+    @Autowired
+    JuniperRouterCmdService juniperRouterCmdService;
+    @Autowired
+    NokiaRouterCmdService nokiaRouterCmdService;
+    @Autowired
+    CiscoRouterCmdService ciscoRouterCmdService;
     public IRouterCmdService getRouterCmdService(Router router) {
         String vendorName = router.getRouterType().getVendor().getName();
         switch (vendorName) {
             case "Juniper":
-                return new JuniperRouterCmdService();
+                return juniperRouterCmdService;
             case "Nokia":
-                return new NokiaRouterCmdService();
+                return nokiaRouterCmdService;
                 case "Cisco":
-                return new CiscoRouterCmdService();
+                return ciscoRouterCmdService;
             default:
                 break;
         }

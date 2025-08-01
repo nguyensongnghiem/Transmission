@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.SoftDelete;
@@ -37,6 +38,10 @@ public class Router {
     @JoinColumn(name = "SiteId",nullable = false)
     @JsonIgnore
     private Site site;
+
+    @OneToMany(mappedBy = "router", cascade = CascadeType.ALL)
+    @JsonIgnore
+    private List<RouterBackup> backupList;
 
     @Column(nullable = false)
     private String ip;

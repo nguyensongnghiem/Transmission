@@ -6,14 +6,18 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 import org.springframework.beans.factory.annotation.Autowired;
-
+import org.springframework.stereotype.Service;
 
 import com.mobifone.transmission.model.Router;
+import com.mobifone.transmission.service.IRouterBackupService;
 import com.mobifone.transmission.service.IRouterCmdService;
-
+@Service
 public class CiscoRouterCmdService implements IRouterCmdService {
+      @Autowired
+    private IRouterBackupService routerBackupService ;
    
-    SshService sshService = new SshService();
+    @Autowired
+    private SshService sshService;
     @Override
     public String getOsInfo() {
         // TODO Auto-generated method stub

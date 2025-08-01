@@ -7,14 +7,21 @@ import java.io.OutputStream;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.jcraft.jsch.Channel;
 import com.jcraft.jsch.ChannelExec;
 import com.jcraft.jsch.JSch;
 import com.jcraft.jsch.Session;
 import com.mobifone.transmission.model.Router;
+import com.mobifone.transmission.model.RouterBackup;
+import com.mobifone.transmission.service.IRouterBackupService;
 import com.mobifone.transmission.service.IRouterCmdService;
-
+@Service
 public class JuniperRouterCmdService implements IRouterCmdService {
+      @Autowired
+    private IRouterBackupService routerBackupService ;
     @Override
     public String getOsInfo() {
         // TODO Auto-generated method stub
@@ -80,6 +87,10 @@ public class JuniperRouterCmdService implements IRouterCmdService {
                             break;
                         }
                     }
+                       RouterBackup  routerBackup = new RouterBackup();
+                    routerBackup.setPath(backupPath + "/" + fileName);
+                    routerBackup.setRouter(router);
+                    routerBackupService.save(routerBackup);
                 }
             }
 

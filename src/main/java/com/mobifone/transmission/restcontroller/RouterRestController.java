@@ -42,7 +42,7 @@ public class RouterRestController {
     private IRouterService routerService;
     @Autowired
     private ISiteService siteService;
-    @Autowired
+
     private IRouterCmdService routerCmdService;
     @Autowired
     private RouterCmdSerFactory routerCmdSerFactory;
@@ -61,6 +61,39 @@ public class RouterRestController {
         return ResponseEntity.ok(sshService.executeSSHCommand(router, "show version"));
     }
 
+    @GetMapping("/backup/all")
+    public ResponseEntity<?> getAllConfig() {
+        List<Router> routers = routerService.findAll();
+        for (Router router : routers) {
+            routerCmdService = routerCmdSerFactory.getRouterCmdService(router);
+            LocalDate currentDate = LocalDate.now();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+            String directoryName = currentDate.format(formatter);
+
+            // Đường dẫn tới thư mục backup
+            Path backupDirectory = Paths.get("F:/backupConfig", directoryName); // "backup" là thư mục gốc
+
+            try {
+                // Kiểm tra và tạo thư mục nếu cần
+                if (!Files.exists(backupDirectory)) {
+                    Files.createDirectories(backupDirectory);
+                    System.out.println("Thư mục đã được tạo: " + backupDirectory.toString());
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            // String fullBackupFolder = "F:/" + backupDirectory.toString();
+            // String fullBackupFolder = "/" + backupDirectory.toString();
+            if (router == null)
+                throw new RouterNotFoundException("Router không tồn tại trong hệ thống");
+            else
+                routerCmdService = routerCmdSerFactory.getRouterCmdService(router);
+            routerCmdService.getConfigFile(router, backupDirectory.toString());
+        }
+
+        return ResponseEntity.ok("Đã backup tất cả thiết bị");
+    }
+
     @GetMapping("/backup/{name}")
     public ResponseEntity<?> getConfig(@PathVariable(name = "name") String name) {
 
@@ -70,20 +103,18 @@ public class RouterRestController {
         String directoryName = currentDate.format(formatter);
 
         // Đường dẫn tới thư mục backup
-        Path backupDirectory = Paths.get("backup", directoryName); // "backup" là thư mục gốc
+        Path backupDirectory = Paths.get("F:/backupConfig", directoryName); // "backup" là thư mục gốc
 
         try {
             // Kiểm tra và tạo thư mục nếu cần
             if (!Files.exists(backupDirectory)) {
                 Files.createDirectories(backupDirectory);
                 System.out.println("Thư mục đã được tạo: " + backupDirectory.toString());
-            } else {
-                System.out.println("Thư mục đã tồn tại: " + backupDirectory.toString());
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
-        String fullBackupFolder = "D:/" +backupDirectory.toString();
+        // String fullBackupFolder = "F:/" + backupDirectory.toString();
         // String fullBackupFolder = "/" + backupDirectory.toString();
         if (router == null)
             throw new RouterNotFoundException("Router không tồn tại trong hệ thống");
@@ -91,7 +122,7 @@ public class RouterRestController {
             routerCmdService = routerCmdSerFactory.getRouterCmdService(router);
         // Lấy ngày hiện tại
 
-        return ResponseEntity.ok(routerCmdService.getConfigFile(router, fullBackupFolder));
+        return ResponseEntity.ok(routerCmdService.getConfigFile(router, backupDirectory.toString()));
     }
 
     @GetMapping
@@ -102,6 +133,7 @@ public class RouterRestController {
 
     @GetMapping("/{id}")
     public ResponseEntity<?> getRouter(@PathVariable(name = "id") Long id) {
+        Router fullRouter = routerService.findById(id, Router.class);
         RouterViewDTO router = routerService.findById(id, RouterViewDTO.class);
         if (router == null)
             throw new RouterNotFoundException("Router không tồn tại trong hệ thống");
