@@ -23,7 +23,8 @@ public class TransmissionApplication {
 			public void addCorsMappings(CorsRegistry registry) {
 				registry.addMapping("/**")
 						.allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
-						.allowedOrigins("http://localhost:5173", "http://localhost:3000","http://10.24.15.189:3000","http://10.24.15.189:5173")
+						.allowedOrigins("http://localhost:5173", "http://localhost:3000", "http://10.24.15.189:3000",
+								"http://10.24.15.189:5173", "http://localhost:5174")
 						.allowedHeaders("*")
 						.allowCredentials(true);
 			}

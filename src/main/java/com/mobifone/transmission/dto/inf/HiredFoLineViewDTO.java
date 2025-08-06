@@ -21,6 +21,7 @@ public interface HiredFoLineViewDTO {
     interface SiteWithSiteId {
         int getId();
         String getSiteId();
+        ProvinceViewDTO getProvince();
     }
 
 
