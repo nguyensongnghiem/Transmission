@@ -9,11 +9,11 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
 import java.time.LocalDate;
+
 @Getter
 @Setter
 @NoArgsConstructor
-public class FoContractDTO {
-    private Integer id;
+public class FoContractCreateDTO {
     @NotBlank(message = "Yêu cầu nhập số hợp đồng")
     private String contractNumber;
     @NotBlank(message = "Yêu cầu nhập tên hợp đồng")
@@ -24,11 +24,11 @@ public class FoContractDTO {
     private LocalDate signedDate;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @NotNull(message = "Yêu cầu nhập ngày kết thúc hợp đồng")
-    private LocalDate endDate;
-    @NotBlank(message = "Yêu cầu tải lên văn bản hợp đồng pdf")
-    private String contractUrl;
-    private boolean active;
+    private LocalDate endDate;    
+    private String contractUrl;    
     private TransmissionOwner transmissionOwner;
     private String note;
+    
 
+    
 }

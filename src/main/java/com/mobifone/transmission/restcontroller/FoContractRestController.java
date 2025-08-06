@@ -1,6 +1,7 @@
 package com.mobifone.transmission.restcontroller;
 
-import com.mobifone.transmission.dto.FoContractDTO;
+import com.mobifone.transmission.dto.FoContractCreateDTO;
+import com.mobifone.transmission.dto.FoContractUpdateDTO;
 import com.mobifone.transmission.dto.inf.FoContractViewDTO;
 import com.mobifone.transmission.dto.inf.HiredFoLineViewDTO;
 import com.mobifone.transmission.exception.ErrorResponse;
@@ -15,6 +16,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+
 
 // @CrossOrigin(origins = "*")
 @RestController
@@ -71,7 +75,7 @@ public class FoContractRestController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> updateContract(@Valid @RequestBody FoContractDTO foContractDTO,
+    public ResponseEntity<?> updateContract(@Valid @RequestBody FoContractUpdateDTO foContractDTO,
             @PathVariable("id") int id) {
 
         FoContract targetFoContract = contractService.findById(id, FoContract.class);
@@ -96,5 +100,12 @@ public class FoContractRestController {
         // };
         return ResponseEntity.ok("Đã xóa thành công Hợp đồng FO thuê");
     }
+    @PostMapping
+    public String createFoContract(@Valid @RequestBody FoContractCreateDTO foContract) {
+        //TODO: process POST request
+        
+        return foContract;
+    }
+    
 
 }
