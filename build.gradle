@@ -52,9 +52,13 @@ dependencies {
     // https://mvnrepository.com/artifact/com.github.mwiede/jsch
     // https://mvnrepository.com/artifact/com.jcraft/jsch
     implementation group: 'com.jcraft', name: 'jsch', version: '0.1.55'
-    implementation 'org.mapstruct:mapstruct:1.6.3'
+    // https://mvnrepository.com/artifact/org.mapstruct/mapstruct
+implementation("org.mapstruct:mapstruct:1.6.3")
     annotationProcessor 'org.mapstruct:mapstruct-processor:1.6.3'
+    // https://mvnrepository.com/artifact/org.projectlombok/lombok-mapstruct-binding
+    implementation("org.projectlombok:lombok-mapstruct-binding:0.2.0")
     testImplementation group: 'org.springframework.security', name: 'spring-security-test', version: '6.2.3'
+
 }
 
 tasks.named('test') {

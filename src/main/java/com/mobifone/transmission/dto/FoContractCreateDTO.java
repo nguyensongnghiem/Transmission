@@ -27,8 +27,5 @@ public class FoContractCreateDTO {
     private LocalDate endDate;    
     private String contractUrl;    
     private TransmissionOwner transmissionOwner;
-    private String note;
-    
-
-    
+    private String note;    
 }

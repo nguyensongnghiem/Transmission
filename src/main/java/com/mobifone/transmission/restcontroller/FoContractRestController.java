@@ -5,6 +5,7 @@ import com.mobifone.transmission.dto.FoContractUpdateDTO;
 import com.mobifone.transmission.dto.inf.FoContractViewDTO;
 import com.mobifone.transmission.dto.inf.HiredFoLineViewDTO;
 import com.mobifone.transmission.exception.ErrorResponse;
+import com.mobifone.transmission.mapper.FoContractMapper;
 import com.mobifone.transmission.model.FoContract;
 import com.mobifone.transmission.service.IFoContractService;
 import com.mobifone.transmission.service.IHiredFoService;
@@ -28,7 +29,8 @@ public class FoContractRestController {
     private IFoContractService contractService;
     @Autowired
     private IHiredFoService hiredFoService;
-
+    @Autowired
+    private FoContractMapper foContractMapper;
     @GetMapping
     public ResponseEntity<Object> getAllContracts() {
         try {
@@ -86,7 +88,7 @@ public class FoContractRestController {
         }
         BeanUtils.copyProperties(foContractDTO, targetFoContract);
         contractService.save(targetFoContract);
-        return ResponseEntity.ok("Đã tạo thành công hợp đồng");
+        return ResponseEntity.ok("Đã cập nhật thành công hợp đồng");
     }
 
     @DeleteMapping("/{id}")
@@ -101,10 +103,11 @@ public class FoContractRestController {
         return ResponseEntity.ok("Đã xóa thành công Hợp đồng FO thuê");
     }
     @PostMapping
-    public String createFoContract(@Valid @RequestBody FoContractCreateDTO foContract) {
+    public ResponseEntity<?> createFoContract(@Valid @RequestBody FoContractCreateDTO foContractCreateDTO) {
         //TODO: process POST request
-        
-        return foContract;
+        FoContract newFoContract = foContractMapper.toEntity(foContractCreateDTO);
+        contractService.save(newFoContract);
+        return ResponseEntity.ok("Đã tạo thành công hợp đồng");
     }
     
 
