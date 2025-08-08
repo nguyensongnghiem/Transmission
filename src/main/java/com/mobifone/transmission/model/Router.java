@@ -52,6 +52,12 @@ public class Router {
     private Timestamp createdOn;
     @UpdateTimestamp
     private Timestamp updatedOn;
+    @Override
+    public String toString() {
+        return "Router [id=" + id + ", name=" + name + ", routerType=" + routerType + ", transmissionDeviceType="
+                + transmissionDeviceType + ", site=" + site + ", backupList=" + backupList + ", ip=" + ip + ", active="
+                + active + ", note=" + note + ", createdOn=" + createdOn + ", updatedOn=" + updatedOn + "]";
+    }
 
 }
 

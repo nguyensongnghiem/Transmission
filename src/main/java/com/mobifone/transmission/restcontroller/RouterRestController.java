@@ -150,7 +150,8 @@ public class RouterRestController {
     public ResponseEntity<?> createRouter(@Valid @RequestBody RouterDTO routerDTO) {
         Router targetRouter = new Router();
         BeanUtils.copyProperties(routerDTO, targetRouter);
-        routerService.save(targetRouter);
+        System.out.println("Router Created: " + targetRouter.toString());
+        routerService.save(targetRouter);        
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 

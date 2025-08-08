@@ -5,7 +5,7 @@ import com.mobifone.transmission.dto.FoContractUpdateDTO;
 import com.mobifone.transmission.dto.inf.FoContractViewDTO;
 import com.mobifone.transmission.dto.inf.HiredFoLineViewDTO;
 import com.mobifone.transmission.exception.ErrorResponse;
-import com.mobifone.transmission.mapper.FoContractMapper;
+import com.mobifone.transmission.mapper.RouterMapper;
 import com.mobifone.transmission.model.FoContract;
 import com.mobifone.transmission.service.IFoContractService;
 import com.mobifone.transmission.service.IHiredFoService;
@@ -20,7 +20,6 @@ import java.util.List;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-
 // @CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/api/contracts")
@@ -30,7 +29,8 @@ public class FoContractRestController {
     @Autowired
     private IHiredFoService hiredFoService;
     @Autowired
-    private FoContractMapper foContractMapper;
+    private RouterMapper foContractMapper;
+
     @GetMapping
     public ResponseEntity<Object> getAllContracts() {
         try {
@@ -102,13 +102,13 @@ public class FoContractRestController {
         // };
         return ResponseEntity.ok("Đã xóa thành công Hợp đồng FO thuê");
     }
+
     @PostMapping
     public ResponseEntity<?> createFoContract(@Valid @RequestBody FoContractCreateDTO foContractCreateDTO) {
-        //TODO: process POST request
+        // TODO: process POST request
         FoContract newFoContract = foContractMapper.toEntity(foContractCreateDTO);
         contractService.save(newFoContract);
         return ResponseEntity.ok("Đã tạo thành công hợp đồng");
     }
-    
 
 }
