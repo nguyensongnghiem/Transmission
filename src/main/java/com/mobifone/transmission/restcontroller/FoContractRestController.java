@@ -5,7 +5,7 @@ import com.mobifone.transmission.dto.FoContractUpdateDTO;
 import com.mobifone.transmission.dto.inf.FoContractViewDTO;
 import com.mobifone.transmission.dto.inf.HiredFoLineViewDTO;
 import com.mobifone.transmission.exception.ErrorResponse;
-import com.mobifone.transmission.mapper.RouterMapper;
+
 import com.mobifone.transmission.model.FoContract;
 import com.mobifone.transmission.model.Router;
 import com.mobifone.transmission.service.IFoContractService;
@@ -16,7 +16,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.net.URI;
 import java.util.List;
 
 // @CrossOrigin(origins = "*")
@@ -107,8 +109,12 @@ public class FoContractRestController {
         FoContract targetContract = new FoContract();
         BeanUtils.copyProperties(foContractCreateDTO, targetContract);
         System.out.println("Đã tạo hợp đồng : " + targetContract.toString());
-        contractService.save(targetContract);        
-        return ResponseEntity.ok("Đã tạo thành công hợp đồng");
+        contractService.save(targetContract);
+        URI location = ServletUriComponentsBuilder.fromCurrentRequest()
+                .path("/{id}")
+                .buildAndExpand(targetContract.getId())
+                .toUri();
+        return ResponseEntity.created(location).build();
     }
 
 }
