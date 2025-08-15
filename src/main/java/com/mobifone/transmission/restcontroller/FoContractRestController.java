@@ -7,6 +7,7 @@ import com.mobifone.transmission.dto.inf.HiredFoLineViewDTO;
 import com.mobifone.transmission.exception.ErrorResponse;
 import com.mobifone.transmission.mapper.RouterMapper;
 import com.mobifone.transmission.model.FoContract;
+import com.mobifone.transmission.model.Router;
 import com.mobifone.transmission.service.IFoContractService;
 import com.mobifone.transmission.service.IHiredFoService;
 import jakarta.validation.Valid;
@@ -17,8 +18,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 
 // @CrossOrigin(origins = "*")
 @RestController
@@ -28,8 +27,8 @@ public class FoContractRestController {
     private IFoContractService contractService;
     @Autowired
     private IHiredFoService hiredFoService;
-    @Autowired
-    private RouterMapper foContractMapper;
+    // @Autowired
+    // private RouterMapper foContractMapper;
 
     @GetMapping
     public ResponseEntity<Object> getAllContracts() {
@@ -105,9 +104,10 @@ public class FoContractRestController {
 
     @PostMapping
     public ResponseEntity<?> createFoContract(@Valid @RequestBody FoContractCreateDTO foContractCreateDTO) {
-        // TODO: process POST request
-        FoContract newFoContract = foContractMapper.toEntity(foContractCreateDTO);
-        contractService.save(newFoContract);
+        FoContract targetContract = new FoContract();
+        BeanUtils.copyProperties(foContractCreateDTO, targetContract);
+        System.out.println("Đã tạo hợp đồng : " + targetContract.toString());
+        contractService.save(targetContract);        
         return ResponseEntity.ok("Đã tạo thành công hợp đồng");
     }
 
