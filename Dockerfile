@@ -16,7 +16,7 @@ COPY --chown=gradle:gradle . /app
 RUN gradle clean build -x test
 
 # Giai đoạn 2: Tạo image cuối cùng nhỏ gọn
-FROM eclipse-temurin:17-jre-alpine
+FROM eclipse-temurin:8u462-b08-jre-ubi9-minimal
 
 # Copy file JAR đã được build từ giai đoạn 'builder'
 COPY --from=builder /app/build/libs/*.jar /app.jar
