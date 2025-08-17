@@ -16,7 +16,7 @@ COPY --chown=gradle:gradle . /app
 RUN gradle clean build -x test
 
 # Giai đoạn 2: Tạo image cuối cùng nhỏ gọn
-FROM openjdk:17-jre-slim
+FROM openjdk:17-slim-jre
 
 # Copy file JAR đã được build từ giai đoạn 'builder'
 COPY --from=builder /app/build/libs/*.jar /app.jar
