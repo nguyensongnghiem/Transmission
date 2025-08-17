@@ -4,7 +4,7 @@
 # ENTRYPOINT ["java","-jar","/app.jar"]
 
 # Giai đoạn 1: Build dự án với Gradle
-FROM gradle:latest as builder
+FROM gradle:8.7-jdk17 as builder
 
 # Đặt thư mục làm việc bên trong container
 WORKDIR /app
